@@ -1,0 +1,165 @@
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(mant.ttf) format('truetype');
+}
+@font-face {
+  font-family: "grafity";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(SpriteGraffiti-Regular.otf) format('truetype');
+}
+@font-face {
+  font-family: "propis";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(ofont.ru_Nickainley.ttf) format('truetype');
+}
+.none {
+  display: none;
+}
+@media screen and (max-width: 566px), screen and (max-height: 700px) {
+  .rightContainer {
+    top: 40px !important;
+    right: 1px !important;
+    border-radius: 20px 10px 20px 10px ;
+  }
+}
+body {
+  touch-action: none;
+}
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat';
+}
+img {
+  pointer-events: none;
+}
+.selected {
+  cursor: no-drop !important;
+  background-color: #00b3ff8b !important;
+}
+.floor_is_used {
+  display: flex !important;
+  animation: changefloor 1s ease !important;
+}
+.pressed {
+  cursor: grabbing;
+}
+.map .floors {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  background-color: #f2f3da94;
+}
+.map .floors .floor {
+  user-select: none;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  transform: scale(1);
+}
+.map .floors .floor .wrapper {
+  position: relative;
+  height: 482px;
+  width: 645px;
+}
+.map .floors .floor .wrapper .cabName {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  position: absolute;
+  border-radius: 3px;
+  top: 0px;
+  left: 0px;
+  z-index: 3;
+  cursor: pointer;
+  user-select: none;
+}
+.map .floors .floor .wrapper .cabName:hover {
+  background-color: rgba(231, 90, 24, 0.5);
+  transition: all 1s ;
+  -webkit-box-shadow: 0px 0px 38px 7px rgba(231, 24, 24, 0.5);
+  -moz-box-shadow: 0px 0px 38px 7px rgba(231, 24, 24, 0.5);
+  box-shadow: 0px 0px 38px 7px rgba(231, 24, 24, 0.5);
+}
+.map .floors .floor .wrapper .cabName:active {
+  background-color: #FF8C0B;
+  transition: all 0.15s;
+}
+.map .floors svg {
+  z-index: 1;
+  height: 482px;
+  width: 645px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0;
+  user-select: none;
+}
+.map .floors svg polygon {
+  fill: #ffdba478;
+  cursor: pointer;
+}
+.map .floors svg polygon:hover {
+  fill: #ffc60b9d;
+  transition: all 0.3s;
+}
+.map .floors svg polygon:active {
+  fill: #FF8C0B;
+  transition: all 0.15s;
+}
+.map .floors img {
+  z-index: -999;
+  text-decoration: none;
+  user-select: none;
+}
+.rightContainer {
+  z-index: 100;
+  position: fixed;
+  top: 3em;
+  right: 1em;
+  height: auto;
+  width: auto;
+  user-select: none;
+}
+.rightContainer .f_buttons {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  background-color: #B3FAFF;
+  border-radius: 20px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+}
+.rightContainer .f_buttons .selBtn {
+  height: 50px;
+  width: 50px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #00ff4c00;
+}
+.rightContainer .f_buttons .selBtn:hover {
+  background-color: #00b3ff3d;
+  transition: background-color 0.3s ease-in-out;
+}
+@keyframes changefloor {
+  from {
+    transform: scale(1.3);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.cabHover {
+  fill: #ffc60b9d !important;
+  transition: all 0.3s !important;
+}

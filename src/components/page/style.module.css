@@ -1,0 +1,19 @@
+.button{
+    background-color: #1677ff;
+    color: white;
+    border: 10px solid #1677ff;
+    border-radius: 10px;
+}
+.button:hover{
+    color: #fff;
+    background-color: #4096ff;
+    border: 10px solid #4096ff;
+    border-radius: 10px;
+}
+.cont{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
