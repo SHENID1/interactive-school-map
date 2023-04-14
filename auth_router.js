@@ -4,10 +4,15 @@ import authController from "./auth-controller.js";
 import {body} from "express-validator";
 import authMiddleware from "./middlewares/auth-middleware.js";
 import expressIp from "express-ip";
+import dotenv from "dotenv";
 const auth_router = new Router()
+dotenv.config();
 
-auth_router.use(cors());
-auth_router.use(expressIp().getIpInfoMiddleware);
+auth_router.use(cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL
+}));
+// auth_router.use(expressIp().getIpInfoMiddleware);
 
 auth_router.post('/register',
     body('login').isString(),

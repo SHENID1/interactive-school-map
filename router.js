@@ -1,7 +1,6 @@
 import Router from 'express';
 import Controller from "./Controller.js";
 import cors from "cors";
-import bodyParser from "body-parser";
 import fileUpload from "express-fileupload";
 const router = new Router()
 
