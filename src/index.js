@@ -1,13 +1,22 @@
-import React from 'react';
+import React, {createContext} from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import AdminPanel from "./components/admin/admin-panel";
-// import Appy from "./components/test/antdtest";
 import Page404 from "./components/page/404";
+import Store from "./store/store";
+// import Appy from "./components/test/antdtest";
 
+const store = new Store();
+
+export const Context = createContext({
+    store,
+})
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+    <Context.Provider value={{
+        store
+    }}>
     <BrowserRouter>
         <Routes>
             <Route path={"/admin/*"} element={<AdminPanel/>}/>
@@ -16,4 +25,5 @@ root.render(
             <Route path={"*"} element={<Page404/>}/>
         </Routes>
     </BrowserRouter>
+    </Context.Provider>
 );

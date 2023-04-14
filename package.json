@@ -12,6 +12,7 @@
     "bootstrap": "^5.2.2",
     "dotenv": "^16.0.3",
     "fs": "^0.0.1-security",
+    "mobx-react-lite": "^3.4.3",
     "nvm": "^0.0.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",

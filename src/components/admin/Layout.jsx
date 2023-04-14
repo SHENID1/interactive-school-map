@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import cl from "./style.module.css";
 import logo from "../../images/1566 2022.png";
-import {Layout, Menu} from 'antd';
+import {Avatar, Button, Layout, Menu} from 'antd';
 import {Link, Outlet} from "react-router-dom";
+import {Context} from "../../index";
 const { Header} = Layout;
 
 
@@ -12,13 +13,27 @@ const NavOption = [
     {key: 3, label: (<Link to="scheme" >Схема</Link>)},
     {key: 4, label: (<Link to="cab-data" >Кабинеты</Link>)}]
 const ElLayout = () => {
-
+    const {store} = useContext(Context)
+    const Exit = () => {
+        store.logout()
+    };
     return (
         <>
         <Layout>
-            <Header className="header">
+            <Header className={cl.header}>
+                <div className={cl.leftCont}>
                 <div className={cl.logo}><img className={cl.logo} alt={""} src={logo}/></div>
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[1]} items={NavOption}/>
+                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[1]} items={NavOption} style={{maxWidth: "600px"}}/>
+                </div>
+                <div className={cl.user}>
+                    <Avatar style={{ backgroundColor: "#ffc409", verticalAlign: 'middle' }} size="large" gap={4}>
+                        {store.user.login}
+                    </Avatar>
+                    <Button size="middle" className={cl.but} onClick={Exit}>
+                        Выйти
+                    </Button>
+                </div>
+
             </Header>
             <Outlet/>
         </Layout>

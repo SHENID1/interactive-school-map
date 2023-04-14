@@ -11,3 +11,20 @@
     float: right;
     margin: 16px 0 16px 24px;
 }
+.user{
+    max-width: 200px;
+    justify-self: flex-end;
+}
+.header{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    justify-content: space-between;
+}
+.leftCont{
+    width: 600px;
+}
+.but{
+    margin-left: 15px;
+    vertical-align: middle;
+}

@@ -1,10 +1,11 @@
 import axios from "axios";
 import Data from "./getData";
+import {ApiUrl} from "./index";
 
 export default class Evacuation{
     static async getEvacuationByFloor(floor){
         try{
-            const response = await axios.get(`${window.location.origin.slice(0, -5)}:5000/api/evacuation/${floor}`);
+            const response = await axios.get(`${ApiUrl}/api/evacuation/${floor}`);
             if (response.data === undefined) return ErrorEvent;
             return response.data;
         }
