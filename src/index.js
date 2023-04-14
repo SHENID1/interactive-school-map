@@ -5,7 +5,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import AdminPanel from "./components/admin/admin-panel";
 // import Appy from "./components/test/antdtest";
 import Page404 from "./components/page/404";
-// hello world
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
