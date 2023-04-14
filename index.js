@@ -31,5 +31,5 @@ const start = async () => {
         console.log(e);
     }
 }
-
+// Привет мир
 start()
