@@ -1,0 +1,144 @@
+
+.search{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.m1{
+    font-weight: bold;
+    padding-right: 5px;
+}
+.m2{
+    font-size: 15px;
+    align-self: flex-start;
+    font-weight: bold;
+}
+.m3{
+
+    font-size: 15px;
+    align-self: flex-start;
+    font-weight: bold;
+}
+.gr{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.activeSearch{
+    background-color: rgba(0, 0, 0, 0.08);
+    z-index: 999;
+}
+.container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.search .container input{
+    width: 500px;
+    height: 30px;
+    padding-right: 5px;
+    padding-left: 5px;
+    background-color: #B3FAFF;
+    border-radius: 6px;
+    margin-right: 5px;
+    font-size:24px;
+}
+.search .container input:focus{
+    background-color: #00b3ff8b;
+    transition: all 0.3s;
+}
+.search .container button{
+    width: 30px;
+    height: 30px;
+    margin: 0 5px 0 5px;
+    background-image: url("20.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 50%;
+}
+.search .container button:hover{
+    background-color: rgba(0,0,0,0.50);
+    transition: all 0.3s;
+}
+.search .container button:active{
+    background-color: rgb(3, 239, 255);
+    transition: all 0.3s;
+}
+.none{
+    display: none;
+}
+.hint{
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:24px;
+}
+.cont{
+    width: 547px;
+    background-color: white;
+    border-radius: 20px;
+    transition: all 0.3s;
+    z-index: 100;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.inputElement{
+    height: 40px;
+    width: 100%;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    z-index: 99;
+    border: 1px black;
+    cursor: pointer;
+}
+.inputElement:hover{
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    transition: all 0.3s;
+}
+.hintIsSelected{
+    background-color: rgba(0, 0, 0, 0.11) !important;
+}
+@media screen and (max-width: 566px){
+    .container{
+        margin: 1px 0 0 0 !important;
+    }
+    .search .container input{
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 5px 0 5px !important;
+    }
+    .search .container button{
+    display: none;
+    }
+
+    .hint .cont{
+        width: 100% !important;
+        border-radius: 0 0 20px 20px !important;
+    }
+}
+@media screen and (max-width: 347px){
+    .m2 {
+        font-size: 12px !important;
+    }
+    .m3{
+        font-size: 12px !important;
+    }
+}
+@media screen and (max-width: 300px){
+    .m2 {
+        font-size: 10px !important;
+    }
+    .m3{
+        font-size: 10px !important;
+    }
+}
+

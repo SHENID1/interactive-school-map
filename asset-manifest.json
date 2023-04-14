@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0998bbd7.css",
+    "main.js": "/static/js/main.15e97c4b.js",
+    "static/media/1566 2022.png": "/static/media/1566 2022.8f9341358ce3776a8679.png",
+    "static/media/1.png": "/static/media/1.8af72be13abbc91c0e83.png",
+    "static/media/-1.png": "/static/media/-1.027adf567c8272f787ea.png",
+    "static/media/SpriteGraffiti-Regular.otf": "/static/media/SpriteGraffiti-Regular.257cafd15d39fb2ffaed.otf",
+    "static/media/2.png": "/static/media/2.8ca8d49dd81862a68542.png",
+    "static/media/mant.ttf": "/static/media/mant.94bb495fba6077f669ed.ttf",
+    "static/media/ofont.ru_Nickainley.ttf": "/static/media/ofont.ru_Nickainley.d1326231118ec4df4b00.ttf",
+    "static/media/3.png": "/static/media/3.8724e75388daa4916f59.png",
+    "static/media/4.png": "/static/media/4.d6812d3f0dbcf757afeb.png",
+    "static/media/mchs-logo.jpg": "/static/media/mchs-logo.0c78cbc7f34aa58ec207.jpg",
+    "static/media/-1 str_Монтажная область 1.svg": "/static/media/-1 str_Монтажная область 1.761cda272503f3411996f1145fbd0ade.svg",
+    "static/media/стрелки 1 этажа_Монтажная область 1.svg": "/static/media/стрелки 1 этажа_Монтажная область 1.3d517af48a2c031be374c9c4c46559ea.svg",
+    "static/media/strelka.svg": "/static/media/strelka.b7a777563a69433af2d9b6aa6afbcfaf.svg",
+    "index.html": "/index.html",
+    "main.0998bbd7.css.map": "/static/css/main.0998bbd7.css.map",
+    "main.15e97c4b.js.map": "/static/js/main.15e97c4b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0998bbd7.css",
+    "static/js/main.15e97c4b.js"
+  ]
+}
