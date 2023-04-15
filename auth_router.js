@@ -10,7 +10,8 @@ dotenv.config();
 
 auth_router.use(cors({
     credentials: true,
-    origin: process.env.CLIENT_URL
+    origin: process.env.CLIENT_URL,      //access-control-allow-credentials:true
+    optionSuccessStatus:200
 }));
 // auth_router.use(expressIp().getIpInfoMiddleware);
 

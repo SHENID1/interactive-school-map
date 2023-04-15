@@ -8,9 +8,11 @@ import dotenv from "dotenv";
 dotenv.config();
 router.use(cors({
     credentials: true,
-    origin: process.env.CLIENT_URL
+    origin: process.env.CLIENT_URL,      //access-control-allow-credentials:true
+    optionSuccessStatus:200
 }));
 router.use(fileUpload({}))
+// console.log(process.env.CLIENT_URL)
 
 // scheme
 router.get('/scheme/:floor', Controller.getFloorScheme); // get scheme by floor
