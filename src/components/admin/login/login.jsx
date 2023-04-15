@@ -5,9 +5,6 @@ import {Button, Checkbox, Form, Input, notification} from 'antd';
 import lb from "./leftbot.svg";
 import rb from "./rightbot.svg";
 import rt from "./righttop.svg";
-
-import AuthService from "../../../api/auth/AuthService";
-import Store from "../../../store/store";
 import {Context} from "../../../index";
 import {observer} from "mobx-react-lite";
 

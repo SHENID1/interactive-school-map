@@ -1,6 +1,6 @@
 import axios from "axios";
 import Data from "./getData";
-import {ApiUrl} from "./index";
+import $api, {ApiUrl} from "./index";
 
 export default class Timetable{
     static async getTimetableByDayId(dayId){
@@ -15,7 +15,7 @@ export default class Timetable{
     }
     static async UpdateTimetableById(data){
         try{
-            const response = await axios.put(`${ApiUrl}/api/timetable/`, data);
+            const response = await $api.put(`/api/timetable/`, data);
             return response.data;
         }
         catch (e){
@@ -24,7 +24,7 @@ export default class Timetable{
     }
     static async DeleteTimetableById(data){
         try{
-            await axios.delete(`${ApiUrl}/api/timetable/${data._id}`);
+            await $api.delete(`/api/timetable/${data._id}`);
             return true;
         }
         catch (e){
@@ -33,7 +33,7 @@ export default class Timetable{
     }
     static async CreateTimetable(data){
         try{
-            const response = await axios.post(`${ApiUrl}/api/timetable/`, data);
+            const response = await $api.post(`/api/timetable/`, data);
             return response.data;
         }
         catch (e){

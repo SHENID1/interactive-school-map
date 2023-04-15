@@ -78,7 +78,7 @@ const CreateTimetable = ({handler}) => {
         const h = await Timetable.CreateTimetable(values)
         await Load.loadTimetable()
         handler(h.dayId + h.letter + h.num)
-        console.log(values)
+        // console.log(values)
     };
     return (
         <>

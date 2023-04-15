@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Routes, Route} from "react-router-dom";
 import ElLayout from "./Layout";
 import TtMain from "./timetable/tt-main"
@@ -16,10 +16,11 @@ const AdminPanel = () => {
     const {store} = useContext(Context)
 
     useEffect(() => {
+        console.log(1)
         if (localStorage.getItem('token')){
             store.checkAuth()
         }
-    }, [])
+    }, [store])
 
     if (!store.isAuth){
         return <Login/>
