@@ -24,7 +24,6 @@ export default class Store {
             const response = await AuthService.login(login, password);
 
             if (!remember) {
-                console.log(remember)
                 localStorage.setItem('remember', 0);
             }
             if (remember) {
