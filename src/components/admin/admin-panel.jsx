@@ -16,7 +16,6 @@ const AdminPanel = () => {
     const {store} = useContext(Context)
 
     useEffect(() => {
-        console.log(1)
         if (localStorage.getItem('token')){
             store.checkAuth()
         }
@@ -24,6 +23,14 @@ const AdminPanel = () => {
 
     if (!store.isAuth){
         return <Login/>
+    }
+    if (localStorage.getItem('remember') !== null){
+        localStorage.setItem('remember', Number(localStorage.getItem('remember')) + 1)
+        if (localStorage.getItem('remember') >= 2){
+            store.logout()
+            localStorage.removeItem('remember')
+            return <Login/>
+        }
     }
     return (
 

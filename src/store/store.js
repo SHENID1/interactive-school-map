@@ -24,11 +24,12 @@ export default class Store {
             const response = await AuthService.login(login, password);
 
             if (!remember) {
-                this.setAuth(true);
-                this.setUser(response.data.user)
-                return
+                console.log(remember)
+                localStorage.setItem('remember', 0);
             }
-
+            if (remember) {
+                localStorage.removeItem('remember');
+            }
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true)
             this.setUser(response.data.user)
@@ -41,6 +42,7 @@ export default class Store {
         try{
             await AuthService.logout();
             localStorage.removeItem('token');
+            localStorage.removeItem('remember')
             this.setAuth(false)
             this.setUser({})
         }
