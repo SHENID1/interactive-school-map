@@ -3,7 +3,7 @@ import Token from "../mongoose_scheme/token.js";
 
 class tokenService{
     generateTokens(payload){
-        const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET_KEY, {expiresIn: '30m'});
+        const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET_KEY, {expiresIn: '1d'});
         const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET_KEY, {expiresIn: '14d'});
         return {
             accessToken,
