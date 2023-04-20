@@ -2,7 +2,7 @@ import SchemeFloors from "./mongoose_scheme/schemefloors.js";
 import CabData from './mongoose_scheme/cabdata.js';
 import Evacuation from "./mongoose_scheme/evacuation.js";
 import Timetable from "./mongoose_scheme/Timetable.js";
-import fileService from "./fileService.js";
+//  import fileService from "./fileService.js";
 
 class Controller {
 
@@ -29,7 +29,7 @@ class Controller {
     }
     async updateFloorScheme (req, res) {
         try {
-            const list = req.body;
+            // const list = req.body;
 
             const post = await SchemeFloors.find();
             res.status(200).json(post);
@@ -50,14 +50,14 @@ class Controller {
     }
     async updateCabData (req, res) {
         try {
-            const data = req.body;
+            // const data = req.body;
             res.status(200);
-            return
-            const {imgName} = req.files
-            fileService.saveFile(imgName, data.name)
-
-            const post = await CabData.findByIdAndUpdate(req.body._id, req.body, {new: true})
-            res.status(200).json(post);
+            // return
+            // const {imgName} = req.files
+            // fileService.saveFile(imgName, data.name)
+            //
+            // const post = await CabData.findByIdAndUpdate(req.body._id, req.body, {new: true})
+            // res.status(200).json(post);
         } catch (e) {
             console.log(e)
             res.status(500).json(e);
