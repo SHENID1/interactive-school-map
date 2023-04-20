@@ -16,7 +16,8 @@ router.use(fileUpload({}))
 
 // scheme
 router.get('/scheme/:floor', Controller.getFloorScheme); // get scheme by floor
-router.post('/scheme',authMiddleware, Controller.createFloorScheme); // create scheme
+router.post('/scheme', authMiddleware, Controller.createFloorScheme); // create scheme
+router.put('/scheme', authMiddleware, Controller.updateFloorScheme)
 
 // cabData
 router.get('/cabdata/:floor', Controller.getCabData)

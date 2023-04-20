@@ -7,6 +7,7 @@ import fileService from "./fileService.js";
 class Controller {
 
     //scheme
+
     async createFloorScheme (req, res) {
         try {
             const {id, points, name, floor} = req.body;
@@ -21,6 +22,16 @@ class Controller {
         try {
             const {floor} = req.params;
             const post = await SchemeFloors.find({floor: Number(floor)});
+            res.status(200).json(post);
+        } catch (e) {
+            res.status(500).json(e);
+        }
+    }
+    async updateFloorScheme (req, res) {
+        try {
+            const list = req.body;
+
+            const post = await SchemeFloors.find();
             res.status(200).json(post);
         } catch (e) {
             res.status(500).json(e);
