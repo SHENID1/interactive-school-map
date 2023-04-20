@@ -9,7 +9,7 @@ const { Header} = Layout;
 
 const NavOption = [
     {key: 1, label: (<Link to="timetable" >Расписание</Link>)},
-    {key: 2, label: (<Link to="evacuation" >Стрелки эвакуации</Link>)},
+    // {key: 2, label: (<Link to="evacuation" >Стрелки эвакуации</Link>)},
     {key: 3, label: (<Link to="scheme" >Схема</Link>)},
     {key: 4, label: (<Link to="cab-data" >Кабинеты</Link>)}]
 const ElLayout = () => {
