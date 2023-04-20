@@ -55,7 +55,7 @@ function getTimeTable(id) {
                 if (h.group) {
                     timeTable[h.num - 1].subject = date[i].num + date[i].letter + " (" + h.group + ")гр. " + h.subject;
                 }
-                if (h.time !== "") {
+                if (h.time !== "" && h.time !== undefined) {
                     timeTable[h.num - 1].lessonTime = h.time;
                 }
             }
