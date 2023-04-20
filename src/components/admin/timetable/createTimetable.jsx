@@ -1,11 +1,12 @@
-import React from 'react';
-import {Breadcrumb, Button, Form, Input, InputNumber, Select, Space} from "antd";
+import React, {useContext} from 'react';
+import {Breadcrumb, Button, Form, Input, InputNumber, notification, Select, Space} from "antd";
 import cl from "./style.module.css";
 import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import {Content} from "antd/es/layout/layout";
 import Data from "../../../api/getData";
 import Timetable from "../../../api/timetable";
 import Load from "../../../api/load";
+import {Context} from "../../../index";
 
 
 const getAllCabData = () => {
@@ -71,17 +72,34 @@ const getOptionsForBreadcrumb = () => {
 
 
 const CreateTimetable = ({handler}) => {
+    const [api, contextHolder] = notification.useNotification();
+    const openNotificationWithIcon = (type) => {
+        api[type]({
+            message: 'Не удалось создать таблицу',
+            description:
+                "Попробуйте еще раз или перейдите в аккаунт",
+        });
+    };
+    const {store} = useContext(Context)
     const [form] = Form.useForm();
     const onFinish = async (values) => {
         // const data = values.push()
-        form.resetFields();
-        const h = await Timetable.CreateTimetable(values)
-        await Load.loadTimetable()
-        handler(h.dayId + h.letter + h.num)
+        try{
+            const h = await Timetable.CreateTimetable(values)
+            await Load.loadTimetable()
+            form.resetFields();
+            handler(h.dayId + h.letter + h.num)
+        }
+        catch (e) {
+            store.checkAuth()
+            openNotificationWithIcon('error')
+        }
         // console.log(values)
     };
     return (
         <>
+            {contextHolder}
+            <contextHolder/>
             <Breadcrumb
                 style={{
                     margin: '16px 0',
