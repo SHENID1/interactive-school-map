@@ -6,7 +6,8 @@ import {Fl} from "../../context/fl";
 import Data from "../../api/getData"
 import Str1fl from "../../images/icons/стрелки 1 этажа_Монтажная область 1.svg"
 import StrM1fl from "../../images/icons/-1 str_Монтажная область 1.svg"
-
+import Str2fl from "../../images/icons/2 str_Монтажная область 1.svg"
+import Str34fl from "../../images/icons/3 str_Монтажная область 1.svg"
 const EvacuationST = () => {
 
     const {floor} = useContext(Fl);
@@ -42,9 +43,12 @@ const EvacuationST = () => {
         <div className={[isVisible ? "" : "none", cl.evacuationWrapper].join(' ')}>
             {floor === 1?   <img src={Str1fl} alt="" className={cl.image} />: <></>}
             {floor === -1?   <img src={StrM1fl} alt="" className={cl.image} />: <></>}
-            {data?.map(str =>
-                <img key={Math.random()} src={strelka} className={cl.evacuation} alt="" style={{zIndex:999,top:`${str.y}px`, left:`${str.x}px` ,transform: `rotate(${str.deg}deg)`}}/>)
-            }
+            {floor === 2?   <img src={Str2fl} alt="" className={cl.image} />: <></>}
+            {floor === 3?   <img src={Str34fl} alt="" className={cl.image} />: <></>}
+            {floor === 4?   <img src={Str34fl} alt="" className={cl.image} />: <></>}
+        {/*    {data?.map(str =>*/}
+        {/*        <img key={Math.random()} src={strelka} className={cl.evacuation} alt="" style={{zIndex:999,top:`${str.y}px`, left:`${str.x}px` ,transform: `rotate(${str.deg}deg)`}}/>)*/}
+        {/*    }*/}
         </div>
     );
 };
