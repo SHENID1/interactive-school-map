@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {View, StyleSheet, StatusBar, Platform, TextInput} from 'react-native';
+import Map from "./components/floor/map";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const App = () => {
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    return (
+        <View style={style.AndroidSafeArea}>
+            <TextInput/>
+                <Map/>
+        </View>
+    );
+};
+const style = StyleSheet.create({
+    AndroidSafeArea: {
+        flex: 1,
+        marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+    }
 });
+
+
+export default App;
