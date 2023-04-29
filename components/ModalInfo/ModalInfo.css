@@ -1,0 +1,202 @@
+.none {
+    display: none;
+}
+
+.active {
+    display: flex !important;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: all 0.5s !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    justify-content: center;
+    align-items: flex-end;
+
+}
+
+.modal__content img{
+    user-select: none;
+    border-radius: 10px;
+}
+.rasp {
+    width: 100%;
+    margin-top: 12px;
+    border-radius: 4px 4px 4px 4px;
+}
+
+.rasp table {
+    border: 1px solid black;
+    width: 100%;
+    border-collapse: collapse;
+    display: grid;
+    border-radius: 5px;
+    overflow-x: hidden;
+}
+
+.rasp table #main {
+    background-color: rgba(0, 0, 0, 0.09);
+    height: 40px;
+    font-weight: bold;
+}
+
+.rasp th {
+    border-top: 1px solid black;
+}
+.r100b{
+    text-overflow: ellipsis;
+}
+.r100 {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center start;
+    padding-left: 7px;
+    border-left: 1px solid black;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.rasp td {
+}
+
+.rasp .tr1 {
+    border-top: 1px solid black;
+    height: 29px;
+    display: grid;
+    place-items: center start;
+    justify-items: start;
+    grid-template-columns: 17ch 38ch;
+}
+
+#main {
+    display: grid;
+    place-items: center;
+    height: 25px;
+    margin: 0 0 0 0;
+    font-size: 25px;
+}
+
+#first {
+    margin-left: 5px;
+}
+
+.t1 {
+    margin-left: 7px;
+    /*background-color: rgba(86, 86, 86, 0.31);*/
+    /*color: white;*/
+    border-radius: 3px;
+    font-weight: 400;
+}
+
+.t2 {
+    font-weight: bold;
+}
+
+.t3 {
+    opacity: 0;
+}
+
+.span {
+    background-color: rgba(0, 0, 0, 0.18);
+    border-radius: 7px;
+    height: 30px;
+    margin-top: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.modal__content {
+    width: 600px;
+    text-align: center;
+    user-select: text !important;
+    cursor: auto;
+    padding: 20px;
+}
+.modal{
+    justify-content: center;
+    display: flex;
+    background-color: white;
+    border-radius: 20px;
+    max-height: 100%;
+    overflow-y: auto !important;
+}
+#stolovay{
+    grid-template-columns: 23ch auto !important;
+}
+#activeAnimation {
+    animation: an 0.3s ease !important;
+}
+@media screen and (max-height: 504px){
+    .rasp{
+        padding-bottom: 10px;
+    }
+}
+@media screen and (max-width: 640px){
+    .modal{
+        width: 100%; /* Модальное окно на всю ширину становится */
+        border-radius: 20px 20px 0 0; /* Закругленные углы снизу исчезают*/
+    }
+    .modal__content {
+        padding: 10px; /* Отступ уменьшается */
+    }
+    .rasp .tr1 {
+        grid-template-columns: 6ch auto; /* Схема таблицы становится меньше */
+    }
+    #stolovay{
+        grid-template-columns: 11ch auto !important;
+    }
+    .r100{
+        padding-left: 5px; /* Отступ уменьшается */
+    }
+    #main{
+        font-size: 15px; /* Шрифт становится меньше */
+    }
+    .lessDec{
+        display: none; /* Элемент исчезает*/
+    }
+}
+@media screen and (max-width: 460px) {
+    #main{
+        font-size: 20px;
+    }
+    .t2{
+        font-size: 13px;
+    }
+}
+@media screen and (max-width: 460px){
+    #main{
+        font-size: 18px;
+    }
+    .t2{
+        font-size: 13px;
+        padding-left: 2px;
+    }
+    .span{
+        justify-content: flex-start;
+
+    }
+}
+@media screen and (max-width: 320px){
+   .t3{
+       display: none;
+   }
+    #main{
+        font-size: 16px;
+    }
+    .t2{
+        font-size: 12px;
+    }
+}
+@keyframes an {
+    from {
+        transform: translateY(200px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}

@@ -1,0 +1,118 @@
+.evacuation-wrapper{
+    z-index: 1;
+}
+.EvRulesButton{
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    background-color: #B3FAFF;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.EvRulesButton{
+    background-color: rgba(179, 250, 255, 0.72);
+}
+.Rules{
+    background-color: rgba(0, 0, 0, 0.29);
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+}
+.x{
+     position: absolute;
+     top: -10px;
+     right: 25px;
+     font-size: 100px;
+     z-index: 9999;
+     font-family: "grafity";
+ }
+.textContent{
+
+}
+.RulesWrapper{
+    width: 1170px;
+    background-color: rgba(255, 255, 255, 1) !important;
+    overflow-y: auto;
+    padding: 20px;
+    user-select: text !important;
+}
+.RulesWrapper h1{
+    text-align: center;
+    font-size: 60px;
+}
+.RulesWrapper img{
+    user-select: none;
+}
+.RulesWrapper h2{
+    text-align: center;
+}
+.x:hover{
+    color: rgba(0,0,0,0.68);
+    cursor: pointer;
+}
+.image{
+    height: 480px;
+    z-index: 99 !important;
+    width: 640px;
+    position: absolute !important;
+    top: 0px;
+    left: 0px;
+}
+.evacuationWrapper .evacuation{
+    z-index: auto;
+    height: 18px;
+    width: auto;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(255, 255, 255, 0.18);
+    border-radius: 5px;
+}
+/*.evacuation-wrapper .evacuation:hover{*/
+/*    animation: scale 2s;*/
+/*}*/
+
+.ActiveEvacuationButton{
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    background-color: rgb(20, 255, 0);
+    border-radius: 10px;
+    cursor: pointer;
+}
+.ActiveEvacuationButton:hover{
+    background-color: rgba(20, 255, 0, 0.92);
+}
+
+.EvacuationButton{
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    background-color: #B3FAFF;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.EvacuationButton:hover{
+    background-color: rgba(179, 250, 255, 0.72);
+}
+@media screen and (max-width: 350px){
+    .x{
+        font-size: 70px;
+    }
+}
+@keyframes scale {
+    0%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(1.5);
+    }
+}

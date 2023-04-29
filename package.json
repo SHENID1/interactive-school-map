@@ -16,7 +16,8 @@
     "react-native": "0.71.7",
     "react-native-movable-view": "^1.0.3",
     "react-native-svg": "13.4.0",
-    "react-native-web": "~0.18.11"
+    "react-native-web": "~0.18.11",
+    "styled-components": "^5.3.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
