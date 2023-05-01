@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import cl from "./evacuation.module.css";
 import EvacuationButton from "./evacuationButton";
 import im from "../../images/icons/mchs-logo.jpg"
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const ApiUrl = window.location.origin.slice(0, -5) + ":5000";
+export const ApiUrl = "http://212.109.199.246" + ":5000";
 
 
 const $api = axios.create({

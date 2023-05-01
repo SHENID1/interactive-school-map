@@ -1,5 +1,4 @@
 import React, {useRef, useState} from 'react';
-import classes from "./timetable.module.css";
 import RaspTable from "./rasptable";
 import {Carousel, Select, Modal} from "antd";
 import Data from "../../api/getData"

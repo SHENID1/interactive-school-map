@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react';
-import "./search.css";
 import {Fl} from "../../context/fl";
 
 const searchEngine = (props, searchQuery) => {

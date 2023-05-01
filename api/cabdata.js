@@ -1,7 +1,7 @@
 import axios from "axios";
 import Data from "./getData";
-import {PlusOutlined} from "@ant-design/icons";
 import {ApiUrl} from "./index";
+
 export default class CabData{
     static async getCabDataByFloor(floor){
         try{

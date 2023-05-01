@@ -2,6 +2,7 @@ import {makeAutoObservable} from "mobx";
 import AuthService from "../api/auth/AuthService";
 import axios from "axios";
 import {ApiUrl} from "../api";
+import SyncStorage from 'sync-storage';
 
 export default class Store {
     user = {};
@@ -24,12 +25,12 @@ export default class Store {
             const response = await AuthService.login(login, password);
 
             if (!remember) {
-                localStorage.setItem('remember', 0);
+                SyncStorage.set('remember', 0);
             }
             if (remember) {
-                localStorage.removeItem('remember');
+                SyncStorage.remove('remember');
             }
-            localStorage.setItem('token', response.data.accessToken);
+            SyncStorage.set('token', response.data.accessToken);
             this.setAuth(true)
             this.setUser(response.data.user)
         }
@@ -40,8 +41,8 @@ export default class Store {
     async logout()  {
         try{
             await AuthService.logout();
-            localStorage.removeItem('token');
-            localStorage.removeItem('remember')
+            SyncStorage.remove('token');
+            SyncStorage.remove('remember')
             this.setAuth(false)
             this.setUser({})
         }
@@ -53,7 +54,7 @@ export default class Store {
         try{
             const response = await axios.get(`${ApiUrl}/auth/refresh`, {withCredentials: true})
             // console.log(response)
-            localStorage.setItem('token', response.data.accessToken);
+            SyncStorage.set('token', response.data.accessToken);
             this.setAuth(true)
             this.setUser(response.data.user)
         }

@@ -1,5 +1,4 @@
 import React, {useContext, useEffect} from 'react';
-import './ModalInfo.css';
 import {Fl} from "../../context/fl";
 import Data from "../../api/getData"
 import Timetable from "../../api/timetable";

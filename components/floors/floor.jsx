@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import CabList from "./UI/cabList";
 import PolygonX from "./UI/PolygonX";
 import {Fl} from "../../context/fl";
@@ -14,7 +14,6 @@ const Floor = (props) => {
     const [vectorXY, setVectorXY] = useState(0) // сохранение старого вектора для увеличения на устройствах с тачпадом
     const img = require(`../../images/floor/${props.num}.png`); // получение ссылки на изображение
     const {floor} = useContext(Fl); // получаем номер текущего этажа из глобально стейта
-    const map = useRef();
     let translateBorder = [(window.innerWidth / 2) - 322, (window.innerHeight / 2) - 241]; // граница карты
     if (translateBorder[0] < 0 || translateBorder[1] < 0) translateBorder = [240, 220]; // граница карты
     // const translateBorder = [638, 229]; // граница карты
@@ -41,23 +40,7 @@ const Floor = (props) => {
     useEffect(() => {
         setScale(1); // обнуление масштабировании при переходе на другой этаж
     }, [floor])
-    const onWheel = (y) => {
-        // прокрутка колесиком мыши
-        if (y > 0) { // - уменьшение
-            if (scale > 0) {
-                let b = scale + parseFloat(`-0.${y}`)
-                if (b <= 0.8) setScale(0.6);
-                else setScale(b);
-            }
-        }
-        if (y < 0) { // + увеличение
-            if (scale < 5) {
-                let b = scale + parseFloat(`0.${-y}`)
-                if (b >= 4) setScale(4);
-                else setScale(b);
-            }
-        }
-    }
+    
     const translateMap = (ev) => {
         if (isPressed) {
             let newXY = [ev.clientX, ev.clientY]; // новый координаты
@@ -121,16 +104,10 @@ const Floor = (props) => {
     return (
         <div
             className={[props.used ? "floor_is_used" : "", isPressed ? "pressed" : "", 'floor'].join(' ')}
-            onWheel={(e) => onWheel(e.deltaY)}
-            onMouseDown={(e) => mouseDown(e)}
-            onMouseUp={() => mouseUp()}
-            onMouseMove={(e) => translateMap(e)}
-            onTouchStart={(e) => mouseDown(e)}
             onTouchMove={(e) => translateMap(e)}
-            onTouchEnd={() => mouseUp()}
         >
-            <div className="wrapper" id="wrapper" ref={map}
-                 style={{transform: `scale(${scale}) translate(${translateXY[0]}px, ${translateXY[1]}px)`}}>
+            <WrapperView
+                 style={{transform: `scale(${scale})`}}>
                 <EvacuationST st={true} />
                 <img src={img} alt=""></img>
                 <svg>
@@ -140,9 +117,15 @@ const Floor = (props) => {
                     )}
                 </svg>
                 <CabList List={props.cabData} mo={get_mo} HoverTo={hoverTo} HoverFrom={hoverOut}/>
-            </div>
+            </WrapperView>
         </div>
     );
 };
 
 export default Floor;
+
+const WrapperView = styled.View`
+    position: relative;
+    height: 482px;
+    width: 645px;
+`;
