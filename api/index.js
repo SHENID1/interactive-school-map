@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const ApiUrl = "http://212.109.199.246" + ":5000";
+export const ApiUrl = "https://pro.rezraf.com/shenid_api";
 
 
 const $api = axios.create({
@@ -19,7 +19,7 @@ $api.interceptors.response.use((config) => {
     if (error.response.status === 401 && error.config && !error.config._isRetry) {
         originalRequests._isRetry = true;
         try {
-            const response = await axios.get(`${ApiUrl}/refresh`, {withCredentials: true});
+            const response = await axios.get(`${ApiUrl}refresh`, {withCredentials: true});
             localStorage.setItem('token', response.data.accessToken)
             return $api.request(originalRequests);
         }

@@ -5,7 +5,7 @@ import {ApiUrl} from "./index";
 export default class CabData{
     static async getCabDataByFloor(floor){
         try{
-            const response = await axios.get(`${ApiUrl}/api/cabdata/${floor}`);
+            const response = await axios.get(`${ApiUrl}api/cabdata/${floor}`);
             if (response.data === undefined) return ErrorEvent;
             return response.data;
         }

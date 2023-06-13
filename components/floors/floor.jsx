@@ -3,7 +3,30 @@ import CabList from "./UI/cabList";
 import PolygonX from "./UI/PolygonX";
 import {Fl} from "../../context/fl";
 import EvacuationST from "../evacuation/evacuationst";
+import {StyleSheet, View, Image} from "react-native";
+import floor_1 from '../../images/floor/-1.png';
+import floor1 from '../../images/floor/1.png';
+import floor2 from '../../images/floor/2.png';
+import floor3 from '../../images/floor/3.png';
+import floor4 from '../../images/floor/4.png';
+import Map from "../floor/map";
+import {Svg} from "react-native-svg"
 
+function getFloor(props) {
+    let floorImage;
+    if (props.num === 1) {
+        floorImage = floor1;
+    } else if (props.num === 2) {
+        floorImage = floor2;
+    } else if (props.num === 3) {
+        floorImage = floor3;
+    } else if (props.num === -1) {
+        floorImage = floor_1;
+    } else if (props.num === 4) {
+        floorImage = floor4;
+    }
+    return floorImage;
+}
 
 const Floor = (props) => {
     const [hoverCab, setHoverCab] = useState("None"); // для привязки к выделению svg полигона и надписи выше нее
@@ -12,7 +35,14 @@ const Floor = (props) => {
     const [beforeXY, setBeforeXY] = useState([]); // сохрание старых координат для получения траектории
     const [translateXY, setTranslateXY] = useState([0, 0]); // тут хранятся координаты для перетаскивания карты
     const [vectorXY, setVectorXY] = useState(0) // сохранение старого вектора для увеличения на устройствах с тачпадом
-    const img = require(`../../images/floor/${props.num}.png`); // получение ссылки на изображение
+    let img;
+    if (props.num){
+        img = getFloor(props); // получение ссылки на изображение
+    }
+    else{
+        img = require(`../../images/floor/1.png`); // получение ссылки на изображение
+    }
+
     const {floor} = useContext(Fl); // получаем номер текущего этажа из глобально стейта
     let translateBorder = [(window.innerWidth / 2) - 322, (window.innerHeight / 2) - 241]; // граница карты
     if (translateBorder[0] < 0 || translateBorder[1] < 0) translateBorder = [240, 220]; // граница карты
@@ -102,30 +132,47 @@ const Floor = (props) => {
     }
 
     return (
-        <div
-            className={[props.used ? "floor_is_used" : "", isPressed ? "pressed" : "", 'floor'].join(' ')}
+        <View
+            style={[props.used ? styles.floor_is_used : "", isPressed ? styles.pressed : "", styles.floor]}
             onTouchMove={(e) => translateMap(e)}
         >
-            <WrapperView
+            <View
                  style={{transform: `scale(${scale})`}}>
-                <EvacuationST st={true} />
-                <img src={img} alt=""></img>
-                <svg>
+                {/*<EvacuationST st={true} />*/}
+                <Image source={img} alt=""></Image>
+                <Svg>
                     {props.SchemeData.map(el =>
                         <PolygonX key={el.id} isHover={hoverCab === el.id} dataId={el.id} List={props.cabData}
                                   mo={get_mo} points={el.points}></PolygonX>
                     )}
-                </svg>
+                </Svg>
                 <CabList List={props.cabData} mo={get_mo} HoverTo={hoverTo} HoverFrom={hoverOut}/>
-            </WrapperView>
-        </div>
+            </View>
+        </View>
+        // <Map/>
     );
 };
 
 export default Floor;
 
-const WrapperView = styled.View`
-    position: relative;
-    height: 482px;
-    width: 645px;
-`;
+const styles = StyleSheet.create({
+    wrapper: {
+        position: "relative",
+        height: 482,
+        width: 645,
+    },
+    floor_is_used: {
+        display: "flex"
+    },
+    pressed: {
+        cursor: "grabbing"
+    },
+    floor: {
+        userSelect: "none",
+        display: "none",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%",
+        width: "100%"
+    }
+})

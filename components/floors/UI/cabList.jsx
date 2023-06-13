@@ -1,4 +1,5 @@
 import React from 'react';
+import {View, StyleSheet, Text, Image} from "react-native";
 
 
 const CabList = ({List, HoverTo, HoverFrom, mo}) => {
@@ -6,21 +7,35 @@ const CabList = ({List, HoverTo, HoverFrom, mo}) => {
     const woman = require("../../../images/icons/women_wc.png");
     const dressing_room = require("../../../images/icons/icon-dressing-room.png");
     return (
-        <div>
+        <View>
 
             {List.map(cab =>
-                <div key={cab.id} onClick={()=> mo(cab)} data-id={cab.id} className="cabName" style={{top: cab.top , left: cab.left, fontSize: cab.fontsize}} onMouseOver={()=> HoverTo(cab.id)}
+                <View key={cab.id} onClick={()=> mo(cab)} style={{top: cab.top , left: cab.left, fontSize: cab.fontsize + styles.cabName}} onMouseOver={()=> HoverTo(cab.id)}
                      onMouseOut={()=> HoverFrom()}>
                     {cab.name === "WC"?
-                        <img height={cab.fontsize} width={cab.fontsize} src={cab.pol === "мужской"?man:woman} alt={cab.name}/>
+                        <Image height={cab.fontsize} width={cab.fontsize} source={cab.pol === "мужской"?man:woman} alt={cab.name}/>
                         :cab.name === "DR"?
-                            <img height={cab.fontsize} width={cab.fontsize} src={dressing_room} alt={cab.name}/>
-                         :cab.name //+ "(" + cab.id + ")"
+                            <Image height={cab.fontsize} width={cab.fontsize} source={dressing_room} alt={cab.name}/>
+                         :<Text>cab.name</Text> //+ "(" + cab.id + ")"
                     }
-                </div>
+                </View>
             )}
-        </div>
+        </View>
     );
 };
 
 export default CabList;
+
+const styles = StyleSheet.create({
+    cabName: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "black",
+        position: "absolute",
+        borderRadius: 3,
+        top: 0,
+        left: 0,
+        zIndex: 3,
+        cursor: "pointer",
+    }
+})

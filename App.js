@@ -1,19 +1,26 @@
-//import FButton from "./components/f_button";
 import React, {useEffect, useState} from "react";
-//import ModalInfo from "./components/ModalInfo/ModalInfo";
-import Floor from "./components/floors/floor";
-//import Search from "./components/search/search";
 import {Fl} from "./context/fl";
 import {Ev} from "./context/ev";
-//import Timetable from "./components/timetable/timetable";
 import MainLoader from "./components/mainloader/main_loader";
 import Load from "./api/load";
-import Data from "./api/getData"
 import {Platform, StatusBar, StyleSheet, View} from "react-native"
-//import Evacuation from "./components/evacuation/evacuation";
 import SyncStorage from 'sync-storage';
+import Data from "./api/getData"
+import FButton from "./components/f_button";
+import {Text} from "react-native";
+import Floor from "./components/floors/floor";
+//import ModalInfo from "./components/ModalInfo/ModalInfo";
+//import Search from "./components/search/search";
+//import Timetable from "./components/timetable/timetable";
+//import Evacuation from "./components/evacuation/evacuation";
+import { useFonts } from 'expo-font';
+
 
 function App() {
+    const [loaded] = useFonts({
+        Montserrat: require('./assets/fonts/Montserrat.ttf'),
+    });
+
 
     // imports database
     const dataFour = Data.getData('CabDataFour');
@@ -27,6 +34,8 @@ function App() {
     const dataSchemeTwo = Data.getData('SchemeTwo');
     const dataSchemeOne = Data.getData('SchemeOne');
     const dataSchemeMOne = Data.getData('SchemeMOne');
+
+
     const [modalActive, setModalActive] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -77,28 +86,28 @@ function App() {
             <Ev.Provider value={{
                 isVisible, setIsVisible
             }}>
-            <View styles={style.App}>
-                {/*<div className={"map"} id="map">*/}
-                {/*    <Search data={allData} editFloor={editFloor} modal_object={modal_object} fl={floor}/>*/}
-                {/*    <div className="rightContainer">*/}
-                {/*        <FButton starting_floor={floor} edit={editFloor}></FButton>*/}
-                {/*        <Timetable modal_object={modal_object}/>*/}
-                {/*        <Evacuation/>*/}
-                {/*    </div>*/}
-                {/*    <div className="floors">*/}
-                {/*        <Floor num="4" used={floor === 4} cabData={dataFour} SchemeData={dataSchemeFour}*/}
-                {/*               mo={modal_object}></Floor>*/}
-                {/*        <Floor num="3" used={floor === 3} cabData={dataThree} SchemeData={dataSchemeThree}*/}
-                {/*               mo={modal_object}></Floor>*/}
-                {/*        <Floor num="2" used={floor === 2} cabData={dataTwo} SchemeData={dataSchemeTwo}*/}
-                {/*               mo={modal_object}></Floor>*/}
-                {/*        <Floor num="1" used={floor === 1} cabData={dataOne} SchemeData={dataSchemeOne}*/}
-                {/*               mo={modal_object}></Floor>*/}
-                {/*        <Floor num="-1" used={floor === -1} cabData={dataMOne} SchemeData={dataSchemeMOne}*/}
-                {/*               mo={modal_object}></Floor>*/}
-                {/*    </div>*/}
-                {/*    <ModalInfo active={modalActive} sma={sma} dataObj={ModalObg}/>*/}
-                {/*</div>*/}
+            <View style={style.App}>
+                    {/*<Search data={allData} editFloor={editFloor} modal_object={modal_object} fl={floor}/>*/}
+                    <View style={style.RightContainer}>
+                        <FButton starting_floor={floor} edit={editFloor}></FButton>
+                        {/*<Timetable modal_object={modal_object}/>*/}
+                        {/*<Evacuation/>*/}
+                    </View>
+                    <Text style={style.text}>{floor}</Text>
+                    <View style={{backgroundColor: "#f2f3da94"}}>
+                        <Floor num="4" used={floor === 4} cabData={dataFour} SchemeData={dataSchemeFour}
+                               mo={modal_object}></Floor>
+                        <Floor num="3" used={floor === 3} cabData={dataThree} SchemeData={dataSchemeThree}
+                               mo={modal_object}></Floor>
+                        <Floor num="2" used={floor === 2} cabData={dataTwo} SchemeData={dataSchemeTwo}
+                               mo={modal_object}></Floor>
+                        <Floor num="1" used={floor === 1} cabData={dataOne} SchemeData={dataSchemeOne}
+                               mo={modal_object}></Floor>
+                        <Floor num="-1" used={floor === -1} cabData={dataMOne} SchemeData={dataSchemeMOne}
+                               mo={modal_object}></Floor>
+                    </View>
+                    {/*<ModalInfo active={modalActive} sma={sma} dataObj={ModalObg}/>*/}
+
             </View>
             </Ev.Provider>
         </Fl.Provider>
@@ -110,6 +119,20 @@ export default App;
 const style = StyleSheet.create({
     App: {
         flex: 1,
-        marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
-    }
+        marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        backgroundColor: "#f2f3da",
+        fontFamily: "Montserrat"
+    },
+    RightContainer: {
+        zIndex: 100,
+        position: "absolute",
+        top: 15,
+        right: 0,
+        height: "auto",
+        width: "auto",
+    },
+    text: {
+        fontSize:25,
+
+    },
 });
