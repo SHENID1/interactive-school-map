@@ -4,26 +4,21 @@ import PolygonX from "./UI/PolygonX";
 import {Fl} from "../../context/fl";
 import EvacuationST from "../evacuation/evacuationst";
 import {StyleSheet, View, Image} from "react-native";
-import floor_1 from '../../images/floor/-1.png';
-import floor1 from '../../images/floor/1.png';
-import floor2 from '../../images/floor/2.png';
-import floor3 from '../../images/floor/3.png';
-import floor4 from '../../images/floor/4.png';
 import Map from "../floor/map";
 import {Svg} from "react-native-svg"
-
+import MovableView from "react-native-movable-view";
 function getFloor(props) {
     let floorImage;
-    if (props.num === 1) {
-        floorImage = floor1;
-    } else if (props.num === 2) {
-        floorImage = floor2;
-    } else if (props.num === 3) {
-        floorImage = floor3;
-    } else if (props.num === -1) {
-        floorImage = floor_1;
-    } else if (props.num === 4) {
-        floorImage = floor4;
+    if (props.num === "1") {
+        floorImage = require('../../images/floor/1.png');
+    } else if (props.num === "2") {
+        floorImage = require('../../images/floor/2.png');
+    } else if (props.num === "3") {
+        floorImage = require('../../images/floor/3.png');
+    } else if (props.num === "-1") {
+        floorImage = require('../../images/floor/-1.png');
+    } else if (props.num === "4") {
+        floorImage = require('../../images/floor/4.png');
     }
     return floorImage;
 }
@@ -42,7 +37,7 @@ const Floor = (props) => {
     else{
         img = require(`../../images/floor/1.png`); // получение ссылки на изображение
     }
-
+    // console.log(img)
     const {floor} = useContext(Fl); // получаем номер текущего этажа из глобально стейта
     let translateBorder = [(window.innerWidth / 2) - 322, (window.innerHeight / 2) - 241]; // граница карты
     if (translateBorder[0] < 0 || translateBorder[1] < 0) translateBorder = [240, 220]; // граница карты
@@ -133,21 +128,23 @@ const Floor = (props) => {
 
     return (
         <View
-            style={[props.used ? styles.floor_is_used : "", isPressed ? styles.pressed : "", styles.floor]}
-            onTouchMove={(e) => translateMap(e)}
+            style={[props.used ? styles.floor_is_used : {display: "none"}, isPressed ? styles.pressed : {}, styles.floor]}
+            // onTouchMove={(e) => translateMap(e)}
         >
-            <View
-                 style={{transform: `scale(${scale})`}}>
-                {/*<EvacuationST st={true} />*/}
-                <Image source={img} alt=""></Image>
-                <Svg>
-                    {props.SchemeData.map(el =>
-                        <PolygonX key={el.id} isHover={hoverCab === el.id} dataId={el.id} List={props.cabData}
-                                  mo={get_mo} points={el.points}></PolygonX>
-                    )}
-                </Svg>
-                <CabList List={props.cabData} mo={get_mo} HoverTo={hoverTo} HoverFrom={hoverOut}/>
-            </View>
+            <MovableView>
+                <View
+                     style={styles.wrapper}>
+                    <EvacuationST/>
+                    <Image source={img} alt=""></Image>
+                    <Svg style={styles.svg}>
+                        {props.SchemeData.map(el =>
+                            <PolygonX key={el.id} isHover={hoverCab === el.id} dataId={el.id} List={props.cabData}
+                                      mo={get_mo} points={el.points}></PolygonX>
+                        )}
+                    </Svg>
+                    <CabList List={props.cabData} mo={get_mo} HoverTo={hoverTo} HoverFrom={hoverOut}/>
+                </View>
+            </MovableView>
         </View>
         // <Map/>
     );
@@ -161,6 +158,15 @@ const styles = StyleSheet.create({
         height: 482,
         width: 645,
     },
+    svg: {
+        zIndex: 1,
+        height: 482,
+        width: 645,
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+    },
     floor_is_used: {
         display: "flex"
     },
@@ -168,8 +174,6 @@ const styles = StyleSheet.create({
         cursor: "grabbing"
     },
     floor: {
-        userSelect: "none",
-        display: "none",
         justifyContent: "center",
         alignItems: "center",
         height: "100%",

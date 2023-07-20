@@ -7,13 +7,12 @@ import {Platform, StatusBar, StyleSheet, View} from "react-native"
 import SyncStorage from 'sync-storage';
 import Data from "./api/getData"
 import FButton from "./components/f_button";
-import {Text} from "react-native";
 import Floor from "./components/floors/floor";
-//import ModalInfo from "./components/ModalInfo/ModalInfo";
-//import Search from "./components/search/search";
+import ModalInfo from "./components/ModalInfo/ModalInfo";
+import Search from "./components/search/search";
 //import Timetable from "./components/timetable/timetable";
-//import Evacuation from "./components/evacuation/evacuation";
-import { useFonts } from 'expo-font';
+import Evacuation from "./components/evacuation/evacuation";
+import {useFonts} from 'expo-font';
 
 
 function App() {
@@ -44,14 +43,14 @@ function App() {
     }
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(()=>{
+    useEffect(() => {
         (Load.loadData().then((v) => {
             if (v) setIsLoading(false)
-        }, (e) =>{
+        }, (e) => {
             alert(e)
         }))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [isLoading])
+    }, [isLoading])
     const [ModalObg, setModalObj] = useState(null);
 
     // создаем состояние floor и функцию обновления состояния setFloor
@@ -86,29 +85,27 @@ function App() {
             <Ev.Provider value={{
                 isVisible, setIsVisible
             }}>
-            <View style={style.App}>
-                    {/*<Search data={allData} editFloor={editFloor} modal_object={modal_object} fl={floor}/>*/}
-                    <View style={style.RightContainer}>
-                        <FButton starting_floor={floor} edit={editFloor}></FButton>
+                <View style={styles.App}>
+                    <Search data={allData} editFloor={editFloor} modal_object={modal_object} fl={floor}/>
+                    <View style={styles.RightContainer}>
+                        <FButton starting_floor={floor} edit={editFloor}/>
                         {/*<Timetable modal_object={modal_object}/>*/}
-                        {/*<Evacuation/>*/}
+                        <Evacuation/>
                     </View>
-                    <Text style={style.text}>{floor}</Text>
                     <View style={{backgroundColor: "#f2f3da94"}}>
                         <Floor num="4" used={floor === 4} cabData={dataFour} SchemeData={dataSchemeFour}
-                               mo={modal_object}></Floor>
+                               mo={modal_object}/>
                         <Floor num="3" used={floor === 3} cabData={dataThree} SchemeData={dataSchemeThree}
-                               mo={modal_object}></Floor>
+                               mo={modal_object}/>
                         <Floor num="2" used={floor === 2} cabData={dataTwo} SchemeData={dataSchemeTwo}
-                               mo={modal_object}></Floor>
+                               mo={modal_object}/>
                         <Floor num="1" used={floor === 1} cabData={dataOne} SchemeData={dataSchemeOne}
-                               mo={modal_object}></Floor>
+                               mo={modal_object}/>
                         <Floor num="-1" used={floor === -1} cabData={dataMOne} SchemeData={dataSchemeMOne}
-                               mo={modal_object}></Floor>
+                               mo={modal_object}/>
                     </View>
-                    {/*<ModalInfo active={modalActive} sma={sma} dataObj={ModalObg}/>*/}
-
-            </View>
+                    <ModalInfo active={modalActive} sma={sma} dataObj={ModalObg}/>
+                </View>
             </Ev.Provider>
         </Fl.Provider>
     );
@@ -116,23 +113,22 @@ function App() {
 
 export default App;
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     App: {
         flex: 1,
         marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
         backgroundColor: "#f2f3da",
-        fontFamily: "Montserrat"
+            // fontFamily: "Montserrat"
     },
     RightContainer: {
         zIndex: 100,
         position: "absolute",
-        top: 15,
+        top: 15 + StatusBar.currentHeight,
         right: 0,
-        height: "auto",
-        width: "auto",
+        height: 370,
+        width: 50,
     },
     text: {
-        fontSize:25,
-
+        fontSize: 25,
     },
 });

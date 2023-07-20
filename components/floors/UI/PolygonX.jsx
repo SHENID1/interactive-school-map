@@ -1,14 +1,12 @@
 import React from 'react';
 import {Polygon} from "react-native-svg"
-import {TouchableOpacity, StyleSheet} from "react-native";
+import {StyleSheet} from "react-native";
 
 const PolygonX = ({dataId, points, isHover, List, mo}) => {
     let obj = List.find(el => el.id === Number(dataId));
 
     return (
-        <TouchableOpacity onPush={() => mo(obj)}>
-            <Polygon style={isHover ? styles.cabHover : " "} points={points} fill={"#ffdba478"}></Polygon>
-        </TouchableOpacity>
+            <Polygon onPress={() => mo(obj)} style={isHover ? styles.cabHover : {}} points={points} fill={isHover ? "#ffc60b9d" : "#ffdba478"}></Polygon>
     );
 };
 
@@ -19,3 +17,4 @@ const styles = StyleSheet.create({
 
     }
 })
+//onPush={() => mo(obj)}

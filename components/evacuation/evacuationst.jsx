@@ -1,13 +1,11 @@
 import React, {useContext} from 'react';
 import {Ev} from "../../context/ev";
 import {Fl} from "../../context/fl";
-import Str1fl from "../../images/icons/стрелки 1 этажа_Монтажная область 1.svg"
-import StrM1fl from "../../images/icons/-1 str_Монтажная область 1.svg"
-import Str2fl from "../../images/icons/2 str_Монтажная область 1.svg"
-import Str34fl from "../../images/icons/3 str_Монтажная область 1.svg"
-import styled from "styled-components"
-import {StyleSheet, Image} from "react-native";
-import {View} from "react-native-web";
+import Str1fl from "../../images/EvacuationST/1.png";
+import StrM1fl from "../../images/EvacuationST/-1.png";
+import Str2fl from "../../images/EvacuationST/2.png";
+import Str34fl from "../../images/EvacuationST/34.png";
+import {StyleSheet, Image, View} from "react-native";
 
 const EvacuationST = () => {
 
@@ -15,28 +13,28 @@ const EvacuationST = () => {
     const {isVisible} = useContext(Ev);
 
     return (
-        <View styles={isVisible ? {} : {display : "none"} + cl.evacuationWrapper}>
-            {floor === 1?   <ImageView src={Str1fl}  alt="" />: <></>}
-            {floor === -1?  <ImageView src={StrM1fl} alt="" />: <></>}
-            {floor === 2?   <ImageView src={Str2fl}  alt="" />: <></>}
-            {floor === 3?   <ImageView src={Str34fl} alt="" />: <></>}
-            {floor === 4?   <ImageView src={Str34fl} alt="" />: <></>}
+        <View style={!isVisible ? {display : "none"} : styles.evacuationWrapper}>
+            {floor === 1  ?   <Image source={Str1fl}  alt="" style={styles.image} />: <></>}
+            {floor === -1 ?   <Image source={StrM1fl} alt="" style={styles.image} />: <></>}
+            {floor === 2  ?   <Image source={Str2fl}  alt="" style={styles.image} />: <></>}
+            {floor === 3  ?   <Image source={Str34fl} alt="" style={styles.image} />: <></>}
+            {floor === 4  ?   <Image source={Str34fl} alt="" style={styles.image} />: <></>}
         </View>
     );
 };
 
 export default EvacuationST;
 
-const ImageView = styled.Image`
-  height: 480px;
-  z-index: 99 !important;
-  width: 640px;
-  position: absolute !important;
-  top: 0px;
-  left: 0px;
-`;
-const cl = StyleSheet.create({
+const styles = StyleSheet.create({
     evacuationWrapper: {
-        zIndex: 1
-    }
+        zIndex: 4
+    },
+    image: {
+        height: 480,
+        zIndex: 1,
+        width: 640,
+        position: "absolute",
+        top: 0,
+        left: 0,
+    },
 });

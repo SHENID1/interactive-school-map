@@ -1,6 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState, useRef} from 'react';
 import {Fl} from "../../context/fl";
+import {View, TextInput, StyleSheet, Text, Button, TouchableWithoutFeedback} from "react-native";
 
+const e = () => {}
 const searchEngine = (props, searchQuery) => {
     const list = [];
     if (searchQuery === "") {
@@ -44,6 +46,7 @@ const Search = (props) => {
     const [hintMenu, setHintMenu] = useState([]);
     const [selHInt, setSelHInt] = useState(0);
     const [hintVisibility, setHintVisibility] = useState(false);
+    const inputRef =  useRef();
     useEffect(
         () => {
             if (searchQuery === "") return setHintMenu([]);
@@ -58,6 +61,7 @@ const Search = (props) => {
         if (searchQuery === "") return;
         if (!obj) {
             if (hintMenu === []) return;
+            inputRef.current.blur()
             let fl = hintMenu[0].floor;
             if (floor !== fl) {
                 setFloor(fl);
@@ -66,6 +70,7 @@ const Search = (props) => {
             setHintVisibility(false);
         }
         if (obj) {
+            inputRef.current.blur()
             let fl = obj.floor;
             if (fl !== floor) {
                 setFloor(fl);
@@ -94,40 +99,153 @@ const Search = (props) => {
 
     }
     return (
-        <div className={[hintVisibility ? "activeSearch" : "", 'search'].join(' ')}
-             onClick={() => setHintVisibility(false)}>
-            <div className="container">
-                <input
-                    type="text"
+        <TouchableWithoutFeedback onPress={() => {
+            setHintVisibility(false)
+            inputRef.current.blur()
+        }}>
+        <View style={[hintVisibility ? styles.activeSearch : {}, styles.search]}>
+            <TouchableWithoutFeedback onPress={() => setHintVisibility(true)}>
+            <View style={styles.container}>
+
+                <TextInput
+                    inputMode={"text"}
                     value={searchQuery}
-                    onChange={e => {
-                        setSearchQuery(e.target.value);
+                    onChangeText={text => {
+                        setSearchQuery(text);
                         setSelHInt(0);
                     }}
-                    onKeyDown={(e) => checkKey(e)}
+                    blurOnSubmit={true}
+                    onSubmitEditing={() => click(hintMenu[selHInt])}
+                    maxLength={20}
+                    // onKeyDown={(e) => checkKey(e)}
                     placeholder="Поиск..."
                     onFocus={() => setHintVisibility(true)}
-                    onClick={e => e.stopPropagation()}
-                ></input>
-                <button onClick={() => click(hintMenu[selHInt])}/>
-            </div>
-            <div className={hintVisibility ? "hint" : "none"}>
-                <div className="cont">
-                    {hintMenu === [] ? <div className="inputElement">Не найдено</div> : hintMenu.map(obj =>
-                        <div onClick={() => click(obj)}
-                             className={[obj.id === hintMenu[selHInt].id ? "hintIsSelected" : "", "inputElement"].join(' ')}
-                             key={obj.id}>
-                            <div className="m1">{obj.name === "" ? obj.description : obj.name}</div>
-                            <div className="gr">
-                                <div className="m2">{obj.manager.join(' ')}</div>
-                                <div className="m3">{obj.description}</div>
-                            </div>
-                        </div>
+                    ref={inputRef}
+                    style={[hintVisibility ? styles.searchInputFocus : {}, styles.searchInput]}
+                />
+                {/*<Button onPress={() => click(hintMenu[selHInt])} title=""/>*/}
+            </View>
+        </TouchableWithoutFeedback>
+            <View style={hintVisibility ? styles.hint : styles.none}>
+                <View style={styles.cont}>
+                    {hintMenu === [] ? <Text style={styles.inputElement}>Не найдено</Text> : hintMenu.map(obj =>
+                        <TouchableWithoutFeedback key={obj.id} onPress={() => click(obj)}>
+                        <View
+                             style={[obj.id === hintMenu[selHInt].id ? styles.hintIsSelected : {}, styles.inputElement]}
+                             >
+                            <Text style={styles.m1}>{obj.name === "" ? obj.description : obj.name}</Text>
+                            <View style={styles.gr}>
+                                <Text style={styles.m2}>{obj.manager.join(' ')}</Text>
+                                <Text style={styles.m3}>{obj.description}</Text>
+                            </View>
+                        </View>
+                        </TouchableWithoutFeedback>
                     )}
-                </div>
-            </div>
-        </div>
+                </View>
+            </View>
+        </View>
+        </TouchableWithoutFeedback>
     );
 };
 
 export default Search;
+
+const styles = StyleSheet.create({
+    search: {
+        zIndex: 10
+    },
+    m1: {
+        fontWeight: "bold",
+        paddingRight: 5,
+        fontSize: 18,
+    },
+    m2: {
+        fontSize: 14,
+        alignSelf: "flex-start",
+        fontWeight: "bold",
+    },
+    m3: {
+        fontSize: 14,
+        alignSelf: "flex-start",
+        fontWeight: "bold",
+    },
+    gr: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+    },
+    activeSearch: {
+        backgroundColor: "rgba(0, 0, 0, 0.08)",
+        zIndex: 999,
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+    },
+    container: {
+        width: "100%",
+        display: "flex",
+        height: 40,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "white",
+        zIndex: 999,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 5,
+    },
+    searchInput: {
+        width: "95%",
+        height: 30,
+        backgroundColor: "#B3FAFF",
+        borderRadius: 6,
+        fontSize: 23,
+        borderWidth: 1,
+        borderColor: "black",
+        borderStyle: "solid",
+        paddingLeft: 5,
+        paddingRight: 5,
+    },
+    searchInputFocus: {
+        backgroundColor: "#00b3ff8b",
+    },
+    searchContainerButtonActive: {
+        backgroundColor: "rgb(3, 239, 255)",
+    },
+    none: {
+        display: "none",
+    },
+    hint: {
+        height: "auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: 24,
+    },
+    cont: {
+        width: "100%",
+        backgroundColor: "white",
+        borderBottomRightRadius: 20,
+        borderBottomLeftRadius: 20,
+        // transition: all 0.3s,
+        zIndex: 999,
+        overflowX: "hidden",
+        overflowY: "hidden",
+    },
+    inputElement: {
+        // borderTopColor: "rgba(0,0,0,0.32)",
+        // borderTopWidth: 1,
+        height: 40,
+        width: "100%",
+        paddingLeft: 10,
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "row",
+        zIndex: 999,
+        borderStyle: "solid"
+    },
+    hintIsSelected: {
+        backgroundColor: "rgba(0, 0, 0, 0.11)",
+    },
+})
