@@ -10,7 +10,7 @@ import FButton from "./components/f_button";
 import Floor from "./components/floors/floor";
 import ModalInfo from "./components/ModalInfo/ModalInfo";
 import Search from "./components/search/search";
-//import Timetable from "./components/timetable/timetable";
+import Timetable from "./components/timetable/timetable";
 import Evacuation from "./components/evacuation/evacuation";
 import {useFonts} from 'expo-font';
 

@@ -146,4 +146,15 @@ export default class Timetable{
                 return "Не найдено"
         }
     }
+    static compareSl(a, b) {
+        if (a.s[1] > b.s[1]) return -1;
+        if (a.s[1] === b.s[1] && a.s[0] < b.s[0]) return -1;
+        if (a.s[1] === b.s[1] && a.s[0] > b.s[0]) return 1;
+        if (a.s[1] < b.s[1]) return 1;
+
+    }
+    static timeTableSort (table) {
+        table.sort(self.compareSl)
+        return table
+    }
 }
