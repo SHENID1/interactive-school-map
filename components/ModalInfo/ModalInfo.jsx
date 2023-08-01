@@ -73,6 +73,7 @@ const getTimetableDiningRoom = [
         ["6 переменна (14:20 - 14:40)", "Обед (9 - 11)"],
     ]
 
+
 const ModalInfo = (props) => {
     const {floor, setFloor} = useContext(Fl);
     useEffect(() => {

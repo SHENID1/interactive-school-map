@@ -10,7 +10,7 @@ import FButton from "./components/f_button";
 import Floor from "./components/floors/floor";
 import ModalInfo from "./components/ModalInfo/ModalInfo";
 import Search from "./components/search/search";
-import Timetable from "./components/timetable/timetable";
+import TimetableView from "./components/timetable/timetable";
 import Evacuation from "./components/evacuation/evacuation";
 import {useFonts} from 'expo-font';
 
@@ -89,7 +89,7 @@ function App() {
                     <Search data={allData} editFloor={editFloor} modal_object={modal_object} fl={floor}/>
                     <View style={styles.RightContainer}>
                         <FButton starting_floor={floor} edit={editFloor}/>
-                        {/*<Timetable modal_object={modal_object}/>*/}
+                        <TimetableView modal_object={modal_object}/>
                         <Evacuation/>
                     </View>
                     <View style={{backgroundColor: "#f2f3da94"}}>

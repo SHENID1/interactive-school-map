@@ -147,8 +147,7 @@ export default class Timetable{
         }
     }
     static compareSl(a, b) {
-        if (a.s[1] > b.s[1]) return -1;
-        if (a.s[1] === b.s[1] && a.s[0] < b.s[0]) return -1;
+        if ((a.s[1] > b.s[1]) || (a.s[1] === b.s[1] && a.s[0] < b.s[0])) return -1;
         if (a.s[1] === b.s[1] && a.s[0] > b.s[0]) return 1;
         if (a.s[1] < b.s[1]) return 1;
 
@@ -156,5 +155,27 @@ export default class Timetable{
     static timeTableSort (table) {
         table.sort(self.compareSl)
         return table
+    }
+
+    static getCabNum = (id) => {
+        if (!id) return ""
+        const data = [
+            Data.getData('CabDataFour'),
+            Data.getData('CabDataThree'),
+            Data.getData('CabDataTwo'),
+            Data.getData('CabDataOne'),
+            Data.getData('CabDataMOne')
+        ]
+        for (let i = 0; i !== 5; i++) {
+            let floor_data = data[i];
+            for (let d in floor_data) {
+                let h = floor_data[d].id;
+                if (h === id[0]) {
+                    return (floor_data[d].name)
+                }
+            }
+
+        }
+        return "?"
     }
 }
