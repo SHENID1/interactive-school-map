@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@ant-design/react-native": "^5.0.4",
-    "@react-native-camera-roll/camera-roll": "^5.7.2",
     "@react-native-community/segmented-control": "^2.2.2",
     "@react-native-community/slider": "^4.4.2",
     "@react-native-picker/picker": "^2.4.10",
