@@ -1,24 +1,26 @@
 import React from 'react';
-import styled from 'styled-components/native'
-import {ActivityIndicator} from 'react-native';
-import {Text} from "react-native";
+import {ActivityIndicator, View} from 'react-native';
+import {Text, StyleSheet} from "react-native";
 
-const ContainerView = styled.View`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-`
 
 const MainLoader = () => {
     return (
-        <ContainerView>
+        <View style={styles.container}>
             <ActivityIndicator size="large" />
             <Text style={{marginTop: 15}}>Загрузка ...</Text>
-        </ContainerView>
+        </View>
     );
 };
 
 export default MainLoader;
+
+const styles = StyleSheet.create({
+    container: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        height: "100%",
+        position: "absolute",
+    }
+})
