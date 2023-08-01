@@ -12,13 +12,9 @@ import ModalInfo from "./components/ModalInfo/ModalInfo";
 import Search from "./components/search/search";
 import TimetableView from "./components/timetable/timetable";
 import Evacuation from "./components/evacuation/evacuation";
-import {useFonts} from 'expo-font';
 
 
 function App() {
-    const [loaded] = useFonts({
-        Montserrat: require('./assets/fonts/Montserrat.ttf'),
-    });
 
 
     // imports database

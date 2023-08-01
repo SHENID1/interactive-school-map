@@ -15,18 +15,12 @@
   },
   "dependencies": {
     "@ant-design/react-native": "^5.0.4",
-    "@react-native-community/segmented-control": "^2.2.2",
-    "@react-native-community/slider": "^4.4.2",
-    "@react-native-picker/picker": "2.4.8",
     "@rneui/base": "^4.0.0-rc.7",
     "@rneui/themed": "^4.0.0-rc.8",
     "axios": "^1.4.0",
-    "axois": "^0.0.1-security",
-    "babel-plugin-import": "^1.13.6",
     "expo": "~48.0.11",
     "expo-app-loading": "^2.1.1",
     "expo-asset": "^8.9.1",
-    "expo-font": "^11.1.1",
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
@@ -35,7 +29,6 @@
     "react-native-movable-view": "^1.0.3",
     "react-native-svg": "13.4.0",
     "react-native-table-component": "^1.2.2",
-    "react-native-web": "~0.18.11",
     "sync-storage": "^0.4.2"
   },
   "devDependencies": {
