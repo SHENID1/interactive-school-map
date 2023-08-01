@@ -14,7 +14,6 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@ant-design/react-native": "^5.0.4",
     "@rneui/base": "^4.0.0-rc.7",
     "@rneui/themed": "^4.0.0-rc.8",
     "axios": "^1.4.0",
