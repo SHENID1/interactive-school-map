@@ -1,6 +1,6 @@
 {
   "name": "mobileapp",
-  "version": "1.0.0",
+  "version": "0.9.1",
   "main": "node_modules/expo/AppEntry.js",
   "rnpm": {
     "assets": [
@@ -31,7 +31,9 @@
     "sync-storage": "^0.4.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@expo/config-plugins": "^7.2.5",
+    "@expo/prebuild-config": "^6.2.6"
   },
   "resolutions": {
     "@expo/config-plugins": "^4.1.0",
