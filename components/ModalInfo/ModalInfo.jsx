@@ -4,7 +4,6 @@ import Data from "../../api/getData"
 import Timetable from "../../api/timetable";
 import {StyleSheet, Text, View, Image, TouchableWithoutFeedback, ImageBackground} from "react-native";
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
-// import {Drawer} from '@ant-design/react-native';
 
 const e = () => {}
 function getTimeTable(id) {
@@ -125,7 +124,7 @@ const ModalInfo = (props) => {
                 {/*</View>*/}
                 <View style={styles.rasp}>
                     <Table style={styles.table} borderStyle={{ borderWidth: 1, borderColor: 'black'}} >
-                        <Row data={[`Расписание на сегодня (${Timetable.getDay()})`]} style={styles.main} textStyle={styles.textMain}/>
+                        <Row data={[`Расписание на сегодня (${Timetable.getDay()})`]} style={styles.main} textStyle={[styles.textMain]}/>
                         <Rows data={getTimeTable(props.dataObj.id)} textStyle={styles.textTable} widthArr={[165, 225]}/>
                     </Table>
                 </View>
