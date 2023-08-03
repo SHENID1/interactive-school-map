@@ -27,25 +27,25 @@ export default class CabData{
         ]
         switch (dayId) {
             case (0):
-                date = Data.getData('TimetableSunday');
+                date = Data.getDataWithJsonParse('TimetableSunday');
                 break;
             case (1):
-                date = Data.getData('TimetableMonday');
+                date = Data.getDataWithJsonParse('TimetableMonday');
                 break;
             case (2):
-                date = Data.getData('TimetableTuesday');
+                date = Data.getDataWithJsonParse('TimetableTuesday');
                 break;
             case (3):
-                date = Data.getData('TimetableWednesday');
+                date = Data.getDataWithJsonParse('TimetableWednesday');
                 break;
             case (4):
-                date = Data.getData('TimetableThursday');
+                date = Data.getDataWithJsonParse('TimetableThursday');
                 break;
             case (5):
-                date = Data.getData('TimetableFriday');
+                date = Data.getDataWithJsonParse('TimetableFriday');
                 break;
             case (6):
-                date = Data.getData('TimetableSaturday');
+                date = Data.getDataWithJsonParse('TimetableSaturday');
                 break;
             default:
                 return ErrorEvent;
@@ -70,11 +70,11 @@ export default class CabData{
     }
     static getCabDataById = (id) => {
         const data = [
-            Data.getData('CabDataFour'),
-            Data.getData('CabDataThree'),
-            Data.getData('CabDataTwo'),
-            Data.getData('CabDataOne'),
-            Data.getData('CabDataMOne')
+            Data.getDataWithJsonParse('CabDataFour'),
+            Data.getDataWithJsonParse('CabDataThree'),
+            Data.getDataWithJsonParse('CabDataTwo'),
+            Data.getDataWithJsonParse('CabDataOne'),
+            Data.getDataWithJsonParse('CabDataMOne')
         ]
 
         for (let i = 0; i !== 5; i++) {
@@ -103,13 +103,13 @@ export default class CabData{
         }
 
         const DataList = [
-            Data.getData('TimetableSunday'),
-            Data.getData('TimetableMonday'),
-            Data.getData('TimetableTuesday'),
-            Data.getData('TimetableWednesday'),
-            Data.getData('TimetableThursday'),
-            Data.getData('TimetableFriday'),
-            Data.getData('TimetableSaturday')
+            Data.getDataWithJsonParse('TimetableSunday'),
+            Data.getDataWithJsonParse('TimetableMonday'),
+            Data.getDataWithJsonParse('TimetableTuesday'),
+            Data.getDataWithJsonParse('TimetableWednesday'),
+            Data.getDataWithJsonParse('TimetableThursday'),
+            Data.getDataWithJsonParse('TimetableFriday'),
+            Data.getDataWithJsonParse('TimetableSaturday')
         ]
 
         const globalList = [{key: "create", label: "Создать расписание", icon: <PlusOutlined />}]

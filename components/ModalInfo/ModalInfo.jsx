@@ -13,30 +13,30 @@ function getTimeTable(id) {
     let date = {};
     switch (getDay) {
         case (0):
-            date = Data.getData('TimetableSunday')
+            date = Data.getDataWithJsonParse('TimetableSunday')
             break;
         case (1):
-            date = Data.getData('TimetableMonday')
+            date = Data.getDataWithJsonParse('TimetableMonday')
             break;
         case (2):
-            date = Data.getData('TimetableTuesday')
+            date = Data.getDataWithJsonParse('TimetableTuesday')
             break;
         case (3):
-            date = Data.getData('TimetableWednesday')
+            date = Data.getDataWithJsonParse('TimetableWednesday')
             break;
         case (4):
-            date = Data.getData('TimetableThursday')
+            date = Data.getDataWithJsonParse('TimetableThursday')
             break;
         case (5):
-            date = Data.getData('TimetableFriday')
+            date = Data.getDataWithJsonParse('TimetableFriday')
             break;
         case (6):
-            date = Data.getData('TimetableSaturday')
+            date = Data.getDataWithJsonParse('TimetableSaturday')
             break;
         default:
             return ErrorEvent
     }
-    // console.log(date);
+    console.log(date);
     let timeTable = [
         ["1 урок (08:40 - 09:25)", "Не найдено"],
         ["2 урок (09:35 - 10:20)", "Не найдено"],
@@ -74,6 +74,7 @@ const getTimetableDiningRoom = [
 
 
 const ModalInfo = (props) => {
+
     const {floor, setFloor} = useContext(Fl);
     useEffect(() => {
         if (!props.dataObj) return
@@ -86,7 +87,7 @@ const ModalInfo = (props) => {
             </View>
         )
     }
-
+    console.log(props.dataObj)
     let des = props.dataObj.description;
     let numCab = des;
     let teacher = props.dataObj.manager.join(' ');

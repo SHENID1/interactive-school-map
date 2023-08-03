@@ -3,8 +3,8 @@ import {Fl} from "./context/fl";
 import {Ev} from "./context/ev";
 import MainLoader from "./components/mainloader/main_loader";
 import Load from "./api/load";
-import {Platform, StatusBar, StyleSheet, View} from "react-native"
-import SyncStorage from 'sync-storage';
+import {Platform, StatusBar, StyleSheet, View } from "react-native"
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Data from "./api/getData"
 import FButton from "./components/f_button";
 import Floor from "./components/floors/floor";
@@ -12,31 +12,52 @@ import ModalInfo from "./components/ModalInfo/ModalInfo";
 import Search from "./components/search/search";
 import TimetableView from "./components/timetable/timetable";
 import Evacuation from "./components/evacuation/evacuation";
+import SyncStorage from "./api/syncStorage";
 
+const aaa =  () => {
+    try {
+        SyncStorage.set("test", 1)
+        console.log(11133, SyncStorage.get("test"))
+
+        const data = SyncStorage.get("test")
+
+        return data
+    } catch (e) {
+        console.error(e)
+    }
+}
 
 function App() {
-
+    // console.log(aaa())
 
     // imports database
-    const dataFour = Data.getData('CabDataFour');
-    const dataThree = Data.getData('CabDataThree');
-    const dataTwo = Data.getData('CabDataTwo');
-    const dataOne = Data.getData('CabDataOne');
-    const dataMOne = Data.getData('CabDataMOne');
-    const allData = [dataFour, dataThree, dataTwo, dataOne, dataMOne];
-    const dataSchemeFour = Data.getData('SchemeFour');
-    const dataSchemeThree = Data.getData('SchemeThree');
-    const dataSchemeTwo = Data.getData('SchemeTwo');
-    const dataSchemeOne = Data.getData('SchemeOne');
-    const dataSchemeMOne = Data.getData('SchemeMOne');
+    const dataFour = Data.getDataWithJsonParse('CabDataFour');
+    const dataThree= Data.getDataWithJsonParse('CabDataThree');
+    const dataTwo  = Data.getDataWithJsonParse('CabDataTwo');
+    const dataOne  = Data.getDataWithJsonParse('CabDataOne');
+    const dataMOne = Data.getDataWithJsonParse('CabDataMOne');
+    const allData= [dataFour, dataThree, dataTwo, dataOne, dataMOne];
+    const dataSchemeFour  = Data.getDataWithJsonParse('SchemeFour');
+    const dataSchemeThree = Data.getDataWithJsonParse('SchemeThree');
+    const dataSchemeTwo   = Data.getDataWithJsonParse('SchemeTwo');
+    const dataSchemeOne   = Data.getDataWithJsonParse('SchemeOne');
+    const dataSchemeMOne  = Data.getDataWithJsonParse('SchemeMOne');
 
 
     const [modalActive, setModalActive] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+    function checkStarted_floor() {
+        try {
+            if (!Data.getData('started_floor')) {
+                Data.setData('started_floor', "1"); // начальное состояние - 1 этаж
+            }
+        }
+        catch (e) {
+            console.error(e)
+        }
 
-    if (!SyncStorage.get('started_floor')) {
-        SyncStorage.set('started_floor', "1"); // начальное состояние - 1 этаж
     }
+    checkStarted_floor()
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -45,12 +66,13 @@ function App() {
         }, (e) => {
             alert(e)
         }))
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoading])
     const [ModalObg, setModalObj] = useState(null);
 
     // создаем состояние floor и функцию обновления состояния setFloor
-    const [floor, setFloor] = useState(Number(SyncStorage.get('started_floor')));
+    const [floor, setFloor] = useState(Number(Data.getData('started_floor')));
     //                                        ^ берем начальное состояние из локального хранилища на компьютере
 
     const editFloor = (floor) => {
@@ -67,12 +89,16 @@ function App() {
         setModalObj(obj);
     }
 
-    useEffect(() => {
-        SyncStorage.set('started_floor', floor.toString());
+    useEffect( () => {
+        if (!Data.getData('started_floor')) {
+            Data.setData('started_floor', floor.toString());
+        }
         // eslint-disable-next-line
     }, [floor])
 
     if (isLoading) return <MainLoader/>
+    // console.log()
+
     return (
         <Fl.Provider value={{
             floor,

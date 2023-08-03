@@ -15,11 +15,11 @@ export default class Evacuation{
     }
 
     static getEvacuationList(floor){
-        const dataFour = Data.getData('EvacuationFour');
-        const dataThree = Data.getData('EvacuationThree');
-        const dataTwo = Data.getData('EvacuationTwo');
-        const dataOne = Data.getData('EvacuationOne');
-        const dataMOne = Data.getData('EvacuationMOne');
+        const dataFour = Data.getDataWithJsonParse('EvacuationFour');
+        const dataThree = Data.getDataWithJsonParse('EvacuationThree');
+        const dataTwo = Data.getDataWithJsonParse('EvacuationTwo');
+        const dataOne = Data.getDataWithJsonParse('EvacuationOne');
+        const dataMOne = Data.getDataWithJsonParse('EvacuationMOne');
         let data;
         switch (floor){
             case 4:

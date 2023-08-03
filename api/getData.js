@@ -1,13 +1,43 @@
-import SyncStorage from 'sync-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import SyncStorage from "./syncStorage";
 
-export default class Data{
-    static getData(key){
-        const data = SyncStorage.get(key)
+export default class Data {
+    static getDataWithJsonParse(key) {
+        try {
+            const value = SyncStorage.get(key)
+            if (value !== undefined) {
+                //console.log("getData", value);
+                return JSON.parse(value)
+            }
+            return undefined;
 
-        if (data !== undefined){
-            return JSON.parse(data);
+        } catch (e) {
+            console.error(e)
         }
-        return data
+    }
+
+    static getData(key) {
+        try {
+            const value = SyncStorage.get(key)
+            if (value !== null) {
+                //console.log("getData", value);
+                return value;
+            }
+            return undefined;
+        } catch (e) {
+
+        }
+    }
+
+    static setData(key, value) {
+        try {
+            SyncStorage.set(
+                key,
+                value,
+            )
+        } catch (e) {
+            console.error(e)
+        }
     }
 }
 

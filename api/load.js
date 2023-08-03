@@ -2,7 +2,8 @@ import CabData from "./cabdata";
 import Evacuation from "./evacuation";
 import PolygonScheme from "./scheme";
 import Timetable from "./timetable";
-import SyncStorage from 'sync-storage';
+import Data from "./getData";
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default class Load{
 
@@ -14,11 +15,11 @@ export default class Load{
             const CabDataTwo = await CabData.getCabDataByFloor(2);
             const CabDataOne = await CabData.getCabDataByFloor(1);
             const CabDataMOne = await CabData.getCabDataByFloor(-1);
-            SyncStorage.set('CabDataFour', JSON.stringify(CabDataFour));
-            SyncStorage.set('CabDataThree', JSON.stringify(CabDataThree));
-            SyncStorage.set('CabDataTwo', JSON.stringify(CabDataTwo));
-            SyncStorage.set('CabDataOne', JSON.stringify(CabDataOne));
-            SyncStorage.set('CabDataMOne', JSON.stringify(CabDataMOne));
+            await Data.setData('CabDataFour', JSON.stringify(CabDataFour));
+            await Data.setData('CabDataThree', JSON.stringify(CabDataThree));
+            await Data.setData('CabDataTwo', JSON.stringify(CabDataTwo));
+            await Data.setData('CabDataOne', JSON.stringify(CabDataOne));
+            await Data.setData('CabDataMOne', JSON.stringify(CabDataMOne));
 
             //Evacuation
             const EvacuationFour = await Evacuation.getEvacuationByFloor(4);
@@ -26,11 +27,11 @@ export default class Load{
             const EvacuationTwo = await Evacuation.getEvacuationByFloor(2);
             const EvacuationOne = await Evacuation.getEvacuationByFloor(1);
             const EvacuationMOne = await Evacuation.getEvacuationByFloor(-1);
-            SyncStorage.set('EvacuationFour', JSON.stringify(EvacuationFour));
-            SyncStorage.set('EvacuationThree', JSON.stringify(EvacuationThree));
-            SyncStorage.set('EvacuationTwo', JSON.stringify(EvacuationTwo));
-            SyncStorage.set('EvacuationOne', JSON.stringify(EvacuationOne));
-            SyncStorage.set('EvacuationMOne', JSON.stringify(EvacuationMOne));
+            await Data.setData('EvacuationFour', JSON.stringify(EvacuationFour));
+            await Data.setData('EvacuationThree', JSON.stringify(EvacuationThree));
+            await Data.setData('EvacuationTwo', JSON.stringify(EvacuationTwo));
+            await Data.setData('EvacuationOne', JSON.stringify(EvacuationOne));
+            await Data.setData('EvacuationMOne', JSON.stringify(EvacuationMOne));
 
             //Scheme
             const SchemeFour = await PolygonScheme.getScheme(4);
@@ -38,11 +39,11 @@ export default class Load{
             const SchemeTwo = await PolygonScheme.getScheme(2);
             const SchemeOne = await PolygonScheme.getScheme(1);
             const SchemeMOne = await PolygonScheme.getScheme(-1);
-            SyncStorage.set('SchemeFour', JSON.stringify(SchemeFour));
-            SyncStorage.set('SchemeThree', JSON.stringify(SchemeThree));
-            SyncStorage.set('SchemeTwo', JSON.stringify(SchemeTwo));
-            SyncStorage.set('SchemeOne', JSON.stringify(SchemeOne));
-            SyncStorage.set('SchemeMOne', JSON.stringify(SchemeMOne));
+            await Data.setData('SchemeFour', JSON.stringify(SchemeFour));
+            await Data.setData('SchemeThree', JSON.stringify(SchemeThree));
+            await Data.setData('SchemeTwo', JSON.stringify(SchemeTwo));
+            await Data.setData('SchemeOne', JSON.stringify(SchemeOne));
+            await Data.setData('SchemeMOne', JSON.stringify(SchemeMOne));
 
             //Timetable
             const TimetableMonday =  await Timetable.getTimetableByDayId(1);
@@ -52,13 +53,13 @@ export default class Load{
             const TimetableFriday = await Timetable.getTimetableByDayId(5);
             const TimetableSaturday = await Timetable.getTimetableByDayId(6);
             const TimetableSunday = await Timetable.getTimetableByDayId(0);
-            SyncStorage.set('TimetableMonday', JSON.stringify(TimetableMonday));
-            SyncStorage.set('TimetableTuesday', JSON.stringify(TimetableTuesday));
-            SyncStorage.set('TimetableWednesday', JSON.stringify(TimetableWednesday));
-            SyncStorage.set('TimetableThursday', JSON.stringify(TimetableThursday));
-            SyncStorage.set('TimetableFriday', JSON.stringify(TimetableFriday));
-            SyncStorage.set('TimetableSaturday', JSON.stringify(TimetableSaturday));
-            SyncStorage.set('TimetableSunday', JSON.stringify(TimetableSunday));
+            await Data.setData('TimetableMonday', JSON.stringify(TimetableMonday));
+            await Data.setData('TimetableTuesday', JSON.stringify(TimetableTuesday));
+            await Data.setData('TimetableWednesday', JSON.stringify(TimetableWednesday));
+            await Data.setData('TimetableThursday', JSON.stringify(TimetableThursday));
+            await Data.setData('TimetableFriday', JSON.stringify(TimetableFriday));
+            await Data.setData('TimetableSaturday', JSON.stringify(TimetableSaturday));
+            await Data.setData('TimetableSunday', JSON.stringify(TimetableSunday));
 
             return true;
         } catch (e) {
@@ -74,13 +75,13 @@ export default class Load{
             const TimetableFriday = await Timetable.getTimetableByDayId(5);
             const TimetableSaturday = await Timetable.getTimetableByDayId(6);
             const TimetableSunday = await Timetable.getTimetableByDayId(0);
-            SyncStorage.set('TimetableMonday', JSON.stringify(TimetableMonday));
-            SyncStorage.set('TimetableTuesday', JSON.stringify(TimetableTuesday));
-            SyncStorage.set('TimetableWednesday', JSON.stringify(TimetableWednesday));
-            SyncStorage.set('TimetableThursday', JSON.stringify(TimetableThursday));
-            SyncStorage.set('TimetableFriday', JSON.stringify(TimetableFriday));
-            SyncStorage.set('TimetableSaturday', JSON.stringify(TimetableSaturday));
-            SyncStorage.set('TimetableSunday', JSON.stringify(TimetableSunday));
+            await Data.setData('TimetableMonday', JSON.stringify(TimetableMonday));
+            await Data.setData('TimetableTuesday', JSON.stringify(TimetableTuesday));
+            await Data.setData('TimetableWednesday', JSON.stringify(TimetableWednesday));
+            await Data.setData('TimetableThursday', JSON.stringify(TimetableThursday));
+            await Data.setData('TimetableFriday', JSON.stringify(TimetableFriday));
+            await Data.setData('TimetableSaturday', JSON.stringify(TimetableSaturday));
+            await Data.setData('TimetableSunday', JSON.stringify(TimetableSunday));
         }
         catch (e) {
             throw new Error(e.message)
