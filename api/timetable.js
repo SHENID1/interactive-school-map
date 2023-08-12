@@ -178,4 +178,71 @@ export default class Timetable{
         }
         return "?"
     }
+    static getTimeTable(id) {
+        let now = new Date();
+        const getDay = now.getDay();
+        // const getDay = 1;
+        let date = {};
+        switch (getDay) {
+            case (0):
+                date = Data.getDataWithJsonParse('TimetableSunday')
+                break;
+            case (1):
+                date = Data.getDataWithJsonParse('TimetableMonday')
+                break;
+            case (2):
+                date = Data.getDataWithJsonParse('TimetableTuesday')
+                break;
+            case (3):
+                date = Data.getDataWithJsonParse('TimetableWednesday')
+                break;
+            case (4):
+                date = Data.getDataWithJsonParse('TimetableThursday')
+                break;
+            case (5):
+                date = Data.getDataWithJsonParse('TimetableFriday')
+                break;
+            case (6):
+                date = Data.getDataWithJsonParse('TimetableSaturday')
+                break;
+            default:
+                return ErrorEvent
+        }
+
+        let timeTable = [
+            ["1 урок (08:40 - 09:25)", "Не найдено"],
+            ["2 урок (09:35 - 10:20)", "Не найдено"],
+            ["3 урок (10:40 - 11:25)", "Не найдено"],
+            ["4 урок (11:35 - 12:20)", "Не найдено"],
+            ["5 урок (12:30 - 13:15)", "Не найдено"],
+            ["6 урок (13:35 - 14:20)", "Не найдено"],
+            ["7 урок (14:40 - 15:25)", "Не найдено"],
+            ["8 урок (15:35 - 17:00)", "Не найдено"],
+        ]
+        for (let i = 0; i < date.length; i++) {
+            for (let t = 0; t < date[i].timetable.length; t++) {
+                if (id === date[i].timetable[t].id) {
+                    let h = date[i].timetable[t];
+                    timeTable[h.num - 1][1] = +date[i].num + date[i].letter + " " + h.subject;
+                    if (h.group) {
+                        timeTable[h.num - 1][1] = date[i].num + date[i].letter + " (" + h.group + ")гр. " + h.subject;
+                    }
+                    if (h.time !== "" && h.time !== undefined) {
+                        timeTable[h.num - 1][0] = `${h.num} урок (${h.time})`;
+                    }
+                }
+            }
+        }
+        return timeTable
+    }
+
+    static getTimetableDiningRoom = () =>  [
+        ["1 переменна (09:25 - 09:35)", "Завтрак (6 - 8)"],
+        ["2 переменна (10:20 - 10:40)", "Завтрак (9 - 11)"],
+        ["3 переменна (11:25 - 11:35)", "Буфет"],
+        ["4 переменна (12:20 - 12:30)", "Буфет"],
+        ["5 переменна (13:15 - 13:35)", "Обед (6 - 8)"],
+        ["6 переменна (14:20 - 14:40)", "Обед (9 - 11)"],
+    ]
+
 }

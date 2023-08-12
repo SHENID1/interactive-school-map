@@ -3,8 +3,7 @@ import {Fl} from "./context/fl";
 import {Ev} from "./context/ev";
 import MainLoader from "./components/mainloader/main_loader";
 import Load from "./api/load";
-import {Platform, StatusBar, StyleSheet, View } from "react-native"
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import {SafeAreaView, StatusBar, StyleSheet, View} from "react-native"
 import Data from "./api/getData"
 import FButton from "./components/f_button";
 import Floor from "./components/floors/floor";
@@ -13,12 +12,11 @@ import Search from "./components/search/search";
 import TimetableView from "./components/timetable/timetable";
 import Evacuation from "./components/evacuation/evacuation";
 import SyncStorage from "./api/syncStorage";
+import Constants from 'expo-constants';
 
 const aaa =  () => {
     try {
         SyncStorage.set("test", 1)
-        console.log(11133, SyncStorage.get("test"))
-
         const data = SyncStorage.get("test")
 
         return data
@@ -28,7 +26,6 @@ const aaa =  () => {
 }
 
 function App() {
-    // console.log(aaa())
 
     // imports database
     const dataFour = Data.getDataWithJsonParse('CabDataFour');
@@ -107,7 +104,13 @@ function App() {
             <Ev.Provider value={{
                 isVisible, setIsVisible
             }}>
-                <View style={styles.App}>
+                <SafeAreaView style={styles.App}>
+                    <StatusBar
+                        backgroundColor="white"
+                        barStyle={"dark-content"}
+                        showHideTransition={"none"}
+                        hidden={false}
+                    />
                     <Search data={allData} editFloor={editFloor} modal_object={modal_object} fl={floor}/>
                     <View style={styles.RightContainer}>
                         <FButton starting_floor={floor} edit={editFloor}/>
@@ -127,7 +130,7 @@ function App() {
                                mo={modal_object}/>
                     </View>
                     <ModalInfo active={modalActive} sma={sma} dataObj={ModalObg}/>
-                </View>
+                </SafeAreaView>
             </Ev.Provider>
         </Fl.Provider>
     );
@@ -138,14 +141,13 @@ export default App;
 const styles = StyleSheet.create({
     App: {
         flex: 1,
-        marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
         backgroundColor: "#f2f3da",
             // fontFamily: "Montserrat"
     },
     RightContainer: {
         zIndex: 100,
         position: "absolute",
-        top: 15 + StatusBar.currentHeight,
+        top: 15 + Constants.statusBarHeight,
         right: 0,
         height: 370,
         width: 50,

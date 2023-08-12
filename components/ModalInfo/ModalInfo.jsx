@@ -1,77 +1,11 @@
 import React, {useContext, useEffect} from 'react';
 import {Fl} from "../../context/fl";
-import Data from "../../api/getData"
 import Timetable from "../../api/timetable";
-import {StyleSheet, Text, View, Image, TouchableWithoutFeedback, ImageBackground} from "react-native";
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import {StyleSheet, Text, View, TouchableWithoutFeedback, ImageBackground, Animated} from "react-native";
+import { Table, Row, Rows} from 'react-native-table-component';
+import Constants from "expo-constants";
 
 const e = () => {}
-function getTimeTable(id) {
-    let now = new Date();
-    const getDay = now.getDay();
-    // const getDay = 1;
-    let date = {};
-    switch (getDay) {
-        case (0):
-            date = Data.getDataWithJsonParse('TimetableSunday')
-            break;
-        case (1):
-            date = Data.getDataWithJsonParse('TimetableMonday')
-            break;
-        case (2):
-            date = Data.getDataWithJsonParse('TimetableTuesday')
-            break;
-        case (3):
-            date = Data.getDataWithJsonParse('TimetableWednesday')
-            break;
-        case (4):
-            date = Data.getDataWithJsonParse('TimetableThursday')
-            break;
-        case (5):
-            date = Data.getDataWithJsonParse('TimetableFriday')
-            break;
-        case (6):
-            date = Data.getDataWithJsonParse('TimetableSaturday')
-            break;
-        default:
-            return ErrorEvent
-    }
-    console.log(date);
-    let timeTable = [
-        ["1 урок (08:40 - 09:25)", "Не найдено"],
-        ["2 урок (09:35 - 10:20)", "Не найдено"],
-        ["3 урок (10:40 - 11:25)", "Не найдено"],
-        ["4 урок (11:35 - 12:20)", "Не найдено"],
-        ["5 урок (12:30 - 13:15)", "Не найдено"],
-        ["6 урок (13:35 - 14:20)", "Не найдено"],
-        ["7 урок (14:40 - 15:25)", "Не найдено"],
-        ["8 урок (15:35 - 17:00)", "Не найдено"],
-    ]
-    for (let i = 0; i < date.length; i++) {
-        for (let t = 0; t < date[i].timetable.length; t++) {
-            if (id === date[i].timetable[t].id) {
-                let h = date[i].timetable[t];
-                timeTable[h.num - 1][1] = +date[i].num + date[i].letter + " " + h.subject;
-                if (h.group) {
-                    timeTable[h.num - 1][1] = date[i].num + date[i].letter + " (" + h.group + ")гр. " + h.subject;
-                }
-                if (h.time !== "" && h.time !== undefined) {
-                    timeTable[h.num - 1][0] = `${h.num} урок (${h.time})`;
-                }
-            }
-        }
-    }
-    return timeTable
-}
-const getTimetableDiningRoom = [
-        ["1 переменна (09:25 - 09:35)", "Завтрак (6 - 8)"],
-        ["2 переменна (10:20 - 10:40)", "Завтрак (9 - 11)"],
-        ["3 переменна (11:25 - 11:35)", "Буфет"],
-        ["4 переменна (12:20 - 12:30)", "Буфет"],
-        ["5 переменна (13:15 - 13:35)", "Обед (6 - 8)"],
-        ["6 переменна (14:20 - 14:40)", "Обед (9 - 11)"],
-    ]
-
 
 const ModalInfo = (props) => {
 
@@ -87,7 +21,6 @@ const ModalInfo = (props) => {
             </View>
         )
     }
-    console.log(props.dataObj)
     let des = props.dataObj.description;
     let numCab = des;
     let teacher = props.dataObj.manager.join(' ');
@@ -126,7 +59,7 @@ const ModalInfo = (props) => {
                 <View style={styles.rasp}>
                     <Table style={styles.table} borderStyle={{ borderWidth: 1, borderColor: 'black'}} >
                         <Row data={[`Расписание на сегодня (${Timetable.getDay()})`]} style={styles.main} textStyle={[styles.textMain]}/>
-                        <Rows data={getTimeTable(props.dataObj.id)} textStyle={styles.textTable} widthArr={[165, 225]}/>
+                        <Rows data={Timetable.getTimeTable(props.dataObj.id)} textStyle={styles.textTable} widthArr={[165, 225]} />
                     </Table>
                 </View>
             </>
@@ -145,7 +78,7 @@ const ModalInfo = (props) => {
                 <View style={styles.rasp}>
                     <Table style={styles.table} borderStyle={{ borderWidth: 1, borderColor: 'black'}} >
                         <Row data={[`Расписание столовой на (любой день)`]} style={styles.main} textStyle={styles.textMain}/>
-                        <Rows data={getTimetableDiningRoom} textStyle={styles.textTable} widthArr={[210, 180]}/>
+                        <Rows data={Timetable.getTimetableDiningRoom()} textStyle={styles.textTable} widthArr={[210, 180]}/>
                     </Table>
                 </View>
             </>
@@ -155,13 +88,13 @@ const ModalInfo = (props) => {
         <TouchableWithoutFeedback onPress={() => props.sma(false)}>
             <View style={props.active ? styles.active : styles.none}>
                 <TouchableWithoutFeedback onPress={e}>
-                    <View id={props.active ? "activeAnimation" : "out"} style={styles.modal}>
+                    <Animated.View id={props.active ? "activeAnimation" : "out"} style={styles.modal}>
 
                         <View style={styles.modal__content}>
                             {info}
                         </View>
 
-                    </View>
+                    </Animated.View>
                 </TouchableWithoutFeedback>
             </View>
         </TouchableWithoutFeedback>
@@ -186,7 +119,6 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         backgroundColor: "rgba(0,0,0,0.4)",
-        // transition: all 0.5s,
         position: "absolute",
         display: "flex",
         top: 0,
@@ -256,15 +188,11 @@ const styles = StyleSheet.create({
     },
     table: {
         width: "100%",
-        /*borderTopRightRadius: 5,
-        borderTopLeftRadius: 5,
-        borderBottomLeftRadius: 5,
-        borderBottomRightRadius: 5*/
     },
     textTable: {
         textAlign: "left",
         paddingLeft: 5,
-        height: 30,
+        height: 40,
         textAlignVertical: "center",
         fontWeight: 500
     }

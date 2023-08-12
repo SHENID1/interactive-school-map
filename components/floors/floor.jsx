@@ -3,10 +3,10 @@ import CabList from "./UI/cabList";
 import PolygonX from "./UI/PolygonX";
 import {Fl} from "../../context/fl";
 import EvacuationST from "../evacuation/evacuationst";
-import {StyleSheet, View, Image} from "react-native";
-import Map from "../floor/map";
+import {StyleSheet, View, Image, Dimensions} from "react-native";
 import {Svg} from "react-native-svg"
-import MovableView from "react-native-movable-view";
+
+
 function getFloor(props) {
     let floorImage;
     if (props.num === "1") {
@@ -16,7 +16,7 @@ function getFloor(props) {
     } else if (props.num === "3") {
         floorImage = require('../../images/floor/3.png');
     } else if (props.num === "-1") {
-        floorImage = require('../../images/floor/-1.png');
+        floorImage = require('../../images/floor/m1.png');
     } else if (props.num === "4") {
         floorImage = require('../../images/floor/4.png');
     }
@@ -39,7 +39,7 @@ const Floor = (props) => {
     }
     // console.log(img)
     const {floor} = useContext(Fl); // получаем номер текущего этажа из глобально стейта
-    let translateBorder = [(window.innerWidth / 2) - 322, (window.innerHeight / 2) - 241]; // граница карты
+    let translateBorder = [(Dimensions.get('window').width / 2) - 322, (Dimensions.get('window').height / 2) - 241]; // граница карты
     if (translateBorder[0] < 0 || translateBorder[1] < 0) translateBorder = [240, 220]; // граница карты
     // const translateBorder = [638, 229]; // граница карты
     // console.log(translateBorder)
@@ -68,17 +68,18 @@ const Floor = (props) => {
     
     const translateMap = (ev) => {
         if (isPressed) {
-            let newXY = [ev.clientX, ev.clientY]; // новый координаты
-            if (!ev.clientY) {
-                const sc = ev.touches;
-                newXY = [sc[0].screenX, sc[0].screenY]; // новый координаты для телефонов
+            let newXY = [ev.nativeEvent.pageX, ev.nativeEvent.pageY]; // новый координаты
+            if (ev.nativeEvent.pageX) {
+                const sc = ev.nativeEvent.touches;
+                newXY = [sc[0].pageX, sc[0].pageY]; // новый координаты для телефонов
                 if (sc.length === 2) {
-                    if (calculateVec(newXY, translateXY) < calculateVec(newXY, [sc[1].screenX, sc[1].screenY])) newXY = [sc[1].screenX, sc[1].screenY];
-                    const vecNow = calculateVec([sc[0].clientX, sc[0].clientY], [sc[1].clientX, sc[1].clientY])
+                    if (calculateVec(newXY, translateXY) < calculateVec(newXY, [sc[1].pageX, sc[1].pageY])) newXY = [sc[1].pageX, sc[1].pageY];
+                    const vecNow = calculateVec([sc[0].pageX, sc[0].pageY], [sc[1].pageX, sc[1].pageY])
                     onWheel((vectorXY - vecNow) / 3)
                     setVectorXY(vecNow)
                 }
                 if (sc.length > 2) return
+                //setVectorXY(0)
             }
             // 1 получаем измение по оси x
             let X = translateXY[0];
@@ -86,8 +87,10 @@ const Floor = (props) => {
             if (newXY[0] > beforeXY[0]) {
                 X += (newXY[0] - beforeXY[0]) / scale;
             } else if (newXY[0] < beforeXY[0]) {
-                X += -(beforeXY[0] - newXY[0]) / scale;
+                X -= (beforeXY[0] - newXY[0]) / scale;
+
             }
+
             if (Math.abs(X) > translateBorder[0]) X = translateXY[0];
             if (Math.abs(X) > translateBorder[0]) {
                 setTranslateXY([0, 0]);
@@ -103,7 +106,7 @@ const Floor = (props) => {
                 Y += -(beforeXY[1] - newXY[1]) / scale;
             }
             if (Math.abs(Y) > translateBorder[1]) Y = translateXY[1];
-            if (Math.abs(Y) > translateBorder[1]){
+            if (Math.abs(Y) > translateBorder[1]) {
                 setTranslateXY([0, 0]);
                 setBeforeXY([]);
                 setIsPressed(false);
@@ -112,6 +115,7 @@ const Floor = (props) => {
             }
             // if ((Math.abs(X) > translateBorder[0]) || (Math.abs(Y) > translateBorder[1])) return
             // if (calculateVec([translateXY[0], translateXY[1]],[X, Y]) > 100) return;
+
             setTranslateXY([X, Y]);
             setBeforeXY(newXY);
         }
@@ -119,21 +123,41 @@ const Floor = (props) => {
 
     const mouseDown = (e) => {
         setIsPressed(true);
-        setBeforeXY([e.clientX, e.clientY]);
+        setBeforeXY([e.nativeEvent.pageX, e.nativeEvent.pageY]);
+    }
+    const onWheel = (y) => {
+        // прокрутка колесиком мыши
+        if (y > 0) { // - уменьшение
+            if (scale > 0) {
+                let b = scale + parseFloat(`-0.${y}`)
+                if (b <= 0.8) setScale(0.6);
+                else setScale(b);
+            }
+        }
+        if (y < 0) { // + увеличение
+            if (scale < 5) {
+                let b = scale + parseFloat(`0.${-y}`)
+                if (b >= 4) setScale(4);
+                else setScale(b);
+            }
+        }
     }
     const mouseUp = (e) => {
         setIsPressed(false);
         setBeforeXY([]);
+        setVectorXY(0)
     }
+
 
     return (
         <View
             style={[props.used ? styles.floor_is_used : {display: "none"}, isPressed ? styles.pressed : {}, styles.floor]}
-            // onTouchMove={(e) => translateMap(e)}
-        >
-            <MovableView>
+            onTouchStart={mouseDown}
+            onTouchMove={translateMap}
+            onTouchEnd={mouseUp}
+                >
                 <View
-                     style={styles.wrapper}>
+                     style={[styles.wrapper, {transform: [{scale: scale}, {translateX: translateXY[0]}, {translateY: translateXY[1]}]}]}>
                     <EvacuationST/>
                     <Image source={img} alt=""></Image>
                     <Svg style={styles.svg}>
@@ -144,7 +168,6 @@ const Floor = (props) => {
                     </Svg>
                     <CabList List={props.cabData} mo={get_mo} HoverTo={hoverTo} HoverFrom={hoverOut}/>
                 </View>
-            </MovableView>
         </View>
         // <Map/>
     );

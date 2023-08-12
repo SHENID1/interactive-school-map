@@ -2,7 +2,8 @@
   "expo": {
     "name": "Карта школы",
     "slug": "mobileApp",
-    "version": "1.0.0",
+    "version": "0.9.1",
+    "privacy": "public",
     "orientation": "portrait",
     "icon": "./assets/SHENID_interactive_map_logo.png",
     "userInterfaceStyle": "light",
@@ -32,6 +33,12 @@
       "eas": {
         "projectId": "ba3d7f2a-0fd2-4309-a482-76911bc32cce"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/ba3d7f2a-0fd2-4309-a482-76911bc32cce"
     }
   }
 }

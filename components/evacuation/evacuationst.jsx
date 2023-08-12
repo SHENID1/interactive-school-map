@@ -27,7 +27,7 @@ export default EvacuationST;
 
 const styles = StyleSheet.create({
     evacuationWrapper: {
-        zIndex: 4
+        zIndex: 3
     },
     image: {
         height: 480,

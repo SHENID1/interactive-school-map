@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import SyncStorage from "./syncStorage";
 
 export default class Data {

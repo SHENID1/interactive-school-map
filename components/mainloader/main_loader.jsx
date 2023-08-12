@@ -1,6 +1,7 @@
 import React from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import {Text, StyleSheet} from "react-native";
+import Constants from "expo-constants";
 
 
 const MainLoader = () => {
@@ -22,5 +23,6 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         position: "absolute",
+        top: Constants.statusBarHeight,
     }
 })

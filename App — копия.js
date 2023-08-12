@@ -13,7 +13,6 @@ const App = () => {
 const style = StyleSheet.create({
     AndroidSafeArea: {
         flex: 1,
-        marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
     }
 });
 

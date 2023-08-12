@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState, useRef} from 'react';
 import {Fl} from "../../context/fl";
-import {View, TextInput, StyleSheet, Text, Button, TouchableWithoutFeedback} from "react-native";
+import {View, TextInput, StyleSheet, Text, Button, TouchableWithoutFeedback, Platform} from "react-native";
+import Constants from "expo-constants";
 
 const e = () => {}
 const searchEngine = (props, searchQuery) => {
@@ -59,9 +60,11 @@ const Search = (props) => {
 
     const click = (obj) => {
         if (searchQuery === "") return;
+        inputRef.current.blur()
+        inputRef.current.clear()
         if (!obj) {
             if (hintMenu === []) return;
-            inputRef.current.blur()
+
             let fl = hintMenu[0].floor;
             if (floor !== fl) {
                 setFloor(fl);
@@ -70,7 +73,6 @@ const Search = (props) => {
             setHintVisibility(false);
         }
         if (obj) {
-            inputRef.current.blur()
             let fl = obj.floor;
             if (fl !== floor) {
                 setFloor(fl);
@@ -176,8 +178,9 @@ const styles = StyleSheet.create({
     },
     activeSearch: {
         backgroundColor: "rgba(0, 0, 0, 0.08)",
-        zIndex: 999,
+        zIndex: 9999,
         position: "absolute",
+        // top: Platform.OS === "ios" ? Constants.statusBarHeight: 0,
         width: "100%",
         height: "100%",
         display: "flex",

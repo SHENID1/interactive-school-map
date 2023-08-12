@@ -2,11 +2,12 @@ import React, {useRef, useState} from 'react';
 // import {Carousel, Select, Modal} from "antd";
 // import Data from "../../api/getData"
 // import Timetable from "../../api/timetable";
-import {View, StyleSheet, Image, TouchableOpacity, Modal, TouchableWithoutFeedback} from "react-native";
+import {View, StyleSheet, Image, TouchableOpacity, Modal, TouchableWithoutFeedback, Dimensions} from "react-native";
 import {Tab, TabView, Text} from '@rneui/themed';
 import CabData from "../../api/cabdata";
 import RaspTable from "./rasptable";
 import {Dialog} from "@rneui/base";
+import Constants from "expo-constants";
 
 // const getOptions = (dataObj) => {
 //
@@ -104,7 +105,8 @@ const TimetableView = (props) => {
                     <Image source={require("../../images/icons/timetable_icon.png")} alt="" style={styles.icon}/>
                 </View>
             </TouchableOpacity>
-            <Modal visible={openTimeTable} style={[styles.timetable]} >
+            <Modal visible={openTimeTable} statusBarTranslucent={true}>
+                <View style={styles.timetable}>
                 <TouchableWithoutFeedback onPress={() => setOpenTimeTable(false)}>
                     <Text style={styles.x}>
                         X
@@ -174,6 +176,7 @@ const TimetableView = (props) => {
                         }/>
                     </Dialog.Actions>
                 </Dialog>
+                </View>
             </Modal>
         </>
     );
@@ -201,14 +204,12 @@ const styles = StyleSheet.create({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            // backgroundColor: "rgba(0,0,0,0.09)",
             flexDirection: "row",
             borderRadius: 10,
             width: "auto",
             height: 53,
             zIndex: 100,
             marginTop: 5,
-            // box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2),
         },
         RB: {
             width: 60,
@@ -245,11 +246,9 @@ const styles = StyleSheet.create({
         },
         first1: {
             marginLeft: 5,
-            /*border-right: 1px solid black;*/
         },
         first2: {
             marginLeft: 5,
-            /*border-right: 1px solid black;*/
         },
         Two: {
             height: "100%",
@@ -274,30 +273,16 @@ const styles = StyleSheet.create({
         },
         x: {
             position: "absolute",
-            top: -10,
-            right: 25,
+            top: -5,
+            right: 20,
             fontSize: 30,
             zIndex: 9999,
-            // font-family: "grafity",
         },
-        // .x:hover{
-        //     color: rgba(0,0,0,0.68),
-        //     cursor: pointer,
-        // }
         timetable: {
             width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0,0,0,0.2)",
+            height: Dimensions.get('window').height,
             zIndex: 999,
-            /*background-color: #ffffff;*/
-            display: "flex",
-            flexDirection: "column",
-            /*background-image: url("fon1.jpg");*/
-            // backgroundColor: "#f2f3da",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            justifyContent: "flex-start",
+            marginTop: Constants.statusBarHeight,
         },
         timetable_wrapper: {
             width: "100%",
@@ -318,24 +303,15 @@ const styles = StyleSheet.create({
             borderRadius: 4,
             display: "flex",
             justifyContent: "center",
-            /*display: grid;*/
-            /*place-items: center;*/
-            /*grid-template-columns: repeat(3, 600px);*/
-            /*grid-template-rows: repeat(2, 337px);*/
-            /*column-gap:  15px;*/
-            /*row-gap: 15px;*/
-            /*justify-items: stretch;*/
         },
         header: {
             width: "100%",
-            /*position: absolute;*/
             top: 5,
             height: "auto",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
-            /*margin-bottom: 50px;*/
         },
         cc: {
             display: "flex",
@@ -350,31 +326,5 @@ const styles = StyleSheet.create({
             height: "auto",
             overflowY: "auto",
         },
-        // raspTable: {
-        //     marginTop: 23,
-        //     borderColor: 'black',
-        //     borderWidth: 1,
-        //     borderStyle: 'solid',
-        //     width: 600,
-        //     borderCollapse: "collapse",
-        //     // display: grid,
-        //     borderRadius: 5,
-        //     backgroundColor: "white",
-        // },
-        // #main: {
-        //     // display: grid,
-        //     // place-items: center,
-        //     height: 31,
-        //     margin: 0 0 0 0,
-        //     font-size: 20px,
-        // }
-        //
-        // .rasp th {
-        //     border-top: 1px solid black,
-        // }
-        // .r100b{
-        //     text-overflow: ellipsis,
-        //     width: 337px,
-        // }
     }
 )
