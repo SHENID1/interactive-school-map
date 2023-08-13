@@ -43,29 +43,13 @@ function App() {
 
     const [modalActive, setModalActive] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
-    function checkStarted_floor() {
-        try {
-            if (!Data.getData('started_floor')) {
-                Data.setData('started_floor', "1"); // начальное состояние - 1 этаж
-            }
-        }
-        catch (e) {
-            console.error(e)
-        }
 
+    if (!Data.getData('started_floor')) {
+        Data.setData('started_floor', "1"); // начальное состояние - 1 этаж
     }
-    checkStarted_floor()
+
+
     const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        (Load.loadData().then((v) => {
-            if (v) setIsLoading(false)
-        }, (e) => {
-            alert(e)
-        }))
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isLoading])
     const [ModalObg, setModalObj] = useState(null);
 
     // создаем состояние floor и функцию обновления состояния setFloor
@@ -93,7 +77,7 @@ function App() {
         // eslint-disable-next-line
     }, [floor])
 
-    if (isLoading) return <MainLoader/>
+    if (isLoading) return <MainLoader isLoading={isLoading} setIsLoading={setIsLoading}/>
     // console.log()
 
     return (

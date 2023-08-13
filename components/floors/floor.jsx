@@ -75,7 +75,7 @@ const Floor = (props) => {
                 if (sc.length === 2) {
                     if (calculateVec(newXY, translateXY) < calculateVec(newXY, [sc[1].pageX, sc[1].pageY])) newXY = [sc[1].pageX, sc[1].pageY];
                     const vecNow = calculateVec([sc[0].pageX, sc[0].pageY], [sc[1].pageX, sc[1].pageY])
-                    onWheel((vectorXY - vecNow) / 3)
+                    if (vectorXY !== 0) onWheel((vectorXY - vecNow) / 10)
                     setVectorXY(vecNow)
                 }
                 if (sc.length > 2) return
@@ -147,11 +147,11 @@ const Floor = (props) => {
         setBeforeXY([]);
         setVectorXY(0)
     }
-
+    if (!props.used) return <></>
 
     return (
         <View
-            style={[props.used ? styles.floor_is_used : {display: "none"}, isPressed ? styles.pressed : {}, styles.floor]}
+            style={[styles.floor_is_used, isPressed ? styles.pressed : {}, styles.floor]}
             onTouchStart={mouseDown}
             onTouchMove={translateMap}
             onTouchEnd={mouseUp}

@@ -1,24 +1,25 @@
 import React, {useRef, useState} from 'react';
-// import {Carousel, Select, Modal} from "antd";
-// import Data from "../../api/getData"
-// import Timetable from "../../api/timetable";
-import {View, StyleSheet, Image, TouchableOpacity, Modal, TouchableWithoutFeedback, Dimensions} from "react-native";
+import Timetable from "../../api/timetable";
+import Data from "../../api/getData";
+import {View, StyleSheet, Image, TouchableOpacity, Modal, TouchableWithoutFeedback, Dimensions, Picker} from "react-native";
 import {Tab, TabView, Text} from '@rneui/themed';
 import CabData from "../../api/cabdata";
 import RaspTable from "./rasptable";
 import {Dialog} from "@rneui/base";
 import Constants from "expo-constants";
+import { SelectList } from 'react-native-dropdown-select-list'
 
-// const getOptions = (dataObj) => {
-//
-//     let list = [];
-//     for (let i = 0; i < dataObj.length; i++) {
-//         let Class = dataObj[i];
-//         list.push({value: Class.letter + Class.num, label: Class.num + Class.letter, s: [Class.letter, Class.num]})
-//     }
-//     list = Timetable.timeTableSort(list)
-//     return list;
-// }
+
+const getOptions = (dataObj) => {
+
+    let list = [];
+    for (let i = 0; i < dataObj.length; i++) {
+        let Class = dataObj[i];
+        list.push({value: Class.num + Class.letter, key: {value: Class.letter + Class.num, key: Class.num + Class.letter, s: [Class.letter, Class.num]}})
+    }
+    list = Timetable.timeTableSort(list)
+    return list;
+}
 const RBList = [
     [0, "Пн"],
     [1, "Вт"],
@@ -31,42 +32,15 @@ const RBList = [
 
 
 const TimetableView = (props) => {
-    // const {confirm} = Modal; // инициализация модалки
-    // const showDeleteConfirm = (obj1, obj2) => {
-    //     confirm({
-    //         title: 'Какой кабинет хотите открыть?',
-    //         content: (
-    //             <View>
-    //                 <p>{obj2.name} - {obj2.description}</p>
-    //                 <p>{obj1.name} - {obj1.description}</p>
-    //             </View>
-    //         ),
-    //         okText: obj1.name,
-    //         cancelText: obj2.name,
-    //         onOk() {
-    //             setOpenTimeTable(false);
-    //             props.modal_object(obj1);
-    //         },
-    //         onCancel() {
-    //             setOpenTimeTable(false);
-    //             props.modal_object(obj2);
-    //         },
-    //     });
-    // };
     const [openTimeTable, setOpenTimeTable] = useState(false);
     const [isVisibleDialog, setIsVisibleDialog] = useState(false)
     let initDay = new Date().getDay() - 1;
     if (new Date().getDay() === 0) initDay = 6;
     const [dayId, setDayId] = useState(initDay);
     const [Class, setClass] = useState("Н10");
-    const carRef = useRef() // привязка к элементу карусель
     const [index, setIndex] = React.useState(0);
     const [dialogObj, setDialogObj] = useState([])
     const openTimetable = () => setOpenTimeTable(true);
-    const changeDay = (e) => {
-        setDayId(e);
-        // carRef.current.goTo(e, true);
-    }
 
 
     const setMO = (list) => { // [12, 46]
@@ -85,19 +59,11 @@ const TimetableView = (props) => {
             setIsVisibleDialog(true);
         }
     }
+    const handleChange = (value) => {
+        if (!value.value) return;
+        setClass(value.value);
+    };
 
-    // const onSwipe = (t) => {
-    //     if (t === "left") {
-    //         if (dayId === 6) return setDayId(0);
-    //         setDayId(dayId + 1);
-    //     } else if (t === "right") {
-    //         if (dayId === 0) return setDayId(6);
-    //         setDayId(dayId - 1);
-    //     }
-    // }
-    // const handleChange = (value) => {
-    //     setClass(value);
-    // };
     return (
         <>
             <TouchableOpacity onPress={openTimetable}>
@@ -115,11 +81,16 @@ const TimetableView = (props) => {
 
                     <View style={styles.cc}><Text style={styles.headerH1}>Расписание
                         для {Class.slice(1) + Class.slice(0, 1)}</Text>
-                        {/*<Select*/}
-                        {/*    defaultValue={"Н10"}*/}
-                        {/*    style={{width: 120, paddingLeft: "20px"}}*/}
-                        {/*    onChange={handleChange}*/}
-                        {/*    options={getOptions(Data.getData('TimetableThursday'))}/>*/}
+                        <SelectList
+                            setSelected={handleChange}
+                            boxStyles={{width: 100, paddingLeft: 20}}
+                            search={false}
+                            data={getOptions(Data.getDataWithJsonParse('TimetableThursday'))}
+                            save={"key"}
+                            defaultOption={{"key": "Н10", "value": "10Н"}}
+                        />
+
+
                     </View>
 
                     <Tab
@@ -137,7 +108,7 @@ const TimetableView = (props) => {
                         )}
                     </Tab>
 
-                    <TabView value={index} onChange={setIndex} animationType="timing">
+                    <TabView value={index} onChange={setIndex} animationType="timing" >
                         <RaspTable openModaleCab={setMO} usedDay={dayId} dayId={1}
                                    data={CabData.getTable(Class.slice(1), Class.slice(0, 1), 1)}/>
                         <RaspTable openModaleCab={setMO} usedDay={dayId} dayId={2}

@@ -1,14 +1,51 @@
 import React, {useContext, useEffect} from 'react';
 import {Fl} from "../../context/fl";
 import Timetable from "../../api/timetable";
-import {StyleSheet, Text, View, TouchableWithoutFeedback, ImageBackground, Animated} from "react-native";
-import { Table, Row, Rows} from 'react-native-table-component';
-import Constants from "expo-constants";
+import {
+    StyleSheet,
+    Text,
+    View,
+    TouchableWithoutFeedback,
+    ImageBackground,
+    Animated,
+    Dimensions,
+    FlatList
+} from "react-native";
 
 const e = () => {}
 
-const ModalInfo = (props) => {
+const tableItem = ({item}) => (
+    <View style={styles.tr}>
+        <View style={styles.T1}>
+            <Text style={styles.t1_text}>{item.i} урок {"\n"}
+                <Text style={styles.t1Span}>
+                    ({item.lessonTime})
+                </Text>
+            </Text>
+        </View>
+        <View style={styles.T2}>
+            <Text
+                style={styles.t2_text} numberOfLines={10} ellipsizeMode={"tail"}>{item.subject}</Text>
+        </View>
+    </View>
+)
+const DinningTableItem = ({item}) => (
+    <View style={styles.tr}>
+        <View style={styles.T1_for_dinning}>
+            <Text style={styles.t1_text_for_dinning}>{item.i} перемена {"\n"}
+                <Text style={styles.t1Span}>
+                    ({item.lessonTime})
+                </Text>
+            </Text>
+        </View>
+        <View style={styles.T2}>
+            <Text
+                style={styles.t2_text_for_dinning} numberOfLines={10} ellipsizeMode={"tail"}>{item.subject}</Text>
+        </View>
+    </View>
+)
 
+const ModalInfo = (props) => {
     const {floor, setFloor} = useContext(Fl);
     useEffect(() => {
         if (!props.dataObj) return
@@ -16,11 +53,11 @@ const ModalInfo = (props) => {
     }, [props.dataObj, floor, setFloor])
     if (!props.dataObj) {
         return (
-            <View style={styles.none}>
-                {/*<View style={"out"}></View>*/}
-            </View>
+            <View style={styles.none}/>
         )
     }
+    const data = Timetable.getTimeTable(props.dataObj.id)
+    // console.log(data)
     let des = props.dataObj.description;
     let numCab = des;
     let teacher = props.dataObj.manager.join(' ');
@@ -57,10 +94,8 @@ const ModalInfo = (props) => {
                 {/*    <Text style={styles.t3}>id:</Text>*/}
                 {/*</View>*/}
                 <View style={styles.rasp}>
-                    <Table style={styles.table} borderStyle={{ borderWidth: 1, borderColor: 'black'}} >
-                        <Row data={[`Расписание на сегодня (${Timetable.getDay()})`]} style={styles.main} textStyle={[styles.textMain]}/>
-                        <Rows data={Timetable.getTimeTable(props.dataObj.id)} textStyle={styles.textTable} widthArr={[165, 225]} />
-                    </Table>
+                    <View style={styles.main}><Text style={styles.textMain}>{`Расписание на сегодня (${Timetable.getDay()})`}</Text></View>
+                    <FlatList data={data} renderItem={tableItem} keyExtractor={item => item.i}/>
                 </View>
             </>
     }
@@ -74,12 +109,9 @@ const ModalInfo = (props) => {
                     <Text style={styles.t2}>{props.dataObj.floor}</Text>
                     <Text style={styles.t3}>Этаж:</Text>
                 </View>
-
                 <View style={styles.rasp}>
-                    <Table style={styles.table} borderStyle={{ borderWidth: 1, borderColor: 'black'}} >
-                        <Row data={[`Расписание столовой на (любой день)`]} style={styles.main} textStyle={styles.textMain}/>
-                        <Rows data={Timetable.getTimetableDiningRoom()} textStyle={styles.textTable} widthArr={[210, 180]}/>
-                    </Table>
+                    <View style={styles.main}><Text style={styles.textMain}>{"Расписание столовой на (любой день)"}</Text></View>
+                    <FlatList data={Timetable.getTimetableDiningRoom()} renderItem={DinningTableItem} keyExtractor={item => item.i}/>
                 </View>
             </>
     }
@@ -98,14 +130,6 @@ const ModalInfo = (props) => {
                 </TouchableWithoutFeedback>
             </View>
         </TouchableWithoutFeedback>
-        // <Drawer
-        //     sidebar={info}
-        //     position="bottom"
-        //     open={true}
-        //     drawerRef={(el) => (this.drawer = el)}
-        //     onOpenChange={this.onOpenChange}
-        //     drawerBackgroundColor="#ccc">
-        // </Drawer>
     );
 };
 
@@ -158,7 +182,9 @@ const styles = StyleSheet.create({
     rasp: {
         width: "100%",
         marginTop: 15,
-        borderRadius: 10
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'black',
     },
     modal__content: {
         width: "100%",
@@ -178,13 +204,14 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0, 0, 0, 0.09)",
         height: 40,
         fontWeight: "bold",
+        justifyContent: "center",
+        alignItems: "center",
     },
     textMain: {
-        textAlign: "center",
         height: 25,
         margin: 0,
         fontSize: 15,
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     table: {
         width: "100%",
@@ -195,7 +222,49 @@ const styles = StyleSheet.create({
         height: 40,
         textAlignVertical: "center",
         fontWeight: 500
-    }
+    },
+    tr: {
+        borderTopWidth: 1,
+        borderColor: "black",
+        flexDirection: "row",
+        height: 40,
+    },
+    T1: {
+        width: 100,
+    },
+    T1_for_dinning: {
+        width: 120,
+    },
+    t1_text: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: "center",
+    },
+    t1_text_for_dinning: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        textAlign: "center",
+    },
+    t1Span: {
+        fontSize: 12,
+    },
+    T2: {
+        justifyContent: "center",
+        alignItems: "flex-start",
+        paddingLeft: 5,
+        borderLeftWidth: 1,
+        borderColor: "black",
+        width: Dimensions.get('window').width - 110,
+        // backgroundColor: "red",
+    },
+    t2_text: {
+        fontSize: 14,
+        fontWeight: 'bold',
+    },
+    t2_text_for_dinning: {
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
 })
 
 // obj types:
