@@ -77,6 +77,7 @@ const Floor = (props) => {
                     const vecNow = calculateVec([sc[0].pageX, sc[0].pageY], [sc[1].pageX, sc[1].pageY])
                     if (vectorXY !== 0) onWheel((vectorXY - vecNow) / 10)
                     setVectorXY(vecNow)
+                    return;
                 }
                 if (sc.length > 2) return
                 //setVectorXY(0)
