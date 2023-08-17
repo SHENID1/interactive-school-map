@@ -73,7 +73,7 @@ const Floor = (props) => {
                 const sc = ev.nativeEvent.touches;
                 newXY = [sc[0].pageX, sc[0].pageY]; // новый координаты для телефонов
                 if (sc.length === 2) {
-                    if (calculateVec(newXY, translateXY) < calculateVec(newXY, [sc[1].pageX, sc[1].pageY])) newXY = [sc[1].pageX, sc[1].pageY];
+                    //if (calculateVec(newXY, translateXY) < calculateVec(newXY, [sc[1].pageX, sc[1].pageY])) newXY = [sc[1].pageX, sc[1].pageY];
                     const vecNow = calculateVec([sc[0].pageX, sc[0].pageY], [sc[1].pageX, sc[1].pageY])
                     if (vectorXY !== 0) onWheel((vectorXY - vecNow) / 10)
                     setVectorXY(vecNow)
@@ -143,7 +143,7 @@ const Floor = (props) => {
             }
         }
     }
-    const mouseUp = (e) => {
+    const mouseUp = () => {
         setIsPressed(false);
         setBeforeXY([]);
         setVectorXY(0)
