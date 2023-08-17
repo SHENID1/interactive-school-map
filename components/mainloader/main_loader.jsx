@@ -109,11 +109,11 @@ const MainLoader = ({setIsLoading, isLoading}) => {
     return (
         <View style={styles.container}>
             <Image source={require("../../assets/SHENID_interactive_map_logo.png")} style={styles.image}/>
-            <Text style={styles.textLogo}>Интерактивня карта школы</Text>
+            <Text style={styles.textLogo}>Интерактивная карта школы</Text>
             <ActivityIndicator size="large" />
             <Text style={styles.text}>{!isError ? "Загрузка ...": "Ошибка\nПерезапустите приложение"}</Text>
             <View style={[styles.progressContainer]}>
-                <View style={[styles.progressBar, {flex: 0.0454545454545455 * count}, isError ? {backgroundColor: "red"} : {backgroundColor: "#0000"}]}/>
+                <View style={[styles.progressBar, {flex: 0.0454545454545455 * count}, isError ? {backgroundColor: "red"} : {backgroundColor: "black"}]}/>
                 <Text style={styles.progress_text}>{count}/{AllCount}</Text>
             </View>
             {isError ? <Button title={"Запустить приложение принудительно"} onPress={() => setIsLoading(false)}/>

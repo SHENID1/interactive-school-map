@@ -2,8 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Fl} from "./context/fl";
 import {Ev} from "./context/ev";
 import MainLoader from "./components/mainloader/main_loader";
-import Load from "./api/load";
-import {SafeAreaView, StatusBar, StyleSheet, View} from "react-native"
+import {SafeAreaView, StatusBar, StyleSheet, View, Platform} from "react-native"
 import Data from "./api/getData"
 import FButton from "./components/f_button";
 import Floor from "./components/floors/floor";
@@ -126,12 +125,12 @@ const styles = StyleSheet.create({
     App: {
         flex: 1,
         backgroundColor: "#f2f3da",
-            // fontFamily: "Montserrat"
+        // fontFamily: "Montserrat"
     },
     RightContainer: {
         zIndex: 100,
         position: "absolute",
-        top: 15 + Constants.statusBarHeight,
+        top: 45 + (Platform.OS === "ios" ? StatusBar.currentHeight : 0),
         right: 0,
         height: 370,
         width: 50,
