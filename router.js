@@ -32,5 +32,10 @@ router.put('/timetable',authMiddleware, Controller.UpdateTimetable)
 router.post('/timetable',authMiddleware, Controller.createTimetable)
 router.delete('/timetable/:id',authMiddleware, Controller.DeleteTimetable)
 
+// events
+router.get('/events', Controller.getEvents)
+router.put('/events', Controller.UpdateEvents)
+router.post('/events', Controller.CreateEvents)
+router.delete('/events/:id', Controller.DeleteEvents)
 
 export default router;
