@@ -70,7 +70,7 @@ const ModalInfo = (props) => {
     if (props.dataObj.type === 1) { // кабинет
         let img = <></>
         if (props.dataObj.imgName) {
-            img = <View style={{width: "100%", height: 140}}><ImageBackground source={{uri: `https://pro.rezraf.com/shenid_api/${props.dataObj.name}.jpg`}} style={styles.image} resizeMode="cover"
+            img = <View style={{width: "100%", height: 140}}><ImageBackground source={{uri: `https://pro.rezraf.com/shenid_api/${props.dataObj.imgName}`}} style={styles.image} resizeMode="cover"
             borderRadius={20}/></View>
         }
 
