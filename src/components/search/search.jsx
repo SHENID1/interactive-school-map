@@ -58,7 +58,7 @@ const Search = (props) => {
     const click = (obj) => {
         if (searchQuery === "") return;
         if (!obj) {
-            if (hintMenu === []) return;
+            if (hintMenu.length === 0) return;
             let fl = hintMenu[0].floor;
             if (floor !== fl) {
                 setFloor(fl);

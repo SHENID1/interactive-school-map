@@ -6,3 +6,7 @@
     height: 100%;
     position: absolute;
 }
+.text{
+    padding: 50px;
+    border-radius: 4px;
+}

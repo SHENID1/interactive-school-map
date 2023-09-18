@@ -91,7 +91,7 @@ const CreateTimetable = ({handler}) => {
             handler(h.dayId + h.letter + h.num)
         }
         catch (e) {
-            store.checkAuth()
+            await store.checkAuth()
             openNotificationWithIcon('error')
         }
         // console.log(values)

@@ -90,8 +90,9 @@ const ModalInfo = (props) => {
     let info = <></>;
     if (props.dataObj.type === 1) { // кабинет
         let img = <></>
+        let ImageUrl = `${window.location.origin.slice(0, -5)}:5000/${props.dataObj.imgName}`
         if (props.dataObj.imgName){
-            img = <img src={`${window.location.origin.slice(0, -5)}:5000/${props.dataObj.name}.jpg`} alt={""} height={"auto"}
+            img = <img src={ImageUrl} alt={""} height={"auto"}
                        width={"100%"}/>
         }
 

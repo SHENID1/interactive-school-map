@@ -3,7 +3,24 @@ import CabList from "./UI/cabList";
 import PolygonX from "./UI/PolygonX";
 import {Fl} from "../../context/fl";
 import EvacuationST from "../evacuation/evacuationst";
+import { ContextMenu } from "@ni7r0g3n/react-context-menu";
 
+const contextStyle = {container: {
+    backgroundColor: "white",
+        fontWeight: "bold",
+    },
+    row: {
+        normal: {
+            color: "black",
+            backgroundColor: "#F8D9AD",
+
+        },
+        hover: {
+            backgroundColor: "#ddd1ff",
+        },
+
+    },
+}
 
 const Floor = (props) => {
     const [hoverCab, setHoverCab] = useState("None"); // для привязки к выделению svg полигона и надписи выше нее
@@ -12,6 +29,8 @@ const Floor = (props) => {
     const [beforeXY, setBeforeXY] = useState([]); // сохрание старых координат для получения траектории
     const [translateXY, setTranslateXY] = useState([0, 0]); // тут хранятся координаты для перетаскивания карты
     const [vectorXY, setVectorXY] = useState(0) // сохранение старого вектора для увеличения на устройствах с тачпадом
+    const [contextXY, setContextXY] = useState([0, 0])
+
     const img = require(`../../images/floor/${props.num}.png`); // получение ссылки на изображение
     const {floor} = useContext(Fl); // получаем номер текущего этажа из глобально стейта
     const map = useRef();
@@ -23,7 +42,15 @@ const Floor = (props) => {
     const calculateVec = ([x1, y1], [x2, y2]) => {
         return Math.abs(Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2)))
     }
-
+    const onContextMenu = (e) => {
+        const XY = [e.nativeEvent.layerX, e.nativeEvent.layerY]
+        setContextXY(XY)
+        if (e.nativeEvent.target.className.baseVal !== "svg") {
+            setContextXY([e.nativeEvent.srcElement.offsetLeft, e.nativeEvent.srcElement.offsetTop])
+        }
+        e.preventDefault()
+        return false
+    }
     const get_mo = (obj) => {
         if (!obj) return;
         if (obj.type === 2 || obj.type === 0) return;
@@ -113,10 +140,18 @@ const Floor = (props) => {
         setIsPressed(true);
         setBeforeXY([e.clientX, e.clientY]);
     }
-    const mouseUp = (e) => {
+    const mouseUp = () => {
         setIsPressed(false);
         setBeforeXY([]);
     }
+
+    const items = [
+        { label: `X:${contextXY[0]} Y:${contextXY[1]}`, disabled: true, disabledClassName: "disabled"},
+        { label: "Создать событие", onClick: () =>
+                window.location.replace(`${window.location.href}admin/event/create/${floor}/${contextXY[0]}/${contextXY[1]}`)},
+    ];
+
+
 
     return (
         <div
@@ -127,20 +162,22 @@ const Floor = (props) => {
             onMouseMove={(e) => translateMap(e)}
             onTouchStart={(e) => mouseDown(e)}
             onTouchMove={(e) => translateMap(e)}
-            onTouchEnd={() => mouseUp()}
-        >
+            onTouchEnd={() => mouseUp()}>
+            <ContextMenu items={items} menuStyle={contextStyle} animated={false}>
             <div className="wrapper" id="wrapper" ref={map}
-                 style={{transform: `scale(${scale}) translate(${translateXY[0]}px, ${translateXY[1]}px)`}}>
-                <EvacuationST st={true} />
-                <img src={img} alt=""></img>
-                <svg>
+                 style={{transform: `scale(${scale}) translate(${translateXY[0]}px, ${translateXY[1]}px)`}}
+                 onContextMenu={onContextMenu}>
+                <EvacuationST/>
+                <img src={img} alt=""/>
+                <svg className="svg">
                     {props.SchemeData.map(el =>
                         <PolygonX key={el.id} isHover={hoverCab === el.id} dataId={el.id} List={props.cabData}
-                                  mo={get_mo} points={el.points}></PolygonX>
+                                  mo={get_mo} points={el.points}/>
                     )}
                 </svg>
-                <CabList List={props.cabData} mo={get_mo} HoverTo={hoverTo} HoverFrom={hoverOut}/>
+                    <CabList List={props.cabData} mo={get_mo} HoverTo={hoverTo} HoverFrom={hoverOut}/>
             </div>
+            </ContextMenu>
         </div>
     );
 };

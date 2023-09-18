@@ -5,7 +5,9 @@ import cl from "./loader.module.css";
 const MainLoader = () => {
     return (
         <div className={cl.container}>
-            <Spin tip="Загрузка..."/>
+            <Spin tip={"Загрузка..."}>
+                <div className={cl.text}/>
+            </Spin>
         </div>
     );
 };

@@ -9,6 +9,8 @@ import Homepage from "./homepage";
 import Login from "./login/login";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
+import EventAdminMain from "./event/eventAdminMain";
+import EventCreate from "./event/eventCreate";
 
 
 const AdminPanel = () => {
@@ -41,6 +43,9 @@ const AdminPanel = () => {
                 <Route path="cab-data" element={<CdMain/>}/>
                 <Route path="evacuation" element={<EvMain/>}/>
                 <Route path="scheme" element={<SchemeMain/>}/>
+                <Route path="event" element={<EventAdminMain/>}/>
+                <Route path="event/create/:floor/:x/:y" element={<EventCreate/>}/>
+                <Route path="event/create" element={<EventCreate/>}/>
             </Route>
         </Routes>
     );

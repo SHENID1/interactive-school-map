@@ -13,7 +13,7 @@
     left: 0;
     z-index: 1000;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
 
 }
 
@@ -125,6 +125,10 @@
     max-height: 100%;
     overflow-y: auto !important;
 }
+.context {
+    position: absolute;
+    background-color: white;
+}
 #stolovay{
     grid-template-columns: 23ch auto !important;
 }
@@ -137,6 +141,9 @@
     }
 }
 @media screen and (max-width: 640px){
+    .active{
+        align-items: flex-end;
+    }
     .modal{
         width: 100%; /* Модальное окно на всю ширину становится */
         border-radius: 20px 20px 0 0; /* Закругленные углы снизу исчезают*/
@@ -194,7 +201,7 @@
 }
 @keyframes an {
     from {
-        transform: translateY(200px);
+        transform: translateY(600px);
     }
     to {
         transform: translateY(0px);

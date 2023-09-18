@@ -163,3 +163,10 @@ img {
   fill: #ffc60b9d !important;
   transition: all 0.3s !important;
 }
+.disabled {
+  background-color: #f0bb6c;
+  font-Weight: 900;
+}
+.disabled:hover {
+  background-color: #ddd1ff !important;
+}
