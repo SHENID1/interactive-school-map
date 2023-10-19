@@ -1,10 +1,11 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { useParams } from "react-router-dom";
 import cl from "./style.module.css";
 import {Button, ColorPicker, DatePicker, Input, message, Upload, Space, InputNumber, Form} from 'antd';
 import {UploadOutlined} from "@ant-design/icons";
 import EventApi from "../../../api/eventApi"
 import {Context} from "../../../index";
+import {ApiUrl} from "../../../api";
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
@@ -20,41 +21,16 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 
-const props = {
-    name: 'file',
-    headers: {
-        authorization: 'authorization-text',
-    },
-    beforeUpload: (file) => {
-        const isPNG = file.type === 'image/png';
-        const isJPG = file.type === 'image/jpeg';
-        // console.log(file.type, !isPNG && !isJPG)
-        if (!isPNG && !isJPG) {
-            message.error(`${file.name} is not a png, jpg file`).then();
-        }
-        return isPNG || isJPG || Upload.LIST_IGNORE;
-    },
-    onChange(info) {
-        if (info.file.status !== 'uploading') {
-            // console.log(info.file, info.fileList);
-        }
-        info.file.status = 'done'
-        // if (info.file.status === 'done') {
-        //     message.success(`${info.file.name} файл загружен успешно`);
-        // } else if (info.file.status === 'error') {
-        //     message.error(`${info.file.name} файл не загрузился.`);
-        // }
-    },
-};
+
 
 const EventCreate = () => {
     const [form] = Form.useForm();
     const {floor, x, y} = useParams()
+    const [fileName, setFileName] = useState(undefined)
     const {store} = useContext(Context)
     const onFinish = async (values) => {
         // const data = values.push()
         try{
-            // console.log()
             await EventApi.createEvent(values)
             //form.resetFields();
         }
@@ -63,6 +39,29 @@ const EventCreate = () => {
             message.error(e)
         }
         // console.log(values)
+    };
+    const props = {
+        name: 'file',
+        headers: {
+            authorization: 'authorization-text',
+        },
+        beforeUpload: (file) => {
+            const isPNG = file.type === 'image/png';
+            const isJPG = file.type === 'image/jpeg';
+            if (!isPNG && !isJPG) {
+                message.error(`${file.name} is not a png, jpg file`).then();
+            }
+            return isPNG || isJPG || Upload.LIST_IGNORE;
+        },
+        action: `${ApiUrl}/api/events/upload/`,
+        onChange(info) {
+            if (info.file.status === 'done') {
+                message.success(`${info.file.name} файл загружен успешно`);
+                setFileName(info.file.response)
+            } else if (info.file.status === 'error') {
+                message.error(`${info.file.name} файл не загрузился.`);
+            }
+        },
     };
 
 
@@ -95,7 +94,7 @@ const EventCreate = () => {
                            valuePropName="fileList"
 
                            getValueFromEvent={normFile}>
-                    <Upload {...props} maxCount={1} listType="picture" >
+                    <Upload {...props} maxCount={1} listType="picture" thumbUrl={!fileName ? `${ApiUrl}/static/${fileName}` : null}>
                         <Button icon={<UploadOutlined />}>Прикрепить картинку</Button>
                     </Upload>
                 </Form.Item>
