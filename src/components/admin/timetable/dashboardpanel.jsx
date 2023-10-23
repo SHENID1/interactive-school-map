@@ -73,7 +73,7 @@ const parse = (v) => { // 1 М 10
     }
 }
 const getOptionsForBreadcrumb = (Num, Letter, DayId) => {
-    return ["Админ-панель", "Расписание", Timetable.getDayWithDay(DayId), Num + Letter]
+    return [{ title: "Админ-панель"}, { title: "Расписание"}, { title: Timetable.getDayWithDay(DayId)}, {title: Num + Letter}]
 }
 
 
@@ -141,15 +141,11 @@ const DashBoardPanel = (props) => {
     return (
         <>
             {contextHolder}
-            <Breadcrumb
+            <Breadcrumb items={getOptionsForBreadcrumb(Num, Letter, DayId)}
                 style={{
                     margin: '16px 0',
                 }}
-            >
-                {getOptionsForBreadcrumb(Num, Letter, DayId).map((e) => {
-                    return <Breadcrumb.Item key={e + Math.random(123, 354)}>{e}</Breadcrumb.Item>
-                })}
-            </Breadcrumb>
+            />
             <Content className={cl.content}>
                 <Form
                     labelCol={{ span: 4 }}

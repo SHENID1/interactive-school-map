@@ -31,8 +31,11 @@ const EventCreate = () => {
     const onFinish = async (values) => {
         // const data = values.push()
         try{
-            await EventApi.createEvent(values)
-            //form.resetFields();
+            const response = await EventApi.createEvent(values)
+            const id = response.data._id
+            form.resetFields();
+            window.location.replace(`${window.location.origin}/admin/event/events/${id}`)
+
         }
         catch (e) {
             await store.checkAuth()
@@ -79,15 +82,15 @@ const EventCreate = () => {
             <div className={cl.form}>
                 <h2 className={cl.h2}>Как событие будет называться?</h2>
                 <Form.Item name={['name']} rules={[{required: true}]}>
-                    <Input placeholder="Название" showCount maxLength={30}/>
+                    <Input placeholder="Название" showCount maxLength={70}/>
                 </Form.Item>
                 <h2 className={cl.h2}>Что будет происходить?</h2>
                 <Form.Item name={['description']} rules={[{required: true}]}>
-                    <TextArea autoSize placeholder="Описание" maxLength={200} showCount/>
+                    <TextArea autoSize placeholder="Описание" maxLength={500} showCount/>
                 </Form.Item>
                 <h2 className={cl.h2}>Выберите цвет, который мог ассоциироваться с вашим событием</h2>
                 <Form.Item name={['color']} rules={[{required: true}]} initialValue={"#fffb00"}>
-                    <ColorPicker size="large" showText disabledAlpha/>
+                    <ColorPicker size="large" showText disabledAlpha format={"hex"} defaultFormat={"hex"}/>
                 </Form.Item>
                 <h2 className={cl.h2}>Изображение</h2>
                 <Form.Item name={['image']} rules={[{required: true}]}

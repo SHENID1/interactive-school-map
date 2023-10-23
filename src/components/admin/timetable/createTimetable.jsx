@@ -66,13 +66,11 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 
 
-const getOptionsForBreadcrumb = () => {
-    return ["Админ-панель", "Расписание", "Создать расписание"]
-}
+const getOptionsForBreadcrumb = () => [{ title: "Админ-панель" }, { title: "Расписание" }, { title: "Создать расписание" }]
 
 
 const CreateTimetable = ({handler}) => {
-    const [api, contextHolder] = notification.useNotification();
+    const [api, ContextHolder] = notification.useNotification();
     const openNotificationWithIcon = (type) => {
         api[type]({
             message: 'Не удалось создать таблицу',
@@ -98,16 +96,9 @@ const CreateTimetable = ({handler}) => {
     };
     return (
         <>
-            {contextHolder}
-            <contextHolder/>
-            <Breadcrumb
-                style={{
-                    margin: '16px 0',
-                }}>
-                {getOptionsForBreadcrumb().map((e) => {
-                    return <Breadcrumb.Item key={e + Math.random(123, 354)}>{e}</Breadcrumb.Item>
-                })}
-            </Breadcrumb>
+            {ContextHolder}
+            <Breadcrumb items={getOptionsForBreadcrumb()}
+                style={{margin: '16px 0'}}/>
             <Content className={cl.content}>
                 <Form
                     form={form}
@@ -136,7 +127,6 @@ const CreateTimetable = ({handler}) => {
                             options={DayOptions}
                         />
                     </Form.Item>
-
 
                     <Form.List name="timetable" label={"Расписание"}>
                         {(fields, {add, remove}) => (

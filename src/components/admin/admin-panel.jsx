@@ -11,6 +11,7 @@ import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import EventAdminMain from "./event/eventAdminMain";
 import EventCreate from "./event/eventCreate";
+import EventUpdate from "./event/eventUpdate";
 
 
 const AdminPanel = () => {
@@ -45,6 +46,7 @@ const AdminPanel = () => {
                 <Route path="scheme" element={<SchemeMain/>}/>
                 <Route path="event" element={<EventAdminMain/>}/>
                 <Route path="event/create/:floor/:x/:y" element={<EventCreate/>}/>
+                <Route path="event/events/:id" element={<EventUpdate/>}/>
                 <Route path="event/create" element={<EventCreate/>}/>
             </Route>
         </Routes>

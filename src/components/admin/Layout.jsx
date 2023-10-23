@@ -4,6 +4,7 @@ import logo from "../../images/1566 2022.png";
 import {Avatar, Button, Layout, Menu} from 'antd';
 import {Link, Outlet} from "react-router-dom";
 import {Context} from "../../index";
+import Footer from "./footer/footer";
 const { Header} = Layout;
 
 
@@ -38,6 +39,7 @@ const ElLayout = () => {
 
             </Header>
             <Outlet/>
+            <Footer/>
         </Layout>
         </>
     );

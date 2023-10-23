@@ -34,6 +34,7 @@ export default class Timetable{
     static async CreateTimetable(data){
         try{
             const response = await $api.post(`/api/timetable/`, data);
+            console.log(response)
             return response.data;
         }
         catch (e){

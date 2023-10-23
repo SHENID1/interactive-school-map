@@ -11,20 +11,44 @@ export default class EventApi {
         return res;
     }
 
-    static createEvent(data) {
+    static async createEvent(data) {
         try {
-            const prData = EventApi.processData(data)
-            $api.post(`/api/events/`, prData);
-
+            const prData = EventApi.processData(data);
+            return await $api.post(`/api/events/`, prData);
         } catch (e) {
             console.log(e)
+            return "error"
         }
+    }
+    static async getEvents() {
+        try {
+            return (await $api.get('/api/events/')).data;
+        }
+        catch (e) {
+            return e;
+        }
+
+    }
+    static async getEventById(id) {
+        try {
+            return (await $api.get(`/api/events/${id}`)).data;
+        }
+        catch (e) {
+            return e;
+        }
+
     }
 
     static processData(data) {
+        let color = data.color;
+        if (typeof color !== "string") {
+            color = color.toHexString()
+
+        }
+
         return {
             name: data.name,
-            color: data.color,
+            color: color,
             description: data.description,
             floor: Number(data.floor),
             x: Number(data.x),
