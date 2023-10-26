@@ -12,6 +12,7 @@ import {observer} from "mobx-react-lite";
 import EventAdminMain from "./event/eventAdminMain";
 import EventCreate from "./event/eventCreate";
 import EventUpdate from "./event/eventUpdate";
+import Page404 from "../page/404";
 
 
 const AdminPanel = () => {
@@ -48,6 +49,7 @@ const AdminPanel = () => {
                 <Route path="event/create/:floor/:x/:y" element={<EventCreate/>}/>
                 <Route path="event/events/:id" element={<EventUpdate/>}/>
                 <Route path="event/create" element={<EventCreate/>}/>
+                <Route path={"*"} element={<Page404/>}/>
             </Route>
         </Routes>
     );

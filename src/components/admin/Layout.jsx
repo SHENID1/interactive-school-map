@@ -16,13 +16,14 @@ const NavOption = [
     {key: 5, label: (<Link to="event" >События</Link>)},
 ]
 const ElLayout = () => {
+    document.title = "Панель Администратора";
     const {store} = useContext(Context)
     const Exit = () => {
         store.logout()
     };
     return (
         <>
-        <Layout>
+        <Layout className={cl.main}>
             <Header className={cl.header}>
                 <div className={cl.leftCont}>
                 <div className={cl.logo}><img className={cl.logo} alt={""} src={logo}/></div>
