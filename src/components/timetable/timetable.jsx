@@ -7,22 +7,12 @@ import CabData from "../../api/cabdata";
 
 
 const getOptions = (dataObj) => {
-    const timeTableSort = (table) => {
-        function compareSl(a, b) {
-            if (a.s[1] > b.s[1]) return -1;
-            if (a.s[1] === b.s[1] && a.s[0] < b.s[0]) return -1;
-            if (a.s[1] === b.s[1] && a.s[0] > b.s[0]) return 1;
-            if (a.s[1] < b.s[1]) return 1;
-        }
-        table.sort(compareSl)
-        return table
-    }
     let list = [];
     for (let i = 0; i < dataObj.length; i++) {
         let Class = dataObj[i];
         list.push({value: Class.letter + Class.num, label: Class.num + Class.letter, s: [Class.letter, Class.num]})
     }
-    list = timeTableSort(list)
+    list = CabData.timeTableSort(list)
     return list;
 }
 

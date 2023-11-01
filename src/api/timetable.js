@@ -42,36 +42,31 @@ export default class Timetable{
         }
     }
 
-
-    static getFullTable = (num, letter, dayId) => {
-        let date;
+    static getDataByDayId(dayId: Number) {
         switch (dayId) {
             case (0):
-                date = Data.getData('TimetableSunday');
-                break;
+                return Data.getData('TimetableSunday');
             case (1):
-                date = Data.getData('TimetableMonday');
-                break;
+                return Data.getData('TimetableMonday');
             case (2):
-                date = Data.getData('TimetableTuesday');
-                break;
+                return Data.getData('TimetableTuesday');
             case (3):
-                date = Data.getData('TimetableWednesday');
-                break;
+                return Data.getData('TimetableWednesday');
             case (4):
-                date = Data.getData('TimetableThursday');
-                break;
+                return Data.getData('TimetableThursday');
             case (5):
-                date = Data.getData('TimetableFriday');
-                break;
+                return Data.getData('TimetableFriday');
             case (6):
-                date = Data.getData('TimetableSaturday');
-                break;
+                return Data.getData('TimetableSaturday');
             default:
                 return ErrorEvent;
         }
-        for (let i = 0; i < date.length; i++) {
-            let d = date[i];
+    }
+    static getFullTable = (num, letter, dayId) => {
+        let data;
+        data = Timetable.getDataByDayId(dayId)
+        for (let i = 0; i < data.length; i++) {
+            let d = data[i];
             if (d.num === Number(num) && d.letter === letter) {// num: string, letter: string
                 return d;
             }
@@ -108,24 +103,8 @@ export default class Timetable{
             getDay = now.getDay();
         }
         else getDay = day
-        switch (getDay) {
-            case (0):
-                return "Воскресенье";
-            case (1):
-                return "Понедельник"
-            case (2):
-                return "Вторник"
-            case (3):
-                return "Среда"
-            case (4):
-                return "Четверг"
-            case (5):
-                return "Пятница"
-            case (6):
-                return "Суббота"
-            default:
-                return "Не найдено"
-        }
+        return Timetable.getDayWithDay(getDay)
+
     }
     static getDayWithDay(day) {
         switch (day) {

@@ -3,62 +3,12 @@ import {Content} from "antd/es/layout/layout";
 import cl from "./style.module.css";
 import Timetable from "../../../api/timetable";
 import {DeleteOutlined, MinusCircleOutlined, PlusOutlined, SaveOutlined} from '@ant-design/icons';
-import Data from "../../../api/getData";
 import Load from "../../../api/load";
 import React from "react";
+import CabData from "../../../api/cabdata";
+import DateFunctions from "../../../api/Day";
 
 
-
-const getAllCabData = () => {
-    const data = [
-        Data.getData('CabDataFour'),
-        Data.getData('CabDataThree'),
-        Data.getData('CabDataTwo'),
-        Data.getData('CabDataOne'),
-        Data.getData('CabDataMOne')
-    ]
-    let gList = []
-    for (let i = 0; i !== 5; i++) {
-        let floor_data = data[i];
-        for (let d in floor_data) {
-            let h = floor_data[d];
-            if (h.type === 0 || h.type === 2) continue;
-            gList.push({value: h.id, label: h.name})
-        }
-    }
-    return gList
-}
-
-const DayOptions = [
-    {
-        value: 1,
-        label: 'Понедельник',
-    },
-    {
-        value: 2,
-        label: 'Вторник',
-    },
-    {
-        value: 3,
-        label: 'Среда',
-    },
-    {
-        value: 4,
-        label: 'Четверг',
-    },
-    {
-        value: 5,
-        label: 'Пятница',
-    },
-    {
-        value: 6,
-        label: 'Суббота',
-    },
-    {
-        value: 0,
-        label: 'Воскресенье',
-    }
-]
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
     required: '${label} нужно указать!'
@@ -81,7 +31,6 @@ const getOptionsForBreadcrumb = (Num, Letter, DayId) => {
 const DashBoardPanel = (props) => {
     const {DayId, Letter, Num} = parse(props.class)
     let data = Timetable.getFullTable(Num, Letter, DayId)
-
     const [messageApi, contextHolder] = message.useMessage();
     const success = () => {
         messageApi.open({
@@ -172,7 +121,7 @@ const DashBoardPanel = (props) => {
                             style={{
                                 width: 160,
                             }}
-                            options={DayOptions}
+                            options={DateFunctions.DayOptions()}
                         />
                     </Form.Item>
 
@@ -213,7 +162,7 @@ const DashBoardPanel = (props) => {
                                                 filterOption={(input, option) =>
                                                     (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                                 }
-                                                options={getAllCabData()}
+                                                options={CabData.getAllCabData()}
                                             />
                                         </Form.Item>
                                         <Form.Item

@@ -23,6 +23,7 @@
     padding-bottom: 2px;
 }
 .submitButton {
+    margin-right: 15px;
 }
 .cont {
     max-width: 1000px;
@@ -37,7 +38,7 @@
     height: 120px;
     margin-top: 20px;
     padding: 5px 5px 5px 5px;
-    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
     display: flex;
     cursor: pointer;
     text-effect: none;
@@ -122,5 +123,8 @@
     margin: 0 5px 0 0;
 }
 .st_span{
+    display: flex;
+}
+.but_wrap {
     display: flex;
 }
