@@ -33,9 +33,14 @@ router.post('/timetable',authMiddleware, Controller.createTimetable)
 router.delete('/timetable/:id',authMiddleware, Controller.DeleteTimetable)
 
 // events
-router.get('/events', Controller.getEvents)
-router.put('/events', Controller.UpdateEvents)
-router.post('/events', Controller.CreateEvents)
-router.delete('/events/:id', Controller.DeleteEvents)
+router.get('/events/bytes', Controller.getBytes)
+router.post('/events/bytes', Controller.clearBytes)
+router.get('/events', authMiddleware, Controller.getEvents)
+router.get('/events/:id', authMiddleware, Controller.getEvent)
+router.put('/events', authMiddleware, Controller.UpdateEvents)
+router.post('/events', authMiddleware, Controller.CreateEvents)
+router.post('/events/upload/', authMiddleware, Controller.Upload_Image)
+router.delete('/events/upload/:fileName', authMiddleware, Controller.Delete_Image)
+router.delete('/events/:id', authMiddleware, Controller.DeleteEvents)
 
 export default router;

@@ -4,6 +4,7 @@ import Evacuation from "./mongoose_scheme/evacuation.js";
 import Timetable from "./mongoose_scheme/Timetable.js";
 import Event from "./mongoose_scheme/event.js";
 import fileService from "./service/fileService.js";
+import FileService from "./service/fileService.js";
 
 class Controller {
 
@@ -89,10 +90,8 @@ class Controller {
     async createTimetable (req, res) {
         try {
             const data = req.body;
-            const image = req.files
-            console.log(image, typeof(data))
-            //const Event = await Timetable.create(data);
-            res.status(200).json(Event);
+            const dates = await Timetable.create(data);
+            res.status(200).json(dates);
         } catch (e) {
             res.status(500).json(e);
         }
@@ -130,14 +129,45 @@ class Controller {
             return res.status(500).json(e)
         }
     }
+    async getEvent(req, res) {
+        try {
+            const {id} = req.params;
+            // console.log(id);
+            const Events = await Event.findById(id);
+            return res.json(Events);
+        }
+        catch (e) {
+            return res.status(500).json(e)
+        }
+    }
     async CreateEvents(req, res) {
         try {
             const data = req.body;
-            // console.log(new Date.now().toUTCString())
-            if (!req.files.image) return res.status(400).json({message: "Image не указан"})
-            const fileName = await fileService.saveFile(req.files.image)
-            const Events = await Event.create({...data, image: fileName});
+            // console.log(req.body)
+            const Events = await Event.create(data);
             res.status(200).json(Events);
+        }
+        catch (e) {
+            console.log(e)
+            return res.status(500).json(e)
+        }
+    }
+    async Upload_Image(req, res) {
+        try {
+            if (!req.files.file) return res.status(400).json({message: "Image не указан"})
+            const fileName = await fileService.saveFile(req.files.file)
+            res.status(200).json(fileName);
+        }
+        catch (e) {
+            return res.status(500).json(e)
+        }
+    }
+    async Delete_Image(req, res) {
+        try {
+            const {fileName} = req.params;
+            if (!fileName) return res.status(400).json({message: "fileName не указан"})
+            fileService.deleteFile(fileName)
+            res.status(200).json();
         }
         catch (e) {
             return res.status(500).json(e)
@@ -145,9 +175,31 @@ class Controller {
     }
     async UpdateEvents(req, res) {
         try {
-
+            const data = req.body;
+            const Events = await Event.findByIdAndUpdate(data._id, data, {new: true});
+            res.status(200).json(Events);
         }
         catch (e) {
+            return res.status(500).json(e)
+        }
+    }
+    async getBytes(req, res) {
+        try {
+            const bytes = await FileService.getSizeDir();
+            res.status(200).json(bytes);
+        }
+        catch (e) {
+            console.log(e)
+            return res.status(500).json(e)
+        }
+    }
+    async clearBytes(req, res) {
+        try {
+            await fileService.clearFile()
+            res.status(200).json();
+        }
+        catch (e) {
+            console.log(e)
             return res.status(500).json(e)
         }
     }
@@ -157,7 +209,7 @@ class Controller {
             if (!id) return res.status(400).json({message: "ID не указан"})
             const {image} = await Event.findByIdAndDelete(id)
             if (!image) return res.status(402).json({message: "Не найдено"})
-            await fileService.deleteFile(image)
+            fileService.deleteFile(image)
             return res.json("ok");
         }
         catch (e) {

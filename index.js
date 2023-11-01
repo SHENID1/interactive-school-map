@@ -16,6 +16,7 @@ mongoose.set('strictQuery', true);
 app.use(cookieParser())
 app.use(express.json());
 app.use(express.static("static"));
+app.use(express.static("eventsImage"));
 app.use('/api', router);
 app.use('/auth', auth_router);
 app.use(expressIp().getIpInfoMiddleware);

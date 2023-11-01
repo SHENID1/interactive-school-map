@@ -27,11 +27,11 @@ const Event = new mongoose.Schema(
             required: true,
         },
         x: {
-            type: String,
+            type: Number,
             required: true,
         },
         y: {
-            type: String,
+            type: Number,
             required: true,
         },
         floor: {
