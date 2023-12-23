@@ -34,7 +34,7 @@ const EventAdminCreate = () => {
             }
 
             <div className={data ? cl.cont : {display: "none"}}>
-                {data ? data.map((el) => <EventsElement data={el} key={el._id} />) : <></>}
+                {data ? data.map((el) =>  <Link to={`events/${el._id}`} color={"#000000"} key={el._id}><EventsElement data={el} /></Link>) : <></>}
             </div>
         </div>
     );

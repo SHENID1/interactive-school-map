@@ -1,4 +1,13 @@
 export default class DateFunctions {
+    static options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric"
+    };
     static DayOptions = () => [
         {
             value: 1,

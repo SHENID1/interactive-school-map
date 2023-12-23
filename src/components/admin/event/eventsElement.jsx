@@ -1,32 +1,23 @@
 import React from 'react';
 import cl from "./style.module.css";
 import {ApiUrl} from "../../../api";
-import {Link} from "react-router-dom";
 import {RightOutlined} from "@ant-design/icons";
 import EventApi from "../../../api/eventApi";
 import dayjs from "dayjs";
+import DateFunctions from "../../../api/Day";
 
 
-const EventsElement = ({data, onclick}) => {
+const EventsElement = ({data}) => {
     const dateStart = dayjs(data.dateStart).toDate();
     const dateEnd = dayjs(data.dateEnd).toDate();
     const dateNow = new Date();
     const status = EventApi.isStartedEvent(dateStart, dateEnd, dateNow);
 
-    const options = {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric"
-    };
+
     const des = data.description;
 
     return (
-        <Link to={`events/${data._id}`} color={"#000000"}>
-            <div className={cl.event_link} style={{border: `2px solid ${data.color}`}} onClick={() => onclick(data)}>
+            <div className={cl.event_link} style={{border: `2px solid ${data.color}`}}>
                 <img height={80} className={cl.icon_Image} src={ApiUrl + `/${data.image}`} alt=""/>
                 <div className={cl.right_row}>
                     <div className={cl.c1}>
@@ -35,7 +26,7 @@ const EventsElement = ({data, onclick}) => {
                     </div>
                     <div className={cl.c2}>
                         <div className={cl.c2_start}>
-                            <b>Время Начала:</b> {dateStart.toLocaleDateString("ru-RU", options)}
+                            <b>Время Начала:</b> {dateStart.toLocaleDateString("ru-RU", DateFunctions.options)}
                         </div>
                         <div className={cl.st_span}>
                             {status === -1 ? <>
@@ -49,7 +40,7 @@ const EventsElement = ({data, onclick}) => {
                                 <b>Завершилось</b></> : <></>}
                         </div>
                         <div className={cl.c2_end}>
-                            <b>Время завершения:</b> {dateEnd.toLocaleDateString("ru-RU", options)}
+                            <b>Время завершения:</b> {dateEnd.toLocaleDateString("ru-RU", DateFunctions.options)}
                         </div>
                     </div>
                     <div className={cl.c3}>
@@ -63,7 +54,6 @@ const EventsElement = ({data, onclick}) => {
                     </div>
                 </div>
             </div>
-        </Link>
     );
 };
 

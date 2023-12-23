@@ -1,9 +1,12 @@
 import React, {useContext, useEffect} from 'react';
 import './ModalInfo.css';
+import cl from './ModalInfo.module.css';
 import {Fl} from "../../context/fl";
 import Data from "../../api/getData"
 import Timetable from "../../api/timetable";
-
+import DateFunctions from "../../api/Day";
+import dayjs from "dayjs";
+import EventApi from "../../api/eventApi";
 
 
 function getTimeTable(id) {
@@ -51,7 +54,7 @@ function getTimeTable(id) {
         for (let t = 0; t < date[i].timetable.length; t++) {
             if (id === date[i].timetable[t].id) {
                 let h = date[i].timetable[t];
-                timeTable[h.num - 1].subject = + date[i].num + date[i].letter + " " + h.subject;
+                timeTable[h.num - 1].subject = +date[i].num + date[i].letter + " " + h.subject;
                 if (h.group) {
                     timeTable[h.num - 1].subject = date[i].num + date[i].letter + " (" + h.group + ")гр. " + h.subject;
                 }
@@ -91,7 +94,7 @@ const ModalInfo = (props) => {
     if (props.dataObj.type === 1) { // кабинет
         let img = <></>
         let ImageUrl = `${window.location.origin.slice(0, -5)}:5000/${props.dataObj.imgName}`
-        if (props.dataObj.imgName){
+        if (props.dataObj.imgName) {
             img = <img src={ImageUrl} alt={""} height={"auto"}
                        width={"100%"}/>
         }
@@ -116,10 +119,11 @@ const ModalInfo = (props) => {
                 {/*    <div className="t3">id:</div>*/}
                 {/*</div>*/}
                 <div className="rasp">
-
                     <table>
                         <thead>
-                        <tr id={"main"}><td>Расписание на сегодня ({Timetable.getDay()})</td></tr>
+                        <tr id={"main"}>
+                            <td>Расписание на сегодня ({Timetable.getDay()})</td>
+                        </tr>
                         </thead>
                         <tbody>
                         {getTimeTable(props.dataObj.id).map(les =>
@@ -144,12 +148,14 @@ const ModalInfo = (props) => {
                     <div className="t1">Этаж</div>
                     <div className="t2">{props.dataObj.floor}</div>
                     <div className="t3">Этаж</div>
-                    </div>
+                </div>
 
                 <div className="rasp">
                     <table>
                         <thead>
-                        <tr id="main"><td>Расписание на сегодня ({Timetable.getDay()})</td></tr>
+                        <tr id="main">
+                            <td>Расписание на сегодня ({Timetable.getDay()})</td>
+                        </tr>
                         </thead>
                         <tbody>
                         <tr className="tr1" id="stolovay">
@@ -193,10 +199,62 @@ const ModalInfo = (props) => {
                 </div>
             </>
     }
+    const data = props.dataObj
+    if (props.dataObj.type === 4) {
+        // console.log(data);
+        let img = <></>
+        let ImageUrl = `${window.location.origin.slice(0, -5)}:5000/${data.image}`
+        if (data.image) img = <img src={ImageUrl} alt="" className={cl.img}/>
+        const dateStart = dayjs(data.dateStart).toDate();
+        const dateEnd = dayjs(data.dateEnd).toDate();
+        const dateNow = new Date();
+        const status = EventApi.isStartedEvent(dateStart, dateEnd, dateNow);
+        info =
+            <div>
+                {img}
+                <h1>{numCab}</h1>
+                {status === -1 ? <>
+                    <div style={{backgroundColor: "#ffc68e"}} className={cl.despan}>
+                        <b>Не началось</b>
+                    </div>
+                </> : <></>}
+                {status === 0 ? <>
+                    <div style={{backgroundColor: "#14ff00"}} className={cl.despan}>
+                        <b>Уже идёт</b></div>
+                </> : <></>}
+                {status === 1 ? <>
+                    <div style={{backgroundColor: "#ff0000"}} className={cl.despan}>
+                        <b>Завершилось</b></div>
+                </> : <></>}
+                <div className={cl.despan}>
+                    <div className={cl.t2}>{des}</div>
+                </div>
+                <div className={cl.span}>
+                    <div className={cl.t1}>Время начала:</div>
+                    <div className={cl.t2}>{dateStart.toLocaleDateString("ru-RU", DateFunctions.options)}</div>
+                    <div className={cl.t3}>Время нача</div>
+                </div>
+                <div className={cl.span}>
+                    <div className={cl.t1}>Время окончания:</div>
+                    <div className={cl.t2}>{dateEnd.toLocaleDateString("ru-RU", DateFunctions.options)}</div>
+                    <div className={cl.t3}>Время окончан</div>
+                </div>
+                <div className={cl.span}>
+                    <div className={cl.t1}>Местоположение</div>
+                    <div className={cl.t2}>{data.floor} Этаж, X:{data.x} Y:{data.y} </div>
+                    <div className={cl.t3}>Местоположение</div>
+                </div>
+            </div>
+    }
+
 
     return (
         <div className={[props.active ? "active" : "none", ' '].join(' ')} onClick={() => props.sma(false)}>
-            <div id={props.active ? "activeAnimation" : "out"} className="modal">
+            <div id={props.active ? "activeAnimation" : "out"} className="modal" style={data.color ? {
+                borderColor: props.dataObj.color,
+                borderStyle: "SOLID",
+                borderWidth: "10px"
+            } : {}}>
                 <div className="modal__content"
                      onClick={e => e.stopPropagation()}>
                     {info}

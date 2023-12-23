@@ -3,10 +3,13 @@ import CabList from "./UI/cabList";
 import PolygonX from "./UI/PolygonX";
 import {Fl} from "../../context/fl";
 import EvacuationST from "../evacuation/evacuationst";
-import { ContextMenu } from "@ni7r0g3n/react-context-menu";
+import {ContextMenu} from "@ni7r0g3n/react-context-menu";
+import EventView from "../event/eventmap/eventview";
+// import {get} from "axios";
 
-const contextStyle = {container: {
-    backgroundColor: "white",
+const contextStyle = {
+    container: {
+        backgroundColor: "white",
         fontWeight: "bold",
     },
     row: {
@@ -43,9 +46,14 @@ const Floor = (props) => {
         return Math.abs(Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2)))
     }
     const onContextMenu = (e) => {
-        const XY = [e.nativeEvent.layerX, e.nativeEvent.layerY]
+        // console.log(e.nativeEvent)
+        const XY = [e.nativeEvent.offsetX, e.nativeEvent.offsetY]
         setContextXY(XY)
         if (e.nativeEvent.target.className.baseVal !== "svg") {
+            if (!e.nativeEvent.srcElement.offsetLeft || !e.nativeEvent.srcElement.offsetTop) {
+                e.preventDefault()
+                return false
+            }
             setContextXY([e.nativeEvent.srcElement.offsetLeft, e.nativeEvent.srcElement.offsetTop])
         }
         e.preventDefault()
@@ -122,7 +130,7 @@ const Floor = (props) => {
                 Y += -(beforeXY[1] - newXY[1]) / scale;
             }
             if (Math.abs(Y) > translateBorder[1]) Y = translateXY[1];
-            if (Math.abs(Y) > translateBorder[1]){
+            if (Math.abs(Y) > translateBorder[1]) {
                 setTranslateXY([0, 0]);
                 setBeforeXY([]);
                 setIsPressed(false);
@@ -146,11 +154,12 @@ const Floor = (props) => {
     }
 
     const items = [
-        { label: `X:${contextXY[0]} Y:${contextXY[1]}`, disabled: true, disabledClassName: "disabled"},
-        { label: "Создать событие", onClick: () =>
-                window.location.replace(`${window.location.href}admin/event/create/${floor}/${contextXY[0]}/${contextXY[1]}`)},
+        {label: `X:${contextXY[0]} Y:${contextXY[1]}`, disabled: true, disabledClassName: "disabled"},
+        {
+            label: "Создать событие", onClick: () =>
+                window.location.replace(`${window.location.href}admin/event/create/${floor}/${contextXY[0]}/${contextXY[1]}`)
+        },
     ];
-
 
 
     return (
@@ -164,19 +173,20 @@ const Floor = (props) => {
             onTouchMove={(e) => translateMap(e)}
             onTouchEnd={() => mouseUp()}>
             <ContextMenu items={items} menuStyle={contextStyle} animated={false}>
-            <div className="wrapper" id="wrapper" ref={map}
-                 style={{transform: `scale(${scale}) translate(${translateXY[0]}px, ${translateXY[1]}px)`}}
-                 onContextMenu={onContextMenu}>
-                <EvacuationST/>
-                <img src={img} alt=""/>
-                <svg className="svg">
-                    {props.SchemeData.map(el =>
-                        <PolygonX key={el.id} isHover={hoverCab === el.id} dataId={el.id} List={props.cabData}
-                                  mo={get_mo} points={el.points}/>
-                    )}
-                </svg>
+                <div className="wrapper" id="wrapper" ref={map}
+                     style={{transform: `scale(${scale}) translate(${translateXY[0]}px, ${translateXY[1]}px)`}}
+                     onContextMenu={onContextMenu}>
+                    <EvacuationST/>
+                    <EventView mo={get_mo}/>
+                    <img src={img} alt=""/>
+                    <svg className="svg">
+                        {props.SchemeData.map(el =>
+                            <PolygonX key={el.id} isHover={hoverCab === el.id} dataId={el.id} List={props.cabData}
+                                      mo={get_mo} points={el.points}/>
+                        )}
+                    </svg>
                     <CabList List={props.cabData} mo={get_mo} HoverTo={hoverTo} HoverFrom={hoverOut}/>
-            </div>
+                </div>
             </ContextMenu>
         </div>
     );

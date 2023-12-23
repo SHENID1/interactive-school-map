@@ -19,7 +19,7 @@ const EvacuationButton = (props) => {
         <>
             <div className={isVisible ? cl.ActiveEvacuationButton : cl.EvacuationButton}
                  onClick={()=>editOnClick()}>
-                <img  width={"45px"} height={"45px"} src={icon} alt=""/>
+                <img  width={"44px"} height={"44px"} src={icon} alt=""/>
             </div>
             <div className={isVisible ? cl.EvRulesButton : 'none'}
             onClick={()=> props.OpenRules()}>

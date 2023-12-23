@@ -5,116 +5,133 @@
   font-display: swap;
   src: url(mant.ttf) format('truetype');
 }
-@font-face{
+
+@font-face {
   font-family: "grafity";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
   src: url(SpriteGraffiti-Regular.otf) format('truetype');
 }
-@font-face{
+
+@font-face {
   font-family: "propis";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
   src: url(ofont.ru_Nickainley.ttf) format('truetype');
 }
-.none{
+
+.none {
   display: none;
 }
+
 @media screen and (max-width: 566px), screen and (max-height: 700px) {
-  .rightContainer{
+  .rightContainer {
     top: 40px !important;
     right: 1px !important;
-    border-radius: 20px 10px 20px 10px ;
+    border-radius: 20px 10px 20px 10px;
   }
 }
-body{
+
+body {
   touch-action: none;
 }
+
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', serif;
 }
-img{
+
+img {
   pointer-events: none;
 }
-.selected{
+
+.selected {
   cursor: no-drop !important;
-  background-color:  #00b3ff8b !important;
-  
+  background-color: #00b3ff8b !important;
+
 }
-.floor_is_used{
+
+.floor_is_used {
   display: flex !important;
   animation: changefloor 1s ease !important;
 }
-.pressed{
+
+.pressed {
   cursor: grabbing;
 }
+
 .map {
-  .floors{
+  .floors {
     overflow-y: hidden;
     overflow-x: hidden;
     background-color: #f2f3da94;
-    .floor{
+
+    .floor {
       user-select: none;
       display: none;
       justify-content: center;
       align-items: center;
       height: 100vh;
       width: 100vw;
-      
+
       transform: scale(1.0);
+
       .wrapper {
         position: relative;
         height: 482px;
         width: 645px;
-        .cabName{
+
+        .cabName {
           font-size: 20px;
-          font-weight:bold;
+          font-weight: bold;
           color: black;
           position: absolute;
           border-radius: 3px;
-          top: 0px;
-          left: 0px;
+          top: 0;
+          left: 0;
           z-index: 3;
           cursor: pointer;
           user-select: none;
         }
-        .cabName:hover{
+
+        .cabName:hover {
           background-color: rgba(231, 90, 24, 0.5);
-          transition: all 1s ;
-          -webkit-box-shadow: 0px 0px 38px 7px rgba(231, 24, 24, 0.5);
-          -moz-box-shadow: 0px 0px 38px 7px rgba(231, 24, 24, 0.5);
-          box-shadow: 0px 0px 38px 7px rgba(231, 24, 24, 0.5);
+          transition: all 1s;
+          -webkit-box-shadow: 0 0 38px 7px rgba(231, 24, 24, 0.5);
+          -moz-box-shadow: 0 0 38px 7px rgba(231, 24, 24, 0.5);
+          box-shadow: 0 0 38px 7px rgba(231, 24, 24, 0.5);
         }
-        .cabName:active{
-          background-color: #FF8C0B ;
-          transition: all 0.15s ;
+
+        .cabName:active {
+          background-color: #FF8C0B;
+          transition: all 0.15s;
         }
       }
     }
 
-    svg {
+    .svg {
       z-index: 1;
       height: 482px;
       width: 645px;
       position: absolute;
-      top: 0px;
-      left: 0px;
+      top: 0;
+      left: 0;
       right: 0;
       user-select: none;
+
       polygon {
         fill: #ffdba478;
         cursor: pointer;
       }
-      
+
       polygon:hover {
         fill: #ffc60b9d;
         transition: all 0.3s;
       }
-      
+
       polygon:active {
         fill: #FF8C0B;
         transition: all 0.15s;
@@ -127,9 +144,10 @@ img{
       text-decoration: none;
       user-select: none;
     }
-    }
   }
-.rightContainer{
+}
+
+.rightContainer {
   z-index: 100;
   position: fixed;
   top: 3em;
@@ -137,6 +155,7 @@ img{
   height: auto;
   width: auto;
   user-select: none;
+
   .f_buttons {
 
     display: flex;
@@ -147,7 +166,8 @@ img{
     text-align: center;
     text-decoration: none;
     user-select: none;
-    .selBtn{
+
+    .selBtn {
       height: 50px;
       width: 50px;
       border-radius: 20px;
@@ -155,29 +175,33 @@ img{
       cursor: pointer;
       background-color: #00ff4c00;
     }
+
     .selBtn:hover {
       background-color: #00b3ff3d;
       transition: background-color .3s ease-in-out;
     }
   }
 }
-@keyframes changefloor{
-  from{
+
+@keyframes changefloor {
+  from {
     transform: scale(1.3);
   }
-  to{
+  to {
     transform: scale(1);
   }
 }
 
-.cabHover{
+.cabHover {
   fill: #ffc60b9d !important;
   transition: all 0.3s !important;
 }
-.disabled{
+
+.disabled {
   background-color: #f0bb6c;
   font-Weight: 900;
 }
-.disabled:hover{
+
+.disabled:hover {
   background-color: #ddd1ff !important;
 }

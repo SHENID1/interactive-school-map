@@ -50,6 +50,14 @@ export default class EventApi {
         }
 
     }
+    static async getEventsByFloor(floor) {
+        try {
+            return (await $api.get(`/api/events/floor/${floor}`)).data;
+        } catch (e) {
+            return e;
+        }
+
+    }
 
     static async getBytes() {
         try {
