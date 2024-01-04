@@ -129,6 +129,17 @@ class Controller {
             return res.status(500).json(e)
         }
     }
+    async getEventByFloor(req, res) {
+        try {
+            const {floor} = req.params;
+            const Events = await Event.find({floor: floor})
+            return res.json(Events)
+        }
+        catch (e) {
+            console.log(e)
+            return res.status(500).json(e)
+        }
+    }
     async getEvent(req, res) {
         try {
             const {id} = req.params;
