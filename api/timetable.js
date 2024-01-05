@@ -13,34 +13,6 @@ export default class Timetable{
             throw new Error(e.message)
         }
     }
-    static async UpdateTimetableById(data){
-        try{
-            const response = await $api.put(`api/timetable/`, data);
-            return response.data;
-        }
-        catch (e){
-            throw new Error(e.message)
-        }
-    }
-    static async DeleteTimetableById(data){
-        try{
-            await $api.delete(`api/timetable/${data._id}`);
-            return true;
-        }
-        catch (e){
-            throw new Error(e.message)
-        }
-    }
-    static async CreateTimetable(data){
-        try{
-            const response = await $api.post(`api/timetable/`, data);
-            return response.data;
-        }
-        catch (e){
-            throw new Error(e.message)
-        }
-    }
-
 
     static getFullTable = (num, letter, dayId) => {
         let date;
@@ -107,6 +79,7 @@ export default class Timetable{
             getDay = now.getDay();
         }
         else getDay = day
+        // getDay = 4;
         switch (getDay) {
             case (0):
                 return "Воскресенье";
@@ -180,8 +153,8 @@ export default class Timetable{
     }
     static getTimeTable(id) {
         let now = new Date();
-        // const getDay = now.getDay();
-        const getDay = 4;
+        const getDay = now.getDay();
+        // const getDay = 4;
         let date = {};
         switch (getDay) {
             case (0):

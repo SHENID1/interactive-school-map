@@ -5,6 +5,7 @@ import {Fl} from "../../context/fl";
 import EvacuationST from "../evacuation/evacuationst";
 import {StyleSheet, View, Image, Dimensions} from "react-native";
 import {Svg} from "react-native-svg"
+import EventView from "../event/eventmap/eventview";
 
 
 function getFloor(props) {
@@ -161,6 +162,7 @@ const Floor = (props) => {
                      style={[styles.wrapper, {transform: [{scale: scale}, {translateX: translateXY[0]}, {translateY: translateXY[1]}]}]}>
                     <EvacuationST/>
                     <Image source={img} alt=""></Image>
+                    <EventView mo={get_mo}/>
                     <Svg style={styles.svg}>
                         {props.SchemeData.map(el =>
                             <PolygonX key={el.id} isHover={hoverCab === el.id} dataId={el.id} List={props.cabData}

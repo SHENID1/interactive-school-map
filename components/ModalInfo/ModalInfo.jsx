@@ -7,12 +7,20 @@ import {
     View,
     TouchableWithoutFeedback,
     ImageBackground,
+    Image,
     Animated,
     Dimensions,
     FlatList
 } from "react-native";
+import EventApi from "../../api/eventApi";
+import DateFunctions from "../../api/Day";
+import dayjs from "dayjs";
+import $api from "../../api";
+import AutoScaleImage from "../test/adaptiveimg";
+import Adaptiveimg from "../test/adaptiveimg";
 
-const e = () => {}
+const e = () => {
+}
 
 const tableItem = ({item}) => (
     <View style={styles.tr}>
@@ -70,8 +78,10 @@ const ModalInfo = (props) => {
     if (props.dataObj.type === 1) { // кабинет
         let img = <></>
         if (props.dataObj.imgName) {
-            img = <View style={{width: "100%", height: 140}}><ImageBackground source={{uri: `https://pro.rezraf.com/shenid_api/${props.dataObj.imgName}`}} style={styles.image} resizeMode="cover"
-            borderRadius={20}/></View>
+            img = <View style={{width: "100%", height: 140}}><ImageBackground
+                source={{uri: `https://pro.rezraf.com/shenid_api/${props.dataObj.imgName}`}} style={styles.image}
+                resizeMode="cover"
+                borderRadius={20}/></View>
         }
 
         info =
@@ -94,7 +104,8 @@ const ModalInfo = (props) => {
                 {/*    <Text style={styles.t3}>id:</Text>*/}
                 {/*</View>*/}
                 <View style={styles.rasp}>
-                    <View style={styles.main}><Text style={styles.textMain}>{`Расписание на сегодня (${Timetable.getDay()})`}</Text></View>
+                    <View style={styles.main}><Text
+                        style={styles.textMain}>{`Расписание на сегодня (${Timetable.getDay()})`}</Text></View>
                     <FlatList data={data} renderItem={tableItem} keyExtractor={item => item.i}/>
                 </View>
             </>
@@ -110,15 +121,73 @@ const ModalInfo = (props) => {
                     <Text style={styles.t3}>Этаж:</Text>
                 </View>
                 <View style={styles.rasp}>
-                    <View style={styles.main}><Text style={styles.textMain}>{"Расписание столовой на (любой день)"}</Text></View>
-                    <FlatList data={Timetable.getTimetableDiningRoom()} renderItem={DinningTableItem} keyExtractor={item => item.i}/>
+                    <View style={styles.main}><Text
+                        style={styles.textMain}>{"Расписание столовой на (любой день)"}</Text></View>
+                    <FlatList data={Timetable.getTimetableDiningRoom()} renderItem={DinningTableItem}
+                              keyExtractor={item => item.i}/>
                 </View>
             </>
+    }
+    if (props.dataObj.type === 4) {
+
+        const data = props.dataObj
+        let img = <></>
+        let ImageUrl = `https://pro.rezraf.com/shenid_api/${data.image}`
+
+        if (data.image) img = <View style={{width: "100%", height: 140}}><ImageBackground
+            source={{uri: ImageUrl}} style={styles.image}
+            resizeMode="cover"
+            borderRadius={20}/></View>
+        const dateStart = dayjs(data.dateStart).toDate();
+        const dateEnd = dayjs(data.dateEnd).toDate();
+        const dateNow = new Date();
+        const status = EventApi.isStartedEvent(dateStart, dateEnd, dateNow);
+        info =
+            <View>
+                {img}
+                <Text style={{fontSize: 25, color: 'black', alignSelf: "center"}}>{numCab}</Text>
+                {status === -1 ? <>
+                    <View style={[{backgroundColor: "#ffc68e"}, styles.despan1]}>
+                        <Text style={styles.b}>Не началось</Text>
+                    </View>
+                </> : <></>}
+                {status === 0 ? <>
+                    <View style={[{backgroundColor: "#14ff00"}, styles.despan1]}>
+                        <Text style={styles.b}>Уже идёт</Text></View>
+                </> : <></>}
+                {status === 1 ? <>
+                    <View style={[{backgroundColor: "#ff0000"}, styles.despan1]}>
+                        <Text style={styles.b}>Завершилось</Text></View>
+                </> : <></>}
+                <View style={styles.despan}>
+                    <View style={styles.t2}><Text>{des}</Text></View>
+                </View>
+                <View style={styles.span}>
+                    <View style={styles.t1}><Text>🕒 начала:</Text></View>
+                    <View style={styles.t2}><Text>{dateStart.toLocaleDateString("ru-RU", DateFunctions.options)}</Text></View>
+                    <View style={styles.t3}><Text>🕒 нача</Text></View>
+                </View>
+                <View style={styles.span}>
+                    <View style={styles.t1}><Text>🕒 конца: </Text></View>
+                    <View
+                        style={styles.t2}><Text>{dateEnd.toLocaleDateString("ru-RU", DateFunctions.options)}</Text></View>
+                    <View style={styles.t3}><Text>🕒 окончан</Text></View>
+                </View>
+                <View style={styles.span}>
+                    <View style={styles.t1}><Text>🧭</Text></View>
+                    <View style={styles.t2}><Text>{data.floor} Этаж, X:{data.x} Y:{data.y}</Text></View>
+                    <View style={styles.t3}><Text>🧭</Text></View>
+                </View>
+            </View>
     }
 
     return (
         <TouchableWithoutFeedback onPress={() => props.sma(false)}>
-            <View style={props.active ? styles.active : styles.none}>
+            <View style={[props.active ? styles.active : styles.none, data.color ? {
+                borderColor: props.dataObj.color,
+                borderStyle: "SOLID",
+                borderWidth: "10px"
+            } : {}]}>
                 <TouchableWithoutFeedback onPress={e}>
                     <Animated.View id={props.active ? "activeAnimation" : "out"} style={styles.modal}>
 
@@ -142,7 +211,7 @@ const styles = StyleSheet.create({
     active: {
         width: "100%",
         height: "100%",
-        backgroundColor: "rgba(0,0,0,0.4)",
+        backgroundColor: "#00000066",
         position: "absolute",
         display: "flex",
         top: 0,
@@ -156,7 +225,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     span: {
-        backgroundColor: "rgba(0, 0, 0, 0.18)",
+        backgroundColor: "#0000002D",
         borderRadius: 7,
         height: 30,
         marginTop: 5,
@@ -264,6 +333,35 @@ const styles = StyleSheet.create({
     t2_text_for_dinning: {
         fontSize: 15,
         fontWeight: 'bold',
+    },
+    despan: {
+        backgroundColor: "#0000002D",
+        paddingLeft: 7,
+        paddingRight: 7,
+        borderRadius: 7,
+        height: "auto",
+        minHeight: 30,
+        marginTop: 5,
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    despan1: {
+        borderRadius: 7,
+        height: 30,
+        marginTop: 5,
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    img: {
+        width: "100%",
+        height:"100%",
+    },
+    b: {
+        fontWeight: "bold",
     },
 })
 
