@@ -7,7 +7,6 @@ import {
     View,
     TouchableWithoutFeedback,
     ImageBackground,
-    Image,
     Animated,
     Dimensions,
     FlatList
@@ -15,9 +14,6 @@ import {
 import EventApi from "../../api/eventApi";
 import DateFunctions from "../../api/Day";
 import dayjs from "dayjs";
-import $api from "../../api";
-import AutoScaleImage from "../test/adaptiveimg";
-import Adaptiveimg from "../test/adaptiveimg";
 
 const e = () => {
 }
@@ -358,7 +354,7 @@ const styles = StyleSheet.create({
     },
     img: {
         width: "100%",
-        height:"100%",
+        height: "100%",
     },
     b: {
         fontWeight: "bold",

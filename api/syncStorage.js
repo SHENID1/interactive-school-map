@@ -14,11 +14,11 @@ class SyncStorage {
     AsyncStorage.multiGet(keys).then((data: Array<Array<KeyType>>): Array<
         *,
         > => {
-    data.forEach(this.saveItem.bind(this));
+    data.forEach(this.saveItem.bind(this))
 
-    return [...this.data];
+    return [...this.data]
 }),
-);
+)
 }
 
 get(key: KeyType): any {

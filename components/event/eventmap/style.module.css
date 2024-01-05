@@ -1,0 +1,13 @@
+.point {
+    cursor: pointer;
+    z-index: 100;
+
+}
+
+
+.svg {
+    border-radius: 15px;
+}
+.svg:hover {
+    background-color: rgba(255, 255, 255, 0.51);
+}
