@@ -17,7 +17,7 @@ export default class EventApi {
 
     static async getEventsByFloor(floor) {
         try {
-            return (await axios.get(`${ApiUrl}api/events/floor/${floor}`)).data
+            return (await axios.get(`${ApiUrl}/api/events/floor/${floor}`)).data
         } catch (e) {
             return e;
         }
@@ -26,7 +26,7 @@ export default class EventApi {
 
 
     static async getEventById(id) {
-        return (await $api.get(`/api/events/${id}`)).data;
+        return (await $api.get(`api/events/${id}`)).data;
     }
 
     static processData(data) {

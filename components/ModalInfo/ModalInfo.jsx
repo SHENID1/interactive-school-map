@@ -332,8 +332,7 @@ const styles = StyleSheet.create({
     },
     despan: {
         backgroundColor: "#0000002D",
-        paddingLeft: 7,
-        paddingRight: 7,
+        padding: 7,
         borderRadius: 7,
         height: "auto",
         minHeight: 30,

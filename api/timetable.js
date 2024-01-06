@@ -5,7 +5,7 @@ import {ApiUrl} from "./index";
 export default class Timetable{
     static async getTimetableByDayId(dayId){
         try{
-            const response = await axios.get(`${ApiUrl}api/timetable/${dayId}`);
+            const response = await axios.get(`${ApiUrl}/api/timetable/${dayId}`);
             if (response.data === undefined) return ErrorEvent;
             return response.data;
         }
