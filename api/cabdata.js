@@ -89,47 +89,7 @@ export default class CabData{
         }
         return undefined
     }
-    static getOptions = () => {
 
-         const timeTableSort = (table) => {
-            function compareSl(a, b) {
-                if (a.s[1] > b.s[1]) return -1;
-                if (a.s[1] === b.s[1] && a.s[0] < b.s[0]) return -1;
-                if (a.s[1] === b.s[1] && a.s[0] > b.s[0]) return 1;
-                if (a.s[1] < b.s[1]) return 1;
-            }
-            table.sort(compareSl)
-            return table
-        }
-
-        const DataList = [
-            Data.getDataWithJsonParse('TimetableSunday'),
-            Data.getDataWithJsonParse('TimetableMonday'),
-            Data.getDataWithJsonParse('TimetableTuesday'),
-            Data.getDataWithJsonParse('TimetableWednesday'),
-            Data.getDataWithJsonParse('TimetableThursday'),
-            Data.getDataWithJsonParse('TimetableFriday'),
-            Data.getDataWithJsonParse('TimetableSaturday')
-        ]
-
-        const globalList = [{key: "create", label: "Создать расписание", icon: <PlusOutlined />}]
-        for (let day = 0; day < 7; day++) {
-            let list = {key: day, label: CabData.parseDay(day), children: []};
-            const dataObj = DataList[day]
-            for (let i = 0; i < dataObj.length; i++) {
-                let Class = dataObj[i];
-                list.children.push({key: day + Class.letter + Class.num, label: Class.num + Class.letter, s: [Class.letter, Class.num]})
-            }
-
-            list.children = timeTableSort(list.children)
-            globalList.push(list)
-        }
-        // console.log(globalList)
-        const el1 = globalList[1]
-        globalList[8] = el1
-        delete globalList[1]
-        return globalList;
-    }
     static parseDay = (dayId) => {
         let dayName = ""
         switch (dayId) {
