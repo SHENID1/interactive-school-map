@@ -5,7 +5,6 @@
     "version": "1.0.0",
     "privacy": "public",
     "orientation": "portrait",
-
     "icon": "./assets/SHENID_interactive_map_logo.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -21,6 +20,7 @@
       "bundleIdentifier": "com.shenid.mobileApp"
     },
     "android": {
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/SHENID_interactive_map_logo.png",
         "backgroundColor": "#ffffff"
