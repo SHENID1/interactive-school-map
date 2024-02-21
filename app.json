@@ -10,7 +10,7 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/SHENID_interactive_map_logo.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
