@@ -2,7 +2,7 @@
   "expo": {
     "name": "Интерактивная карта школы",
     "slug": "mobileApp",
-    "version": "0.9.3",
+    "version": "1.0.0",
     "privacy": "public",
     "orientation": "portrait",
 
