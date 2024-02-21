@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Карта школы",
-    "slug": "mobileApp",
-    "version": "0.9.2",
+    "name": "Интерактивная карта школы",
+    "slug": "interactiveSchoolMap",
+    "version": "0.9.3",
     "privacy": "public",
     "orientation": "portrait",
 
@@ -10,7 +10,7 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/SHENID_interactive_map_logo.png",
-      "resizeMode": "cover",
+      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -18,14 +18,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.shenid.mobileApp"
+      "bundleIdentifier": "com.shenid.interactiveSchoolMap"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/SHENID_interactive_map_logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.shenid.mobileApp"
+      "package": "com.shenid.interactiveSchoolMap"
     },
     "web": {
       "favicon": "./assets/favicon.ico"
