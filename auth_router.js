@@ -15,11 +15,11 @@ auth_router.use(cors({
 }));
 // auth_router.use(expressIp().getIpInfoMiddleware);
 
-// auth_router.post('/register',
-//     body('login').isString(),
-//     body('password').isString(),
-//     body('password').isLength({min: 3, max: 30}),
-//     authController.register);
+auth_router.post('/register',
+    body('login').isString(),
+    body('password').isString(),
+    body('password').isLength({min: 3, max: 30}),
+    authController.register);
 auth_router.post('/login', authController.login);
 auth_router.post('/logout', authController.logout);
 auth_router.get('/refresh', authController.refresh);
