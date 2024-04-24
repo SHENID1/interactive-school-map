@@ -2,7 +2,7 @@
   "expo": {
     "name": "Интерактивная карта школы",
     "slug": "mobileApp",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "privacy": "public",
     "orientation": "portrait",
     "icon": "./assets/SHENID_interactive_map_logo.png",
