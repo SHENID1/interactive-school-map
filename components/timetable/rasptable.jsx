@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet, FlatList, Image, Dimensions, TouchableHighlight } from "react-native";
+import {Text, View, StyleSheet, FlatList, Image, Dimensions, TouchableHighlight, TouchableWithoutFeedback } from "react-native";
 import Timetable from "../../api/timetable"
 
 
@@ -61,13 +61,16 @@ const RaspTable = ({data, dayId, openModaleCab}) => {
         </TouchableHighlight>
     )
         if (data === null || data === undefined) return (
-            <View style={styles.ttNotFound}>
-                <View style={styles.contTTNF}>
-                    <Image height={188} width={200} alt=""
-                           source={{uri: "https://dnevnik.mos.ru/diary/mfNewSchedule/assets/images/53a9af0c94373e4066a24225f0c893ae.png"}}/>
-                    <Text style={styles.contTTNFB}>Уроков нет</Text>
+            <TouchableWithoutFeedback style={styles.rasp}>
+                <View style={styles.ttNotFound}>
+                    <View style={styles.contTTNF}>
+                        <Image height={188} width={200} alt=""
+                               source={require("../../images/icons/no_lesson.png")}/>
+                        <Text style={styles.contTTNFB}>Уроков нет</Text>
+                    </View>
                 </View>
-            </View>
+            </TouchableWithoutFeedback>
+
         )
         let rows = ""
         for (let i = 0; i < data.length; i++) {

@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         // fontFamily: "Montserrat"
     },
     RightContainer: {
-        zIndex: 100,
+        zIndex: 1,
         position: "absolute",
         top: 45 + (Platform.OS === "ios" ? StatusBar.currentHeight : 0),
         right: 0,

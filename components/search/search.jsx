@@ -1,42 +1,75 @@
 import React, {useContext, useEffect, useState, useRef} from 'react';
 import {Fl} from "../../context/fl";
-import {View, TextInput, StyleSheet, Text, Button, TouchableWithoutFeedback, Platform} from "react-native";
+import {View, TextInput, StyleSheet, Text, TouchableWithoutFeedback, Platform, TouchableOpacity} from "react-native";
 import Constants from "expo-constants";
 
-const e = () => {}
+// const e = () => {}
+function removeItemAll(arr, value) {
+    let i = 0;
+    while (i < arr.length) {
+        if (arr[i] === value) {
+            arr.splice(i, 1);
+        } else {
+            ++i;
+        }
+    }
+    return arr;
+}
+
 const searchEngine = (props, searchQuery) => {
-    const list = [];
+    let list = [];
     if (searchQuery === "") {
         return [{
             id: 0,
             name: "Не найдено"
         }];
     }
+    const search_ll = searchQuery.toLowerCase().split(" ")
+    removeItemAll(search_ll, "")
+    removeItemAll(search_ll, " ")
     for (let i = 0; i !== 5; i++) {
         let floor_data = props.data[i];
         for (let d in floor_data) {
             let cab_obj = floor_data[d];
             if (cab_obj.type === 0 || cab_obj.type === 2) continue;
             let stop = 0;
-            for (let i in cab_obj.manager) {
-                if (cab_obj.manager[i].startsWith(searchQuery)) {
+            for (let searchI in search_ll) {
+                let Search = search_ll[searchI];
+                for (let i in cab_obj.manager) {
+                    if (cab_obj.manager[i].toLowerCase().startsWith(Search) && !list.includes(cab_obj)) {
+                        list.push(cab_obj);
+                        stop = 1;
+                        break;
+                    }
+                }
+                let des = cab_obj.description.toLowerCase().split(" ")
+                removeItemAll(des, "")
+                removeItemAll(des, " ")
+                for (let desI in des) {
+                    if (des[desI].startsWith(Search) && !list.includes(cab_obj)) {
+                        list.push(cab_obj);
+                        stop = 1;
+                        break;
+                    }
+                }
+
+                if (stop === 1) continue;
+                if (cab_obj.name === "") {
+                    if (cab_obj.description.toLowerCase().startsWith(Search) && !list.includes(cab_obj)) {
+                        list.push(cab_obj);
+                    }
+                    continue;
+                }
+                if (cab_obj.name.toLowerCase().startsWith(Search) && !list.includes(cab_obj)) {
                     list.push(cab_obj);
-                    stop = 1;
-                    break;
                 }
             }
-            if (stop === 1) continue;
-            if (cab_obj.name === "") {
-                if (cab_obj.description.startsWith(searchQuery)) {
-                    list.push(cab_obj);
-                }
-                continue;
-            }
-            if (cab_obj.name.startsWith(searchQuery)) {
-                list.push(cab_obj);
-            }
+
         }
     }
+
+    if (list.length > 6) list = list.slice(0, 6)
+
     return list;
 }
 
@@ -83,23 +116,23 @@ const Search = (props) => {
         }
 
     }
-    const checkKey = (event) => {
-
-        if (event.keyCode === 13) { // enter
-            click(hintMenu[selHInt]);
-        }
-        if (event.keyCode === 40) {
-            if (selHInt + 1 < hintMenu.length) {
-                setSelHInt(selHInt + 1);
-            }
-        } // up
-        if (event.keyCode === 38) { // down
-            if (selHInt - 1 >= 0) {
-                setSelHInt(selHInt - 1);
-            }
-        }
-
-    }
+    // const checkKey = (event) => {
+    //
+    //     if (event.keyCode === 13) { // enter
+    //         click(hintMenu[selHInt]);
+    //     }
+    //     if (event.keyCode === 40) {
+    //         if (selHInt + 1 < hintMenu.length) {
+    //             setSelHInt(selHInt + 1);
+    //         }
+    //     } // up
+    //     if (event.keyCode === 38) { // down
+    //         if (selHInt - 1 >= 0) {
+    //             setSelHInt(selHInt - 1);
+    //         }
+    //     }
+    //
+    // }
     return (
         <TouchableWithoutFeedback onPress={() => {
             setHintVisibility(false)
@@ -131,7 +164,7 @@ const Search = (props) => {
             <View style={hintVisibility ? styles.hint : styles.none}>
                 <View style={styles.cont}>
                     {hintMenu === [] ? <Text style={styles.inputElement}>Не найдено</Text> : hintMenu.map(obj =>
-                        <TouchableWithoutFeedback key={obj.id} onPress={() => click(obj)}>
+                        <TouchableOpacity key={obj.id} onPress={() => click(obj)}>
                         <View
                              style={[obj.id === hintMenu[selHInt].id ? styles.hintIsSelected : {}, styles.inputElement]}
                              >
@@ -141,7 +174,7 @@ const Search = (props) => {
                                 <Text style={styles.m3}>{obj.description}</Text>
                             </View>
                         </View>
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity>
                     )}
                 </View>
             </View>

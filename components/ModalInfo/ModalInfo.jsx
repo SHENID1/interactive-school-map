@@ -161,13 +161,13 @@ const ModalInfo = (props) => {
                 <View style={styles.span}>
                     <View style={styles.t1}><Text>🕒 начала:</Text></View>
                     <View style={styles.t2}><Text>{dateStart.toLocaleDateString("ru-RU", DateFunctions.options)}</Text></View>
-                    <View style={styles.t3}><Text>🕒 нача</Text></View>
+                    <View style={styles.t3}><Text>🕒 начала</Text></View>
                 </View>
                 <View style={styles.span}>
                     <View style={styles.t1}><Text>🕒 конца: </Text></View>
                     <View
                         style={styles.t2}><Text>{dateEnd.toLocaleDateString("ru-RU", DateFunctions.options)}</Text></View>
-                    <View style={styles.t3}><Text>🕒 окончан</Text></View>
+                    <View style={styles.t3}><Text>🕒 конца</Text></View>
                 </View>
                 <View style={styles.span}>
                     <View style={styles.t1}><Text>🧭</Text></View>
@@ -176,17 +176,18 @@ const ModalInfo = (props) => {
                 </View>
             </View>
     }
-
     return (
         <TouchableWithoutFeedback onPress={() => props.sma(false)}>
-            <View style={[props.active ? styles.active : styles.none, data.color ? {
-                borderColor: props.dataObj.color,
-                borderStyle: "SOLID",
-                borderWidth: "10px"
-            } : {}]}>
+            <View style={props.active ? styles.active : styles.none}>
                 <TouchableWithoutFeedback onPress={e}>
-                    <Animated.View id={props.active ? "activeAnimation" : "out"} style={styles.modal}>
-
+                    <Animated.View id={props.active ? "activeAnimation" : "out"}
+                                   style={[styles.modal, props.dataObj.color ? {
+                                       borderColor: props.dataObj.color,
+                                       borderBottomWidth: 8,
+                                       borderRightWidth: 8,
+                                       borderLeftWidth: 8,
+                                       borderTopWidth: 8,
+                                   } : {}]}>
                         <View style={styles.modal__content}>
                             {info}
                         </View>
@@ -239,6 +240,7 @@ const styles = StyleSheet.create({
 
     t2: {
         fontWeight: "bold",
+        overflow: "hidden"
     },
 
     t3: {
@@ -255,6 +257,9 @@ const styles = StyleSheet.create({
         width: "100%",
         textAlign: "center",
         padding: 10,
+
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
     },
     modal: {
         justifyContent: "center",

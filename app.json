@@ -20,7 +20,7 @@
       "bundleIdentifier": "com.shenid.mobileApp"
     },
     "android": {
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/SHENID_interactive_map_logo.png",
         "backgroundColor": "#ffffff"
