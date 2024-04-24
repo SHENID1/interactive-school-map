@@ -1,0 +1,11 @@
+User-agent: yandex
+disallow: /admin/*
+disallow: /scheme/*
+disallow: /event/*
+Sitemap: https://interactive-school-map.ru/sitemapindex.xml
+
+User-agent: googlebot
+disallow: /admin/*
+disallow: /scheme/*
+disallow: /event/*
+Sitemap: https://interactive-school-map.ru/sitemapindex.xml

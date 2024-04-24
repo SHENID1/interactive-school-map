@@ -2,39 +2,73 @@ import React, {useContext, useEffect, useState} from 'react';
 import "./search.css";
 import {Fl} from "../../context/fl";
 
+
+function removeItemAll(arr, value) {
+    let i = 0;
+    while (i < arr.length) {
+        if (arr[i] === value) {
+            arr.splice(i, 1);
+        } else {
+            ++i;
+        }
+    }
+    return arr;
+}
+
 const searchEngine = (props, searchQuery) => {
-    const list = [];
+    let list = [];
     if (searchQuery === "") {
         return [{
             id: 0,
             name: "Не найдено"
         }];
     }
+    const search_ll = searchQuery.toLowerCase().split(" ")
+    removeItemAll(search_ll, "")
+    removeItemAll(search_ll, " ")
     for (let i = 0; i !== 5; i++) {
         let floor_data = props.data[i];
         for (let d in floor_data) {
             let cab_obj = floor_data[d];
             if (cab_obj.type === 0 || cab_obj.type === 2) continue;
             let stop = 0;
-            for (let i in cab_obj.manager) {
-                if (cab_obj.manager[i].startsWith(searchQuery)) {
+            for (let searchI in search_ll) {
+                let Search = search_ll[searchI];
+                for (let i in cab_obj.manager) {
+                    if (cab_obj.manager[i].toLowerCase().startsWith(Search) && !list.includes(cab_obj)) {
+                        list.push(cab_obj);
+                        stop = 1;
+                        break;
+                    }
+                }
+                let des = cab_obj.description.toLowerCase().split(" ")
+                removeItemAll(des, "")
+                removeItemAll(des, " ")
+                for (let desI in des) {
+                    if (des[desI].startsWith(Search) && !list.includes(cab_obj)) {
+                        list.push(cab_obj);
+                        stop = 1;
+                        break;
+                    }
+                }
+
+                if (stop === 1) continue;
+                if (cab_obj.name === "") {
+                    if (cab_obj.description.toLowerCase().startsWith(Search) && !list.includes(cab_obj)) {
+                        list.push(cab_obj);
+                    }
+                    continue;
+                }
+                if (cab_obj.name.toLowerCase().startsWith(Search) && !list.includes(cab_obj)) {
                     list.push(cab_obj);
-                    stop = 1;
-                    break;
                 }
             }
-            if (stop === 1) continue;
-            if (cab_obj.name === "") {
-                if (cab_obj.description.startsWith(searchQuery)) {
-                    list.push(cab_obj);
-                }
-                continue;
-            }
-            if (cab_obj.name.startsWith(searchQuery)) {
-                list.push(cab_obj);
-            }
+
         }
     }
+
+    if (list.length > 6) list = list.slice(0, 6)
+
     return list;
 }
 

@@ -48,7 +48,7 @@ function App() {
     useEffect(() => {
         (Load.loadData().then((v) => {
             if (v) setIsLoading(false)
-            document.title = `${floor} Этаж - Умная карта `;
+            document.title = `${floor} Этаж - Интерактивная карта школы`;
         }, () => {
             document.title = "Ошибка загрузки"
             openNotificationWithIcon('error')
@@ -76,8 +76,8 @@ function App() {
     }
 
     useEffect(() => {
-        if (isLoading) document.title = "Идет загрузка";
-        else document.title = `${floor} Этаж - Умная карта`;
+        if (isLoading) document.title = "Интерактивная карта школы";
+        else document.title = `${floor} Этаж - Интерактивная карта школы`;
         localStorage.setItem('started_floor', floor.toString());
         // eslint-disable-next-line
     }, [floor])

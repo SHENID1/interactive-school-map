@@ -49,7 +49,7 @@ const getCabNum = (id) => {
 const RaspTable = ({data, dayId, openModaleCab}) => {
     if (data === null || data === undefined) return <div className={classes.ttNotFound}>
         <div className={classes.contTTNF}>
-            <img height={"188px"} width={"200px"} alt={""} src={"https://dnevnik.mos.ru/diary/mfNewSchedule/assets/images/53a9af0c94373e4066a24225f0c893ae.png"}/><b>Уроков
+            <img height={"188px"} width={"200px"} alt={""} src={require("../../images/icons/no_lesson.png")}/><b>Уроков
         нет</b></div></div>
     let rows = ""
     for (let i = 0; i < data.length; i++) {

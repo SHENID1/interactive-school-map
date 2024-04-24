@@ -45,20 +45,7 @@ export default class Load{
             localStorage.setItem('SchemeMOne', JSON.stringify(SchemeMOne));
 
             //Timetable
-            const TimetableMonday =  await Timetable.getTimetableByDayId(1);
-            const TimetableTuesday =  await Timetable.getTimetableByDayId(2);
-            const TimetableWednesday = await Timetable.getTimetableByDayId(3);
-            const TimetableThursday = await Timetable.getTimetableByDayId(4);
-            const TimetableFriday = await Timetable.getTimetableByDayId(5);
-            const TimetableSaturday = await Timetable.getTimetableByDayId(6);
-            const TimetableSunday = await Timetable.getTimetableByDayId(0);
-            localStorage.setItem('TimetableMonday', JSON.stringify(TimetableMonday));
-            localStorage.setItem('TimetableTuesday', JSON.stringify(TimetableTuesday));
-            localStorage.setItem('TimetableWednesday', JSON.stringify(TimetableWednesday));
-            localStorage.setItem('TimetableThursday', JSON.stringify(TimetableThursday));
-            localStorage.setItem('TimetableFriday', JSON.stringify(TimetableFriday));
-            localStorage.setItem('TimetableSaturday', JSON.stringify(TimetableSaturday));
-            localStorage.setItem('TimetableSunday', JSON.stringify(TimetableSunday));
+            await Load.loadTimetable()
 
             return true;
         } catch (e) {

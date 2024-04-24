@@ -8,7 +8,7 @@ export default class EventApi {
     static async updateEvent(data) {
         try {
             const prData = EventApi.processDataForUpdate(data);
-            return await $api.put(`/api/events/`, prData);
+            return await $api.put(`api/events/`, prData);
         } catch (e) {
             return "error"
         }
@@ -16,7 +16,7 @@ export default class EventApi {
 
     static async deleteImage(file) {
         const filename = file.response
-        const res = await $api.delete(`/api/events/upload/${filename}`,
+        const res = await $api.delete(`api/events/upload/${filename}`,
             {ContentType: 'multipart/form-data'});
         console.log(res)
     }
@@ -35,7 +35,7 @@ export default class EventApi {
     static async createEvent(data) {
         try {
             const prData = EventApi.processData(data);
-            return await $api.post(`/api/events/`, prData);
+            return await $api.post(`api/events/`, prData);
         } catch (e) {
             console.log(e)
             return "error"
@@ -44,7 +44,7 @@ export default class EventApi {
 
     static async getEvents() {
         try {
-            return (await $api.get('/api/events/')).data;
+            return (await $api.get('api/events/')).data;
         } catch (e) {
             return e;
         }

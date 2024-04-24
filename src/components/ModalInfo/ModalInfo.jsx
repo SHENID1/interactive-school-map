@@ -7,12 +7,13 @@ import Timetable from "../../api/timetable";
 import DateFunctions from "../../api/Day";
 import dayjs from "dayjs";
 import EventApi from "../../api/eventApi";
+import {ApiUrl} from "../../api";
 
 
 function getTimeTable(id) {
     let now = new Date();
     const getDay = now.getDay();
-    // const getDay = 1;
+    // const getDay = 4;
     let date = {};
     switch (getDay) {
         case (0):
@@ -93,7 +94,7 @@ const ModalInfo = (props) => {
     let info = <></>;
     if (props.dataObj.type === 1) { // кабинет
         let img = <></>
-        let ImageUrl = `${window.location.origin.slice(0, -5)}:5000/${props.dataObj.imgName}`
+        let ImageUrl = `${ApiUrl}/${props.dataObj.imgName}`
         if (props.dataObj.imgName) {
             img = <img src={ImageUrl} alt={""} height={"auto"}
                        width={"100%"}/>
@@ -203,7 +204,7 @@ const ModalInfo = (props) => {
     if (props.dataObj.type === 4) {
         // console.log(data);
         let img = <></>
-        let ImageUrl = `${window.location.origin.slice(0, -5)}:5000/${data.image}`
+        let ImageUrl = `${ApiUrl}/${data.image}`
         if (data.image) img = <img src={ImageUrl} alt="" className={cl.img}/>
         const dateStart = dayjs(data.dateStart).toDate();
         const dateEnd = dayjs(data.dateEnd).toDate();

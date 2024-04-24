@@ -15,7 +15,7 @@ export default class Timetable{
     }
     static async UpdateTimetableById(data){
         try{
-            const response = await $api.put(`/api/timetable/`, data);
+            const response = await $api.put(`api/timetable/`, data);
             return response.data;
         }
         catch (e){
@@ -24,7 +24,7 @@ export default class Timetable{
     }
     static async DeleteTimetableById(data){
         try{
-            await $api.delete(`/api/timetable/${data._id}`);
+            await $api.delete(`api/timetable/${data._id}`);
             return true;
         }
         catch (e){
@@ -33,7 +33,7 @@ export default class Timetable{
     }
     static async CreateTimetable(data){
         try{
-            const response = await $api.post(`/api/timetable/`, data);
+            const response = await $api.post(`api/timetable/`, data);
             console.log(response)
             return response.data;
         }
@@ -103,6 +103,7 @@ export default class Timetable{
             getDay = now.getDay();
         }
         else getDay = day
+        // getDay = 4;
         return Timetable.getDayWithDay(getDay)
 
     }
