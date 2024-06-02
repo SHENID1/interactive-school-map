@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     t1: {
         marginLeft: 7,
         borderRadius: 3,
-        fontWeight: 400,
+        fontWeight: "normal",
     },
 
     t2: {
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         height: 40,
         textAlignVertical: "center",
-        fontWeight: 500
+        fontWeight: "normal"
     },
     tr: {
         borderTopWidth: 1,

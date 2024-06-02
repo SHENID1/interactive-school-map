@@ -1,7 +1,7 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import Timetable from "../../api/timetable";
 import Data from "../../api/getData";
-import {View, StyleSheet, Image, TouchableOpacity, Modal, TouchableWithoutFeedback, Dimensions, Picker} from "react-native";
+import {View, StyleSheet, Image, TouchableOpacity, Modal, TouchableWithoutFeedback, Dimensions} from "react-native";
 import {Tab, TabView, Text} from '@rneui/themed';
 import CabData from "../../api/cabdata";
 import RaspTable from "./rasptable";
@@ -36,7 +36,7 @@ const TimetableView = (props) => {
     const [isVisibleDialog, setIsVisibleDialog] = useState(false)
     let initDay = new Date().getDay() - 1;
     if (new Date().getDay() === 0) initDay = 6;
-    const [dayId, setDayId] = useState(initDay);
+    const dayId = initDay;
     const [Class, setClass] = useState("Н10");
     const [index, setIndex] = React.useState(0);
     const [dialogObj, setDialogObj] = useState([])
