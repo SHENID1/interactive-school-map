@@ -14,81 +14,65 @@ const MainLoader = ({setIsLoading, isLoading}) => {
     const [isError, setIsError] = useState(false)
     const AllCount = 22
     async function loadData() {
+        const tick = (value) => {
+            SetCount((count) => count + 1)
+            return value;
+        }
         try {
-            //cabData
+            const [
+                CabDataFour, CabDataThree, CabDataTwo, CabDataOne, CabDataMOne,
+                EvacuationFour, EvacuationThree, EvacuationTwo, EvacuationOne, EvacuationMOne,
+                SchemeFour, SchemeThree, SchemeTwo, SchemeOne, SchemeMOne,
+                TimetableMonday, TimetableTuesday, TimetableWednesday, TimetableThursday, TimetableFriday, TimetableSaturday, TimetableSunday,
+            ] = await Promise.all([
+                CabData.getCabDataByFloor(4).then(tick),
+                CabData.getCabDataByFloor(3).then(tick),
+                CabData.getCabDataByFloor(2).then(tick),
+                CabData.getCabDataByFloor(1).then(tick),
+                CabData.getCabDataByFloor(-1).then(tick),
+                Evacuation.getEvacuationByFloor(4).then(tick),
+                Evacuation.getEvacuationByFloor(3).then(tick),
+                Evacuation.getEvacuationByFloor(2).then(tick),
+                Evacuation.getEvacuationByFloor(1).then(tick),
+                Evacuation.getEvacuationByFloor(-1).then(tick),
+                PolygonScheme.getScheme(4).then(tick),
+                PolygonScheme.getScheme(3).then(tick),
+                PolygonScheme.getScheme(2).then(tick),
+                PolygonScheme.getScheme(1).then(tick),
+                PolygonScheme.getScheme(-1).then(tick),
+                Timetable.getTimetableByDayId(1).then(tick),
+                Timetable.getTimetableByDayId(2).then(tick),
+                Timetable.getTimetableByDayId(3).then(tick),
+                Timetable.getTimetableByDayId(4).then(tick),
+                Timetable.getTimetableByDayId(5).then(tick),
+                Timetable.getTimetableByDayId(6).then(tick),
+                Timetable.getTimetableByDayId(0).then(tick),
+            ]);
 
-            const CabDataFour = await CabData.getCabDataByFloor(4);
-            SetCount((count) => count + 1)
-            const CabDataThree = await CabData.getCabDataByFloor(3);
-            SetCount((count) => count + 1)
-            const CabDataTwo = await CabData.getCabDataByFloor(2);
-            SetCount((count) => count + 1)
-            const CabDataOne = await CabData.getCabDataByFloor(1);
-            SetCount((count) => count + 1)
-            const CabDataMOne = await CabData.getCabDataByFloor(-1);
-            SetCount((count) => count + 1)
-            await Data.setData('CabDataFour', JSON.stringify(CabDataFour));
-            await Data.setData('CabDataThree', JSON.stringify(CabDataThree));
-            await Data.setData('CabDataTwo', JSON.stringify(CabDataTwo));
-            await Data.setData('CabDataOne', JSON.stringify(CabDataOne));
-            await Data.setData('CabDataMOne', JSON.stringify(CabDataMOne));
-
-            //Evacuation
-            const EvacuationFour = await Evacuation.getEvacuationByFloor(4);
-            SetCount((count) => count + 1)
-            const EvacuationThree = await Evacuation.getEvacuationByFloor(3);
-            SetCount((count) => count + 1)
-            const EvacuationTwo = await Evacuation.getEvacuationByFloor(2);
-            SetCount((count) => count + 1)
-            const EvacuationOne = await Evacuation.getEvacuationByFloor(1);
-            SetCount((count) => count + 1)
-            const EvacuationMOne = await Evacuation.getEvacuationByFloor(-1);
-            SetCount((count) => count + 1)
-            await Data.setData('EvacuationFour', JSON.stringify(EvacuationFour));
-            await Data.setData('EvacuationThree', JSON.stringify(EvacuationThree));
-            await Data.setData('EvacuationTwo', JSON.stringify(EvacuationTwo));
-            await Data.setData('EvacuationOne', JSON.stringify(EvacuationOne));
-            await Data.setData('EvacuationMOne', JSON.stringify(EvacuationMOne));
-
-            //Scheme
-            const SchemeFour = await PolygonScheme.getScheme(4);
-            SetCount((count) => count + 1)
-            const SchemeThree = await PolygonScheme.getScheme(3);
-            SetCount((count) => count + 1)
-            const SchemeTwo = await PolygonScheme.getScheme(2);
-            SetCount((count) => count + 1)
-            const SchemeOne = await PolygonScheme.getScheme(1);
-            SetCount((count) => count + 1)
-            const SchemeMOne = await PolygonScheme.getScheme(-1);
-            SetCount((count) => count + 1)
-            await Data.setData('SchemeFour', JSON.stringify(SchemeFour));
-            await Data.setData('SchemeThree', JSON.stringify(SchemeThree));
-            await Data.setData('SchemeTwo', JSON.stringify(SchemeTwo));
-            await Data.setData('SchemeOne', JSON.stringify(SchemeOne));
-            await Data.setData('SchemeMOne', JSON.stringify(SchemeMOne));
-
-            //Timetable
-            const TimetableMonday = await Timetable.getTimetableByDayId(1);
-            SetCount((count) => count + 1)
-            const TimetableTuesday = await Timetable.getTimetableByDayId(2);
-            SetCount((count) => count + 1)
-            const TimetableWednesday = await Timetable.getTimetableByDayId(3);
-            SetCount((count) => count + 1)
-            const TimetableThursday = await Timetable.getTimetableByDayId(4);
-            SetCount((count) => count + 1)
-            const TimetableFriday = await Timetable.getTimetableByDayId(5);
-            SetCount((count) => count + 1)
-            const TimetableSaturday = await Timetable.getTimetableByDayId(6);
-            SetCount((count) => count + 1)
-            const TimetableSunday = await Timetable.getTimetableByDayId(0);
-            SetCount((count) => count + 1)
-            await Data.setData('TimetableMonday', JSON.stringify(TimetableMonday));
-            await Data.setData('TimetableTuesday', JSON.stringify(TimetableTuesday));
-            await Data.setData('TimetableWednesday', JSON.stringify(TimetableWednesday));
-            await Data.setData('TimetableThursday', JSON.stringify(TimetableThursday));
-            await Data.setData('TimetableFriday', JSON.stringify(TimetableFriday));
-            await Data.setData('TimetableSaturday', JSON.stringify(TimetableSaturday));
-            await Data.setData('TimetableSunday', JSON.stringify(TimetableSunday));
+            await Promise.all([
+                Data.setData('CabDataFour', JSON.stringify(CabDataFour)),
+                Data.setData('CabDataThree', JSON.stringify(CabDataThree)),
+                Data.setData('CabDataTwo', JSON.stringify(CabDataTwo)),
+                Data.setData('CabDataOne', JSON.stringify(CabDataOne)),
+                Data.setData('CabDataMOne', JSON.stringify(CabDataMOne)),
+                Data.setData('EvacuationFour', JSON.stringify(EvacuationFour)),
+                Data.setData('EvacuationThree', JSON.stringify(EvacuationThree)),
+                Data.setData('EvacuationTwo', JSON.stringify(EvacuationTwo)),
+                Data.setData('EvacuationOne', JSON.stringify(EvacuationOne)),
+                Data.setData('EvacuationMOne', JSON.stringify(EvacuationMOne)),
+                Data.setData('SchemeFour', JSON.stringify(SchemeFour)),
+                Data.setData('SchemeThree', JSON.stringify(SchemeThree)),
+                Data.setData('SchemeTwo', JSON.stringify(SchemeTwo)),
+                Data.setData('SchemeOne', JSON.stringify(SchemeOne)),
+                Data.setData('SchemeMOne', JSON.stringify(SchemeMOne)),
+                Data.setData('TimetableMonday', JSON.stringify(TimetableMonday)),
+                Data.setData('TimetableTuesday', JSON.stringify(TimetableTuesday)),
+                Data.setData('TimetableWednesday', JSON.stringify(TimetableWednesday)),
+                Data.setData('TimetableThursday', JSON.stringify(TimetableThursday)),
+                Data.setData('TimetableFriday', JSON.stringify(TimetableFriday)),
+                Data.setData('TimetableSaturday', JSON.stringify(TimetableSaturday)),
+                Data.setData('TimetableSunday', JSON.stringify(TimetableSunday)),
+            ]);
             return true;
         } catch (e) {
             throw new Error(e.message)

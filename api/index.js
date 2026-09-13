@@ -3,6 +3,8 @@ import SyncStorage from "sync-storage";
 
 export const ApiUrl = "https://api.interactive-school-map.shenid.ru";
 
+axios.defaults.timeout = 20000;
+
 
 const $api = axios.create({
     withCredentials: true,
