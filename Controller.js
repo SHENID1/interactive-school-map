@@ -40,6 +40,31 @@ class Controller {
         }
     }
 
+    // mobile app bootstrap: everything the loading screen needs, in one round trip
+    async getBootstrap(req, res) {
+        try {
+            const groupBy = (arr, key) => arr.reduce((acc, item) => {
+                const k = item[key];
+                (acc[k] = acc[k] || []).push(item);
+                return acc;
+            }, {});
+            const [cabData, evacuation, scheme, timetable] = await Promise.all([
+                CabData.find(),
+                Evacuation.find(),
+                SchemeFloors.find(),
+                Timetable.find(),
+            ]);
+            res.status(200).json({
+                cabData: groupBy(cabData, 'floor'),
+                evacuation: groupBy(evacuation, 'floor'),
+                scheme: groupBy(scheme, 'floor'),
+                timetable: groupBy(timetable, 'dayId'),
+            });
+        } catch (e) {
+            res.status(500).json(e);
+        }
+    }
+
     //CabData
     async getCabData(req, res){
         try {

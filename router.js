@@ -10,6 +10,9 @@ dotenv.config();
 router.use(cors(corsOptions));
 router.use(fileUpload({}))
 
+// mobile app bootstrap (cabdata + evacuation + scheme + timetable in one request)
+router.get('/bootstrap', Controller.getBootstrap)
+
 // scheme
 router.get('/scheme/:floor', Controller.getFloorScheme); // get scheme by floor
 router.post('/scheme', authMiddleware, Controller.createFloorScheme); // create scheme
