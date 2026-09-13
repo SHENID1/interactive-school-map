@@ -2,76 +2,27 @@ import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, Button, Image, View} from 'react-native';
 import {Text, StyleSheet} from "react-native";
 import Constants from "expo-constants";
-import CabData from "../../api/cabdata";
 import Data from "../../api/getData";
-import Evacuation from "../../api/evacuation";
-import PolygonScheme from "../../api/scheme";
-import Timetable from "../../api/timetable";
+import Bootstrap from "../../api/bootstrap";
 
 
 const MainLoader = ({setIsLoading, isLoading}) => {
     const [count, SetCount] = useState(0)
     const [isError, setIsError] = useState(false)
-    const AllCount = 22
+    const AllCount = 1
     async function loadData() {
-        const tick = (value) => {
-            SetCount((count) => count + 1)
-            return value;
-        }
         try {
-            const [
-                CabDataFour, CabDataThree, CabDataTwo, CabDataOne, CabDataMOne,
-                EvacuationFour, EvacuationThree, EvacuationTwo, EvacuationOne, EvacuationMOne,
-                SchemeFour, SchemeThree, SchemeTwo, SchemeOne, SchemeMOne,
-                TimetableMonday, TimetableTuesday, TimetableWednesday, TimetableThursday, TimetableFriday, TimetableSaturday, TimetableSunday,
-            ] = await Promise.all([
-                CabData.getCabDataByFloor(4).then(tick),
-                CabData.getCabDataByFloor(3).then(tick),
-                CabData.getCabDataByFloor(2).then(tick),
-                CabData.getCabDataByFloor(1).then(tick),
-                CabData.getCabDataByFloor(-1).then(tick),
-                Evacuation.getEvacuationByFloor(4).then(tick),
-                Evacuation.getEvacuationByFloor(3).then(tick),
-                Evacuation.getEvacuationByFloor(2).then(tick),
-                Evacuation.getEvacuationByFloor(1).then(tick),
-                Evacuation.getEvacuationByFloor(-1).then(tick),
-                PolygonScheme.getScheme(4).then(tick),
-                PolygonScheme.getScheme(3).then(tick),
-                PolygonScheme.getScheme(2).then(tick),
-                PolygonScheme.getScheme(1).then(tick),
-                PolygonScheme.getScheme(-1).then(tick),
-                Timetable.getTimetableByDayId(1).then(tick),
-                Timetable.getTimetableByDayId(2).then(tick),
-                Timetable.getTimetableByDayId(3).then(tick),
-                Timetable.getTimetableByDayId(4).then(tick),
-                Timetable.getTimetableByDayId(5).then(tick),
-                Timetable.getTimetableByDayId(6).then(tick),
-                Timetable.getTimetableByDayId(0).then(tick),
-            ]);
+            const {cabData, evacuation, scheme, timetable} = await Bootstrap.load();
+            SetCount(1)
+
+            const floorKeys = [['Four', 4], ['Three', 3], ['Two', 2], ['One', 1], ['MOne', -1]];
+            const dayKeys = [['Monday', 1], ['Tuesday', 2], ['Wednesday', 3], ['Thursday', 4], ['Friday', 5], ['Saturday', 6], ['Sunday', 0]];
 
             await Promise.all([
-                Data.setData('CabDataFour', JSON.stringify(CabDataFour)),
-                Data.setData('CabDataThree', JSON.stringify(CabDataThree)),
-                Data.setData('CabDataTwo', JSON.stringify(CabDataTwo)),
-                Data.setData('CabDataOne', JSON.stringify(CabDataOne)),
-                Data.setData('CabDataMOne', JSON.stringify(CabDataMOne)),
-                Data.setData('EvacuationFour', JSON.stringify(EvacuationFour)),
-                Data.setData('EvacuationThree', JSON.stringify(EvacuationThree)),
-                Data.setData('EvacuationTwo', JSON.stringify(EvacuationTwo)),
-                Data.setData('EvacuationOne', JSON.stringify(EvacuationOne)),
-                Data.setData('EvacuationMOne', JSON.stringify(EvacuationMOne)),
-                Data.setData('SchemeFour', JSON.stringify(SchemeFour)),
-                Data.setData('SchemeThree', JSON.stringify(SchemeThree)),
-                Data.setData('SchemeTwo', JSON.stringify(SchemeTwo)),
-                Data.setData('SchemeOne', JSON.stringify(SchemeOne)),
-                Data.setData('SchemeMOne', JSON.stringify(SchemeMOne)),
-                Data.setData('TimetableMonday', JSON.stringify(TimetableMonday)),
-                Data.setData('TimetableTuesday', JSON.stringify(TimetableTuesday)),
-                Data.setData('TimetableWednesday', JSON.stringify(TimetableWednesday)),
-                Data.setData('TimetableThursday', JSON.stringify(TimetableThursday)),
-                Data.setData('TimetableFriday', JSON.stringify(TimetableFriday)),
-                Data.setData('TimetableSaturday', JSON.stringify(TimetableSaturday)),
-                Data.setData('TimetableSunday', JSON.stringify(TimetableSunday)),
+                ...floorKeys.map(([suffix, floor]) => Data.setData(`CabData${suffix}`, JSON.stringify(cabData[floor] || []))),
+                ...floorKeys.map(([suffix, floor]) => Data.setData(`Evacuation${suffix}`, JSON.stringify(evacuation[floor] || []))),
+                ...floorKeys.map(([suffix, floor]) => Data.setData(`Scheme${suffix}`, JSON.stringify(scheme[floor] || []))),
+                ...dayKeys.map(([suffix, dayId]) => Data.setData(`Timetable${suffix}`, JSON.stringify(timetable[dayId] || []))),
             ]);
             return true;
         } catch (e) {
@@ -97,7 +48,7 @@ const MainLoader = ({setIsLoading, isLoading}) => {
             <ActivityIndicator size="large" />
             <Text style={styles.text}>{!isError ? "Загрузка ...": "Ошибка\nПерезапустите приложение"}</Text>
             <View style={[styles.progressContainer]}>
-                <View style={[styles.progressBar, {flex: 0.0454545454545455 * count}, isError ? {backgroundColor: "red"} : {backgroundColor: "black"}]}/>
+                <View style={[styles.progressBar, {flex: count / AllCount}, isError ? {backgroundColor: "red"} : {backgroundColor: "black"}]}/>
                 <Text style={styles.progress_text}>{count}/{AllCount}</Text>
             </View>
             {isError ? <Button title={"Запустить приложение принудительно"} onPress={() => setIsLoading(false)}/>
