@@ -1,6 +1,7 @@
 import axios from "axios";
+import SyncStorage from "sync-storage";
 
-export const ApiUrl = "https://pro.rezraf.com/shenid_api";
+export const ApiUrl = "https://api.interactive-school-map.shenid.ru";
 
 
 const $api = axios.create({
@@ -9,7 +10,7 @@ const $api = axios.create({
 })
 
 $api.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`
+    config.headers.Authorization = `Bearer ${SyncStorage.get("token")}`
     return config;
 })
 $api.interceptors.response.use((config) => {
@@ -19,8 +20,8 @@ $api.interceptors.response.use((config) => {
     if (error.response.status === 401 && error.config && !error.config._isRetry) {
         originalRequests._isRetry = true;
         try {
-            const response = await axios.get(`${ApiUrl}/refresh`, {withCredentials: true});
-            localStorage.setItem('token', response.data.accessToken)
+            const response = await axios.get(`${ApiUrl}/auth/refresh`, {withCredentials: true});
+            SyncStorage.set('token', response.data.accessToken)
             return $api.request(originalRequests);
         }
         catch (e) {
