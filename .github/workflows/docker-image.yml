@@ -56,7 +56,6 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT }}
           script: |
-            echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ secrets.GHCR_USER }} --password-stdin
             cd ${{ secrets.BACKEND_DEPLOY_PATH }}
             docker compose pull
             docker compose up -d --remove-orphans
