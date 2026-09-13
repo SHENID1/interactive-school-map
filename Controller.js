@@ -40,30 +40,46 @@ class Controller {
         }
     }
 
-    // mobile app bootstrap: everything the loading screen needs, in one round trip
-    async getBootstrap(req, res) {
+    // mobile app bootstrap: one request per category instead of one per floor/day.
+    // Kept deliberately small per response (not merged into a single big payload) —
+    // a single ~50KB combined response reliably stalls on the current VPS network path.
+    static groupBy(arr, key) {
+        return arr.reduce((acc, item) => {
+            const k = item[key];
+            (acc[k] = acc[k] || []).push(item);
+            return acc;
+        }, {});
+    }
+
+    async getAllCabData(req, res) {
         try {
-            const groupBy = (arr, key) => arr.reduce((acc, item) => {
-                const k = item[key];
-                (acc[k] = acc[k] || []).push(item);
-                return acc;
-            }, {});
-            const [cabData, evacuation, scheme, timetable] = await Promise.all([
-                CabData.find(),
-                Evacuation.find(),
-                SchemeFloors.find(),
-                Timetable.find(),
-            ]);
-            res.status(200).json({
-                cabData: groupBy(cabData, 'floor'),
-                evacuation: groupBy(evacuation, 'floor'),
-                scheme: groupBy(scheme, 'floor'),
-                timetable: groupBy(timetable, 'dayId'),
-            });
+            const cabData = await CabData.find();
+            res.status(200).json(Controller.groupBy(cabData, 'floor'));
         } catch (e) {
             res.status(500).json(e);
         }
     }
+
+    async getAllEvacuation(req, res) {
+        try {
+            const evacuation = await Evacuation.find();
+            res.status(200).json(Controller.groupBy(evacuation, 'floor'));
+        } catch (e) {
+            res.status(500).json(e);
+        }
+    }
+
+    async getAllScheme(req, res) {
+        try {
+            const scheme = await SchemeFloors.find();
+            res.status(200).json(Controller.groupBy(scheme, 'floor'));
+        } catch (e) {
+            res.status(500).json(e);
+        }
+    }
+
+    // NB: no getAllTimetable/all — the full week is ~30KB, which reliably stalls
+    // on the current VPS network path (see [[vps_bandwidth_throttle]]); keep it per-day.
 
     //CabData
     async getCabData(req, res){
