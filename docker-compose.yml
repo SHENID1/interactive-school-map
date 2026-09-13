@@ -1,0 +1,7 @@
+services:
+  web:
+    image: ghcr.io/shenid1/interactive-school-map:master
+    container_name: shenid_map_web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8081:80"

@@ -1,7 +1,6 @@
 import axios from "axios";
 
-export const ApiUrl = "https://pro.rezraf.com/shenid_api";
-// export const ApiUrl = window.location.origin.slice(0, -5) + ":5000";
+export const ApiUrl = process.env.REACT_APP_API_URL || "https://api.interactive-school-map.shenid.ru";
 
 
 const $api = axios.create({
