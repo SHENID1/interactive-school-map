@@ -1,0 +1,12 @@
+services:
+  api:
+    image: ghcr.io/shenid1/interactive-school-map-server:server
+    container_name: shenid_api
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "127.0.0.1:5001:5001"
+    volumes:
+      - ./eventsImage:/server/eventsImage
+      - ./static:/server/static

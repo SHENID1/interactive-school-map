@@ -5,14 +5,11 @@ import {body} from "express-validator";
 import authMiddleware from "./middlewares/auth-middleware.js";
 import expressIp from "express-ip";
 import dotenv from "dotenv";
+import corsOptions from "./cors-options.js";
 const auth_router = new Router()
 dotenv.config();
 
-auth_router.use(cors({
-    credentials: true,
-    origin: process.env.CLIENT_URL,      //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}));
+auth_router.use(cors(corsOptions));
 // auth_router.use(expressIp().getIpInfoMiddleware);
 
 auth_router.post('/register',

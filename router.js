@@ -5,14 +5,10 @@ import fileUpload from "express-fileupload";
 import authMiddleware from "./middlewares/auth-middleware.js";
 const router = new Router()
 import dotenv from "dotenv";
+import corsOptions from "./cors-options.js";
 dotenv.config();
-router.use(cors({
-    credentials: true,
-    origin: process.env.CLIENT_URL,      //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}));
+router.use(cors(corsOptions));
 router.use(fileUpload({}))
-// console.log(process.env.CLIENT_URL)
 
 // scheme
 router.get('/scheme/:floor', Controller.getFloorScheme); // get scheme by floor
