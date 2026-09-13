@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import cl from "./style.module.css"
-import EventIcon from "../../images/icons/Event_icon.svg"
+import EventIcon from "../../images/Event_icon.svg"
 import {EventContext} from "../../context/eventContext";
 // import EventInfo from "./eventInfo";
 
